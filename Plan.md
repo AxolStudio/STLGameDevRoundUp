@@ -1,7 +1,7 @@
 # How this should work
 
 * A new Issue with label "next-roundup" will be created.
-* People add items to this issue as markdown: ` - [category] short description with [links](/link/to/item)
+* People add items to this issue as markdown: `- [category] short description with [links](/link/to/item)`
 * Github action is setup 
   * On a trigger (date? manual?) it will look at the only "next-roundup" issue that it open and, ignoring the first post (which is just instructions), grab all of the comments in that issue, building a list as it goes of each category.
   * Next it will generate a new `.md` file out of all the comments - with a header for each category, and then a list of all the links/entries in that category:

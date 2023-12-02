@@ -45,9 +45,13 @@ jobs:
                         query($name: String!, $owner: String!) {
                             repository(name: $name, owner: $owner) {
                                 issues(first: 1, states: OPEN, labels: "next-roundup") {
-                                    title
-                                    comments {
-                                        body
+                                    nodes {
+                                        title
+                                        comments {
+                                            nodes {
+                                                body
+                                            }
+                                        }
                                     }
                                 }
                             }
