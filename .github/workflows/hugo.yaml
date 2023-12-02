@@ -58,18 +58,21 @@ jobs:
                             }
                         }
                     ')"
-                    str=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
-                    issue_number=${str#*#}
+                    issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[].title')
+                    issue_number=${issue_title} | grep -o -E "[0-9]+"
                     save_to="content/issue-${issue_number}.json"
                     echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments.nodes[].body' > $save_to
+                    echo 'ISSUE_NO'=$issue_number >> $GITHUB_ENV
                 env: 
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     OWNER: ${{ github.repository_owner }}
                     REPO: ${{ github.event.repository.name }}
-            -   name: Add PR for new page
-                run: gh pr create --title "Add new page for issue ${issue_number}" --body "This PR adds a new page for issue ${issue_number}." --base main --head "issue-${issue_number}"
+            -   name: Create PR
+                run: |
+                    gh pr create --title "Issue ${ISSUE_NO} Roundup" --body "This PR is an automated roundup of the comments on Issue ${ISSUE_NO}."
                 env: 
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    ISSUE_NO: ${{ env.ISSUE_NO }}
             -   name: Build
                 env:
                     HUGO_ENVIRONMENT: production
