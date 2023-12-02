@@ -61,11 +61,11 @@ jobs:
                     echo ${RUIssue}
                     issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
                     echo ${issue_title}
-                    ru_no="${issue_title#"Roundup Issue #/"}"
+                    ru_no="${issue_title/"Roundup Issue #/"}"
                     echo ${ru_no}
                     save_to="content/issue-${ru_no}.json"
                     echo ${save_to}
-                    $content=$RUIssue | jq -r '.data.repository.issues.nodes[].comments.nodes[].body'
+                    $content=$RUIssue | jq -r '.data.repository.issues.nodes[].comments.nodes[]'
                     echo $content
                     echo $content > $save_to
                     echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
