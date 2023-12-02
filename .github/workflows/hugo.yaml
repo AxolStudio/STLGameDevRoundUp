@@ -61,12 +61,14 @@ jobs:
                     echo ${RUIssue}
                     issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
                     echo ${issue_title}
-                    issue_number=${issue_title} | grep -o -E "[0-9]+"
-                    echo ${issue_number}
-                    save_to="content/issue-${issue_number}.json"
+                    ru_no=(${issue_title} | grep -Eo '[0-9]+$')"
+                    echo ${ru_no}
+                    save_to="content/issue-${ru_no}.json"
                     echo ${save_to}
-                    echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments.nodes[].body' > $save_to
-                    echo 'ISSUE_NO'=$issue_number >> $GITHUB_ENV
+                    $content=$RUIssue | jq -r '.data.repository.issues.nodes[].comments.nodes[].body'
+                    echo $content
+                    echo $content > $save_to
+                    echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
                 env: 
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     OWNER: ${{ github.repository_owner }}
