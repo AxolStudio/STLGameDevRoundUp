@@ -52,7 +52,7 @@ jobs:
                                 }
                             }
                         }
-                    ' --json)"
+                    ')"
                     str=$(echo $RUIssue | jq -r '.data.repository.issues.title')
                     issue_number = value=${str#*#}
                     save_to="content/issue-${issue_number}.md"
