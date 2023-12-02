@@ -58,9 +58,13 @@ jobs:
                             }
                         }
                     ')"
-                    issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[].title')
+                    echo ${RUIssue}
+                    issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
+                    echo ${issue_title}
                     issue_number=${issue_title} | grep -o -E "[0-9]+"
+                    echo ${issue_number}
                     save_to="content/issue-${issue_number}.json"
+                    echo ${save_to}
                     echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments.nodes[].body' > $save_to
                     echo 'ISSUE_NO'=$issue_number >> $GITHUB_ENV
                 env: 
