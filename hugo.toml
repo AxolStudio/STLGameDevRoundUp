@@ -1,0 +1,15 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'St Louis Game Dev Round Up'
+
+
+publishDir = "public/"
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML"]
+
+enableRobotsTXT = true
