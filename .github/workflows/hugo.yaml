@@ -57,10 +57,10 @@ jobs:
                             }
                         }
                     ')"
-                    str=$(echo $RUIssue | jq -r '.data.repository.issues.title')
+                    str=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
                     issue_number=${str#*#}
                     save_to="content/issue-${issue_number}.md"
-                    echo $RUIssue | jq -r '.data.repository.issues.comments[].body' > $save_to
+                    echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments.nodes[].body' > $save_to
                 env: 
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     OWNER: ${{ github.repository_owner }}
