@@ -24,15 +24,11 @@
   - [ ] combine into new `.md`
   - [ ] build with hugo
   - [ ] publish
-     
-# MISC
-
-- [ ] use github pages
-- [ ] look into netlify?
-- [ ] logo?
+- [ ] design a logo?
 
 # Reference
 
+* https://gohugo.io/hosting-and-deployment/hosting-on-github/
 * https://shazow.net/posts/github-issues-as-a-hugo-frontend/
 * https://cli.github.com/manual/gh_search_issues
 * https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows
