@@ -57,7 +57,10 @@ jobs:
                     issue_number = value=${str#*#}
                     save_to="content/issue-${issue_number}.md"
                     echo $RUIssue | jq -r '.data.repository.issues.comments[].body' > $save_to
-
+                env: 
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    OWNER: ${{ github.repository_owner }}
+                    REPO: ${{ github.event.repository.name }}
             -   name: Build
                 env:
                     HUGO_ENVIRONMENT: production
