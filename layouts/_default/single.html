@@ -6,5 +6,26 @@
   <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
 
   {{ .Content }}
-  {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+
+
+  {{ $s := newScratch }}
+  {{ $categories := slice }}
+  {{ range .Site.Data.issue1.nodes }}
+  {{ $body := .body }}
+  {{ $category := replaceRE `^(?:\{)(.*)(?:\}).*` "$1" $body }}
+  {{ $entry := replaceRE `^(?:\{.*\})(.*)` "$1" $body }}
+  {{ $s.Set $category ($s.Get $category | append $entry) }}
+  {{ $categories = $categories | append $category }}
+  {{ end }}
+
+  {{ $categories = $categories | uniq }}
+  {{ $categories = $categories | sort }}
+
+  {{ range $categories }}
+  <h2>{{ . }}</h2>
+  {{ range $s.Get . }}
+  <li>{{ . | markdownify }}</li>
+  {{ end }}
+  {{ end }}
+  
 {{ end }}

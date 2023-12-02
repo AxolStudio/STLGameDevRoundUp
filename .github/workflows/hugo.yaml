@@ -56,9 +56,17 @@ jobs:
                     
                     issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
                     ru_no="${issue_title##*#}"
-                    save_to="content/issue-${ru_no}.json"
+                    save_to="data/issue${ru_no}.json"
                     echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments' > $save_to
                     echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
+                    md_file="content/issue-${ru_no}.md"
+                    cat << EOF >> $md_file
+                    ---
+                    title: "Issue #$ru_no"
+                    date: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+                    draft: false
+                    ---
+                    EOF
                 env: 
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     OWNER: ${{ github.repository_owner }}
