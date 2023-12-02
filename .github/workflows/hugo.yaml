@@ -76,8 +76,8 @@ jobs:
                 run: |
                     git config --global user.name "GitHub Actions"
                     git config --global user.email "no-reply@github.com"
-                    git add content/issue-${ISSUE_NO}.json
-                    git commit -m "Update issue-${ISSUE_NO}.json"
+                    git add content/issue-${ISSUE_NO}.md data/issue${ISSUE_NO}.json
+                    git commit -m "Update issue ${ISSUE_NO}"
                     git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
                     git push
                 env:
