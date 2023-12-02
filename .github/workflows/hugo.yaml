@@ -39,6 +39,25 @@ jobs:
                 uses: actions/configure-pages@v3
             -   name: Install dependencies
                 run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+            -   name: Grab Issue Comments
+                run: |
+                    RUIssue="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
+                        query($name: String!, $owner: String!) {
+                            repository(name: $name, owner: $owner) {
+                                issues(first: 1, states: OPEN, label: "next-roundup") {
+                                    title
+                                    comments {
+                                        body
+                                    }
+                                }
+                            }
+                        }
+                    ' --json)"
+                    str=$(echo $RUIssue | jq -r '.data.repository.issues.title')
+                    issue_number = value=${str#*#}
+                    save_to="content/issue-${issue_number}.md"
+                    echo $RUIssue | jq -r '.data.repository.issues.comments[].body' > $save_to
+
             -   name: Build
                 env:
                     HUGO_ENVIRONMENT: production
