@@ -44,7 +44,7 @@ jobs:
                     RUIssue="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
                         query($name: String!, $owner: String!) {
                             repository(name: $name, owner: $owner) {
-                                issues(first: 1, states: OPEN, label: "next-roundup") {
+                                issues(first: 1, states: OPEN, labels: "next-roundup") {
                                     title
                                     comments {
                                         body
