@@ -65,6 +65,10 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     OWNER: ${{ github.repository_owner }}
                     REPO: ${{ github.event.repository.name }}
+            -   name: Add PR for new page
+                run: gh pr create --title "Add new page for issue ${issue_number}" --body "This PR adds a new page for issue ${issue_number}." --base main --head "issue-${issue_number}"
+                env: 
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             -   name: Build
                 env:
                     HUGO_ENVIRONMENT: production
