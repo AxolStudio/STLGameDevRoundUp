@@ -3,12 +3,7 @@ name: Deploy Hugo Site to GitHub Pages
 on:
     workflow_dispatch:
 
-permissions:
-    contents: write
-    issues: write
-    pages: write
-    id-token: write
-    pull-requests: write
+permissions: write-all    
 
 concurrency:
     group: "pages"
@@ -58,23 +53,25 @@ jobs:
                             }
                         }
                     ')"
-                    echo ${RUIssue}
+                    
                     issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
-                    echo ${issue_title}
                     ru_no="${issue_title##*#}"
-                    echo ${ru_no}
                     save_to="content/issue-${ru_no}.json"
-                    echo ${save_to}
                     echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments' > $save_to
                     echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
                 env: 
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     OWNER: ${{ github.repository_owner }}
                     REPO: ${{ github.event.repository.name }}
-            -   name: Create PR
+            -   name: Commit change
                 run: |
-                    gh pr create --title "Issue ${ISSUE_NO} Roundup" --body "This PR is an automated roundup of the comments on Issue ${ISSUE_NO}."
-                env: 
+                    git config --global user.name "GitHub Actions"
+                    git config --global user.email "no-reply@github.com"
+                    git add content/issue-${ISSUE_NO}.json
+                    git commit -m "Update issue-${ISSUE_NO}.json"
+                    git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+                    git push
+                env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     ISSUE_NO: ${{ env.ISSUE_NO }}
             -   name: Build
