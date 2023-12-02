@@ -47,7 +47,7 @@ jobs:
                                 issues(first: 1, states: OPEN, labels: "next-roundup") {
                                     nodes {
                                         title
-                                        comments(first:10000) {
+                                        comments(first:100) {
                                             nodes {
                                                 body
                                             }
