@@ -1,1 +1,11 @@
-<p> need to do the footer </p> {{ partialCached "head/js.html" . }}
+<div class="container">
+  <div class="d-flex flex-column flex-sm-row justify-content-center py-2 my-2 border-bottom">
+    <p>Visit the <a href="http://stlgamedev.com/">St Louis Game Dev Co-op Website</a> for more details about the Community.</p>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-4 mt-3 text-center  "><a class="btn btn-success" role="button" href="https://github.com/AxolStudio/STLGameDevRoundUp/issues"><i class="bi bi-plus-square"></i> Submit an Item for the Next Roundup</a></div>
+    <div class="col-12 col-md-4 mt-3 text-center "><a class="btn btn-primary" role="button" href="https://github.com/AxolStudio/STLGameDevRoundUp" ><i class="bi bi-github"></i> Contribute on GitHub</a></div>
+    <div class="col-12 col-md-4 mt-3 text-center align-text-bottom"><i class="bi bi-wrench-adjustable-circle"></i> Built & Maintained by <a href="https://github.com/SeiferTim">Tim I Hely</a></div>
+  </div>
+</div>
+{{ partialCached "head/js.html" . }}

@@ -2,4 +2,4 @@
 # ignore hugo generated files
 /public/**
 /resources/**
-
+/node_modules/**

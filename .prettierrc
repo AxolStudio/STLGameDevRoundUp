@@ -19,7 +19,23 @@
     "useTabs": false,
     "embeddedLanguageFormatting": "auto",
     "vueIndentScriptAndStyle": false,
-    "parser": "html"
-    
-    
+    "parser": "html",
+    "overrides": [
+        {
+            "files": [
+                "*.html",
+                "*.md",
+                "*.scss",
+                "*.json",
+                "*.css"
+            ],
+            "options": {
+                "parser": "go-template"
+            }
+        }
+    ],
+    "goTemplateBracketSpacing": true,
+    "plugins": [
+        "prettier-plugin-go-template"
+    ]
 }

@@ -4,14 +4,14 @@
 <head>
   {{ partial "head.html" . }}
 </head>
-<body>
+<body class="d-flex flex-column h-100">
   <header>
     {{ partial "header.html" . }}
   </header>
-  <main>
+  <main class="flex-shrink-0">
     {{ block "main" . }}{{ end }}
   </main>
-  <footer>
+  <footer class="footer mt-auto py-3 fixed-bottom">
     {{ partial "footer.html" . }}
   </footer>
 </body>

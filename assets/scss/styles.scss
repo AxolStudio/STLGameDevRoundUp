@@ -8,26 +8,7 @@ $gamedev-blue-rgb: rgb(13, 165, 193);
 $gamedev-grey-rgb: rgb(153, 153, 153);
 $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 
-.jumbotron {
-    padding: 4rem 2rem;
-    margin-bottom: 2rem;
-    background-color: var(--bs-light);
-    border-radius: 3em;
-}
 
-a {
-    color: $gamedev-blue;
-
-    &:hover,
-    &:focus,
-    &:active {
-        color: $gamedev-red;
-    }
-
-    &:visited {
-        color: $gamedev-blue;
-    }
-}
 
 @media (min-width: 400px) {
     html[class*="/STLGameDevRoundUp/"] main ul li {
@@ -72,6 +53,23 @@ a {
     }
 }
 
+a {
+    color: $gamedev-blue;
+    text-decoration: wavy;
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: $gamedev-red;
+    }
+}
+
+footer {
+    background-color: $gamedev-darkgrey;
+    color: white;
+
+
+}
 html[class*="/STLGameDevRoundUp/"] {
     main ul {
 
@@ -95,12 +93,6 @@ html[class*="/STLGameDevRoundUp/"] {
 
             h2 {
                 font-size: 1.5rem;
-
-            }
-
-
-            a {
-                text-decoration: none;
 
             }
 
