@@ -26,14 +26,14 @@ ignoreErrors = ["error-disable-taxonomy", "error-no-layout"]
 
 [module]
   [[module.mounts]]
-    source = "./ssets"
-    target = "./assets"
+    source = "assets"
+    target = "assets"
   [[module.mounts]]
-    source = "./node_modules/bootstrap/scss"
-    target = "./assets/scss/bootstrap"
+    source = "node_modules/bootstrap/scss"
+    target = "assets/scss/bootstrap"
   [[module.mounts]]
-    source = "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-    target = "./assets/js/bootstrap.bundle.min.js"
+    source = "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    target = "assets/js/bootstrap.bundle.min.js"
   [[module.mounts]]
-    source = "./node_modules/bootstrap-icons/font/fonts"
-    target = "./static/css/fonts"
+    source = "node_modules/bootstrap-icons/font/fonts"
+    target = "static/css/fonts"
