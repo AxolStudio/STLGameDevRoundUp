@@ -11,7 +11,9 @@ links to add links to the next issue
 
   {{ $s := newScratch }}
   {{ $categories := slice }}
-  {{ range .Site.Data.issue1.nodes }}
+  {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+  {{ $posts := index .Site.Data $post }}
+  {{ range index $posts.nodes }}
   {{ $body := .body }}
   {{ $category := replaceRE `^(?:\{)(.*)(?:\}).*` "$1" $body }}
   {{ $entry := replaceRE `^(?:\{.*\})(.*)` "$1" $body }}
