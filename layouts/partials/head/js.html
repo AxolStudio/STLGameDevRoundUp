@@ -1,4 +1,5 @@
 {{ $bootstrap := resources.Get "js/bootstrap.bundle.min.js" }}
-{{ $js := slice $bootstrap | resources.Concat "js/bundle.js" | resources.Minify }}
+{{ $js := slice $bootstrap |  resources.Minify }} 
+{{/*  resources.Concat "js/bundle.js" |  */}}
 
 <script src="{{$js.RelPermalink}}" defer></script>
