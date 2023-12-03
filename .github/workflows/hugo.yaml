@@ -141,6 +141,7 @@ jobs:
                     destination: "issue-${{ needs.deploy.outputs.issue_no }}.png"
             -   name: Commit image
                 run: |
+                    git pull
                     mkdir -p screenshots
                     mv ${{ steps.screenshot.outputs.path }} screenshots/issue-${{ needs.deploy.outputs.issue_no }}.png
                     git config --global user.name "GitHub Actions"
