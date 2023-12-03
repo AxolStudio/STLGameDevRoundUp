@@ -24,10 +24,7 @@
         {
             "files": [
                 "*.html",
-                "*.md",
-                "*.scss",
-                "*.json",
-                "*.css"
+                "*.md"
             ],
             "options": {
                 "parser": "go-template"

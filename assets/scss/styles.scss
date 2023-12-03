@@ -8,8 +8,6 @@ $gamedev-blue-rgb: rgb(13, 165, 193);
 $gamedev-grey-rgb: rgb(153, 153, 153);
 $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 
-
-
 @media (min-width: 400px) {
     html[class*="/STLGameDevRoundUp/"] main ul li {
         flex-basis: calc(50% - 0.5vw);
@@ -19,7 +17,6 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
         }
     }
 }
-
 
 @media (min-width: 650px) {
     html[class*="/STLGameDevRoundUp/"] main ul li {
@@ -41,7 +38,6 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
         }
     }
 }
-
 
 @media (min-width: 1100px) {
     html[class*="/STLGameDevRoundUp/"] main ul li {
@@ -67,19 +63,16 @@ a {
 footer {
     background-color: $gamedev-darkgrey;
     color: white;
-
-
 }
+
 html[class*="/STLGameDevRoundUp/"] {
     main ul {
-
         display: flex;
         flex-wrap: wrap;
         margin: 0;
         padding: 0;
 
         li {
-
             flex-grow: 1;
             text-align: center;
             display: flex;
@@ -93,7 +86,6 @@ html[class*="/STLGameDevRoundUp/"] {
 
             h2 {
                 font-size: 1.5rem;
-
             }
 
             time {
@@ -112,8 +104,7 @@ html[class*="/STLGameDevRoundUp/"] {
                 time {
                     font-size: 1.5rem;
                 }
-
-
+                
             }
         }
     }
