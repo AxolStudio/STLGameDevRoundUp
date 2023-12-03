@@ -145,8 +145,8 @@ jobs:
                 env:
                     ISSUE_NO: ${{ env.ISSUE_NO }}
                 with:
-                    source: "${{ steps.pages.outputs.base_url }}/issue-${ISSUE_NO}/"
-                    destination: "assets/images/issue-${ISSUE_NO}.png"
+                    source: "${{ steps.pages.outputs.base_url }}/issue-${{ env.ISSUE_NO }}/"
+                    destination: "assets/images/issue-${{ env.ISSUE_NO }}.png"
             -   name: Commit image
                 run: |
                     git config --global user.name "GitHub Actions"
