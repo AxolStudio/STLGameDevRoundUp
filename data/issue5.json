@@ -1,7 +1,7 @@
 {
   "nodes": [
     {
-      "body": "{core} 1 this is an item [new test](/new/test)"
+      "body": "{core} 5 this is an item [new test](/new/test)"
     },
     {
       "body": "{core} here is another item [link](/link/to/item)"

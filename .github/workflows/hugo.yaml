@@ -66,6 +66,7 @@ jobs:
                     title: "Issue #$ru_no"
                     date: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
                     draft: false
+                    no: $ru_no
                     ---
                     EOF
                 env: 
@@ -108,4 +109,3 @@ jobs:
                 id: deployment
                 uses: actions/deploy-pages@v2
                 
-

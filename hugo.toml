@@ -1,9 +1,19 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://axolstudio.github.io/STLGameDevRoundUp/' # this will change eventually
 languageCode = 'en-us'
-title = 'St Louis Game Dev Round Up'
+title = 'St Louis Game Dev Roundup'
 
+[params]
+
+  explanation = "The St Louis Game Developer Roundup is a semi-weekly news aggriagator for the St Louis Game Development community.  It is a collection of news, events, and other items of interest to the community."
+  github = "https://github.com/AxolStudio/STLGameDevRoundUp"
+
+
+relativeURLs = false
 
 publishDir = "public/"
+
+disableKinds = ["taxonomy",  "term", "RSS"]
+ignoreErrors = ["error-disable-taxonomy"] 
 
 [markup.goldmark.renderer]
   unsafe = true
@@ -12,4 +22,16 @@ publishDir = "public/"
   home = ["HTML", "RSS"]
   section = ["HTML"]
 
-enableRobotsTXT = true
+[module]
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "node_modules/bootstrap/scss"
+    target = "assets/scss/bootstrap"
+  [[module.mounts]]
+    source = "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    target = "assets/js/bootstrap.bundle.min.js"
+  [[module.mounts]]
+    source = "node_modules/bootstrap-icons/font/fonts"
+    target = "static/css/fonts"

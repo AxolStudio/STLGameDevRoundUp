@@ -1,11 +1,12 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-
-  {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-  {{ $dateHuman := .Date | time.Format ":date_long" }}
-  <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+<div class="container-lg">
+  <div class="text-center">
+    <h2>{{ .Title }}</h2> {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }} {{ $dateHuman := .Date |
+    time.Format ":date_long" }} <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+  </div>
 
   {{ .Content }}
+links to add links to the next issue
 
 
   {{ $s := newScratch }}
@@ -22,10 +23,11 @@
   {{ $categories = $categories | sort }}
 
   {{ range $categories }}
-  <h2>{{ . }}</h2>
+  <h3>{{ . }}</h3>
   {{ range $s.Get . }}
   <li>{{ . | markdownify }}</li>
   {{ end }}
   {{ end }}
+</div>
   
 {{ end }}
