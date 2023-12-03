@@ -12,8 +12,10 @@ relativeURLs = false
 
 publishDir = "public/"
 
-disableKinds = ["taxonomy",  "term", "RSS"]
-ignoreErrors = ["error-disable-taxonomy"] 
+disableKinds = ["taxonomy",  "term", "RSS", "taxonomyTerm","section"]
+ignoreErrors = ["error-disable-taxonomy", "error-no-layout"]
+
+[taxonomies]
 
 [markup.goldmark.renderer]
   unsafe = true
