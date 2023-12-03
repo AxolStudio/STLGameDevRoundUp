@@ -1,35 +1,59 @@
 {{ define "main" }}
-<div class="container-lg">
-  <div class="text-center">
-    <h2>{{ .Title }}</h2> {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }} {{ $dateHuman := .Date |
-    time.Format ":date_long" }} <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+  <div class="container-lg">
+    <div class="text-center">
+      <h1>Roundup № {{ .Params.no }}</h1>
+      {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+      {{ $dateHuman := .Date |
+        time.Format ":date_full"
+      }}
+      <p><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></p>
+    </div>
+    <div class="p-2  mx-auto">
+      <p>{{ site.Params.explanation }}</p>
+    </div>
+
+    <hr class="my-2 mx-4" />
+
+    <div class="row">
+      <div class="col-lg-auto">
+        <a class="btn btn-success btn-sm" role="button" href="https://github.com/AxolStudio/STLGameDevRoundUp/labels/next-roundup"><i class="bi bi-plus-square"></i> Submit an Item for the Next Roundup</a>
+      </div>
+      <div class="col-lg-auto">
+        <a class="btn btn-outline-danger  btn-sm" role="button" href="https://github.com/AxolStudio/STLGameDevRoundUp/blob/main/data/issue{{ .Params.no }}.json"><i class="bi bi-pencil-square"></i> Make a Correction</a>
+      </div>
+      <div class="col">
+        <div class="row  text-center justify-content-end ">
+          {{ $shareText := printf site.Params.shareText (string .Params.no)  }}
+          <div class="col-2"><a href="{{ .Permalink }}" class="btn btn-primary btn-sm btn-share" ><i class="bi bi-share"></i></a></div>
+          <div class="col-2"><a href="https://twitter.com/intent/tweet?text={{ $shareText | safeHTML }}&url={{ .Permalink | safeURL }}&hashtags=STLGameDevRoundup,GameDev,StLouis" class="btn btn-primary btn-sm  btn-share" ><i class="bi bi-twitter-x"></i></a></div>
+          <div class="col-2"><a href="{{ .Permalink }}" class="btn btn-primary btn-sm btn-share" ><i class="bi bi-facebook"></i></a></div>
+        </div>
+      </div>
+    </div>
+
+      {{ .Content }}
+
+      {{ $s := newScratch }}
+      {{ $categories := slice }}
+      {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+      {{ $posts := index .Site.Data $post }}
+      {{ range index $posts.nodes }}
+        {{ $body := .body }}
+        {{ $category := replaceRE `^(?:\{)(.*)(?:\}).*` "$1" $body }}
+        {{ $entry := replaceRE `^(?:\{.*\})(.*)` "$1" $body }}
+        {{ $s.Set $category ($s.Get $category | append $entry) }}
+        {{ $categories = $categories | append $category }}
+      {{ end }}
+
+      {{ $categories = $categories | uniq }}
+      {{ $categories = $categories | sort }}
+
+      {{ range $categories }}
+        <h3>{{ . }}</h3>
+        {{ range $s.Get . }}
+          <li>{{ . | markdownify }}</li>
+        {{ end }}
+      {{ end }}
+    
   </div>
-
-  {{ .Content }}
-links to add links to the next issue
-
-
-  {{ $s := newScratch }}
-  {{ $categories := slice }}
-  {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
-  {{ $posts := index .Site.Data $post }}
-  {{ range index $posts.nodes }}
-  {{ $body := .body }}
-  {{ $category := replaceRE `^(?:\{)(.*)(?:\}).*` "$1" $body }}
-  {{ $entry := replaceRE `^(?:\{.*\})(.*)` "$1" $body }}
-  {{ $s.Set $category ($s.Get $category | append $entry) }}
-  {{ $categories = $categories | append $category }}
-  {{ end }}
-
-  {{ $categories = $categories | uniq }}
-  {{ $categories = $categories | sort }}
-
-  {{ range $categories }}
-  <h3>{{ . }}</h3>
-  {{ range $s.Get . }}
-  <li>{{ . | markdownify }}</li>
-  {{ end }}
-  {{ end }}
-</div>
-  
 {{ end }}

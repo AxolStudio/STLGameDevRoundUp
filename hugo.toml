@@ -1,11 +1,13 @@
 baseURL = 'https://axolstudio.github.io/STLGameDevRoundUp/' # this will change eventually
 languageCode = 'en-us'
-title = 'St Louis Game Dev Roundup'
+title = 'St Louis Game Developer Roundup'
+
+enableEmoji = true
 
 [params]
-
   explanation = "The St Louis Game Developer Roundup is a semi-weekly news aggriagator for the St Louis Game Development community.  It is a collection of news, events, and other items of interest to the community."
   github = "https://github.com/AxolStudio/STLGameDevRoundUp"
+  shareText = "Check out St Louis Game Dev Roundup № %s!"
 
 
 relativeURLs = false

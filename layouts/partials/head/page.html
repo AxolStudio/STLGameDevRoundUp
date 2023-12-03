@@ -1,0 +1,10 @@
+<meta   property="og:url"     content="{{ .Permalink | safeURL }}" />
+<meta   property="og:type"    content="article" />
+<meta   property="og:title"   content="St Louis Game Developer Roundup № {{ .Params.no }}" />
+<meta   property="og:description" content="{{ site.Params.explanation }}" />
+{{- $image := resources.Get (printf "/images/issue-%s.png" (string .Params.no)) -}}
+{{ if $image }}
+<meta   property="og:image"   content="{{ $image.Permalink }}" />
+{{ end }}
+<meta   property="og:site_name" content="{{ site.Title }}" />
+<meta   property="og:locale"  content="en_US" />
