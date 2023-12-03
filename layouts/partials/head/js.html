@@ -1,4 +1,3 @@
 {{ $bootstrap := resources.Get "js/bootstrap.bundle.min.js" }}
-{{ $js := $bootstrap | resources.Minify }} 
 
-<script src="{{$js.RelPermalink}}" defer></script>
+<script src="{{$bootstrap.RelPermalink}}" defer></script>
