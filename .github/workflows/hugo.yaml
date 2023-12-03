@@ -136,6 +136,7 @@ jobs:
                     issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
                     ru_no="${issue_title##*#}"
                     echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
+                    mkdir -p assets/images
                 env: 
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     OWNER: ${{ github.repository_owner }}
