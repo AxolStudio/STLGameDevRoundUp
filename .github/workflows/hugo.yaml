@@ -139,22 +139,20 @@ jobs:
                 with:
                     source: "${{ steps.pages.outputs.base_url }}/issue-${{ needs.deploy.outputs.issue_no }}/"
                     destination: "issue-${{ needs.deploy.outputs.issue_no }}.png"
-                
-
-    publish:
-        runs-on: ubuntu-latest
-        needs: screenshot
-        steps:
             -   name: Commit image
                 run: |
                     mkdir -p screenshots
-                    mv ${{ needs.screenshot.outputs.path }} screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
+                    mv ${{ steps.screenshot.outputs.path }} screenshots/issue-${{ needs.deploy.outputs.issue_no }}.png
                     git config --global user.name "GitHub Actions"
                     git config --global user.email "no-reply@github.com"
-                    git add screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
-                    git commit -m "Update issue image ${{ needs.screenshot.outputs.issue_no }}"
+                    git add screenshots/issue-${{ needs.deploy.outputs.issue_no }}.png
+                    git commit -m "Update issue image ${{ needs.deploy.outputs.issue_no }}"
                     git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
                     git push
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                
+
+   
+           
             
