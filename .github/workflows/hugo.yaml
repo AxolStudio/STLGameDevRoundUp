@@ -175,7 +175,7 @@ jobs:
                         St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
 
                         ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
-                    media_paths: screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
+                    media_paths: https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
             -   name: Bsky's
                 uses: myConsciousness/bluesky-post@v5
                 with: 
@@ -183,7 +183,7 @@ jobs:
                         St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
 
                         ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
-                    link-preview-url: ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
+                    link-preview-url: https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ needs.screenshot.outputs.issue_no }}/
                     identifier: "axolstudio.com"
                     password: ${{ secrets.BLUESKY_PASSWORD }}
             -   name: Discord
@@ -196,7 +196,7 @@ jobs:
                                 "title": "St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }}",
                                 "url": "${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/",
                                 "image": {
-                                    "url": "${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/"
+                                    "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png"
                                 }
                             }
                         ]
