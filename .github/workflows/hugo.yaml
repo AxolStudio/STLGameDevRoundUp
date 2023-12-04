@@ -20,6 +20,7 @@ jobs:
             HUGO_VERSION: 0.120.4
         outputs:
             issue_no: ${{ steps.issue.outputs.issue_no }}
+            issue_id: ${{ steps.issue.outputs.issue_id }}
             base_url: ${{ steps.pages.outputs.base_url }}
         steps:
             -   name: Install Hugo CLI
@@ -51,6 +52,7 @@ jobs:
                                 issues(first: 1, states: OPEN, labels: "next-roundup") {
                                     nodes {
                                         title
+                                        id
                                         comments(first:100) {
                                             nodes {
                                                 body
@@ -61,7 +63,8 @@ jobs:
                             }
                         }
                     ')"
-                    
+                    issue_id=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].id')
+                    echo 'issue_id'=$issue_id >> $GITHUB_OUTPUT
                     issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
                     ru_no="${issue_title##*#}"
                     save_to="data/issue${ru_no}.json"
@@ -113,6 +116,7 @@ jobs:
             url: ${{ steps.deployment.outputs.page_url }}
         outputs:
             issue_no: ${{ needs.build.outputs.issue_no }}
+            issue_id: ${{ needs.build.outputs.issue_id }}
             base_url: ${{ needs.build.outputs.base_url }}
         runs-on: ubuntu-latest
         needs: build
@@ -126,7 +130,9 @@ jobs:
         needs: deploy
         outputs:
             issue_no: ${{ needs.deploy.outputs.issue_no }}
+            issue_id: ${{ needs.deploy.outputs.issue_id }}
             path: ${{ steps.screenshot.outputs.path }}
+            base_url: ${{ needs.deploy.outputs.base_url }}
         steps: 
             -   name: Checkout
                 uses: actions/checkout@v4
@@ -152,8 +158,66 @@ jobs:
                     git push
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                
+    
+    share:
+        runs-on: ubuntu-latest
+        needs: screenshot
+        env:
+            CONSUMER_API_KEY: ${{ secrets.CONSUMER_API_KEY }}
+            CONSUMER_API_SECRET_KEY: ${{ secrets.CONSUMER_API_SECRET_KEY }}
+            ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+            ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+        steps:
+            -   name: Tweet
+                uses: snow-actions/tweet@v1.4.0
+                with:
+                    status: |
+                        St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
 
-   
-           
+                        ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
+                    media_paths: screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
+            -   name: Bsky's
+                uses: myConsciousness/bluesky-post@v5
+                with: 
+                    text:
+                        St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
+
+                        ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
+                    link-preview-url: ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
+                    identifier: "axolstudio.com"
+                    password: ${{ secrets.BLUESKY_PASSWORD }}
+            -   name: Discord
+                uses: Ilshidur/action-discord@master
+                env:
+                    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+                    DISCORD_EMBEDS: |
+                        [
+                            {
+                                "title": "St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }}",
+                                "url": "${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/",
+                                "image": {
+                                    "url": "${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/"
+                                }
+                            }
+                        ]
+                with:
+                    args: ":sparkles: St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!"
+                    
+    finish:
+        runs-on: ubuntu-latest
+        needs: screenshot
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            OWNER: ${{ github.repository_owner }}
+            REPO: ${{ github.event.repository.name }}
+        steps:
+            -   name: Close Issue
+                run: gh issue close ${{ needs.screenshot.outputs.issue_id }} -c "(Issue № ${{ needs.screenshot.outputs.issue_no }})[${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/] has been released!" -r completed
+            -   name: Open New Issue
+                run: |
+                    new_no=${{ needs.screenshot.outputs.issue_no }}+1
+                    gh issue create -t "Roundup Issue #{{ new_no }}" -b "To add to the next roundup, use the following format:\n\n```md\n{category} short description with [link](/link/to/item)\n```\n\nWhich should generate the following:\n\n{category} short description with [link](/link/to/item)" -l "next-roundup"
             
+
+
+                

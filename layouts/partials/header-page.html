@@ -1,6 +1,7 @@
 <div class="px-4 py-1 my-2 text-center">
     <a href="{{ site.BaseURL }}">
-        <h1 class="fs-3"><img class="" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="48" height="48"> {{
+        {{ $logo := resources.Get "images/stlgdru-logo.svg" }}
+        <h1 class="fs-3"><img class="" src="{{ $logo.RelPermalink }}" alt="St Louis Game Developer Roundup Logo" width="48" height="48"> {{
             site.Title }} </h1>
     </a>
     
