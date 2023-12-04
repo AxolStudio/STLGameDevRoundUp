@@ -1,4 +1,8 @@
-# STLGameDevRoundUp
+<p align="center">
+    <img src="assets/images/stlgdru-logo.svg" alt="St Louis Game Developer Roundup Logo" width=220 height=220 />
+</p>
+
+# St Louis Game Developer Roundup
 
 This is the repository for the St Louis Game Developer Roundup: a semi-regular news aggrigator for the [St Louis Game Development community](http://stlgamedev.com/).
 
