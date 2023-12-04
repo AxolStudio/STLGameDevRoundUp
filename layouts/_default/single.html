@@ -29,40 +29,48 @@
       <p>{{ site.Params.explanation }}</p>
     </div>
 
-    {{ .Content }}
+    {{- $categories := dict }}
+
+    {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+    {{ $posts := index .Site.Data $post }}
+    {{ range index $posts.nodes }}
+      {{ $body := .body }}
+      {{ $category := replaceRE `^(?:\{)(.*)(?:\}).*` "$1" $body }}
+      {{ $entry := replaceRE `^(?:\{.*\})(.*)` "$1" $body }}
+
+      {{ $cat := index $categories $category }}
+      {{ if not $cat }}
+        {{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice $entry))) }}
+      {{ else }}
+        {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) | add 1) "entries" (append $entry $cat.entries))) }}
+      {{ end }}
+
+    {{ end -}}
+
+    {{- $header := index $categories "!header" }}
+    {{ if $header }}
+      <section class="issue-header d-block">
+        {{ range $header.entries }}
+          <p>{{ . | markdownify }}</p>
+        {{ end }}
+      </section>
+    {{ end -}}
 
 
     <section class="row py-4">
       <div class="col issue-content">
-        {{ $categories := dict }}
-
-        {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
-        {{ $posts := index .Site.Data $post }}
-        {{ range index $posts.nodes }}
-          {{ $body := .body }}
-          {{ $category := replaceRE `^(?:\{)(.*)(?:\}).*` "$1" $body }}
-          {{ $entry := replaceRE `^(?:\{.*\})(.*)` "$1" $body }}
-
-          {{ $cat := index $categories $category }}
-          {{ if not $cat }}
-            {{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice $entry))) }}
-          {{ else }}
-            {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) | add 1) "entries" (append $entry $cat.entries))) }}
+        {{- range sort $categories "count" "desc" }}
+          {{ if neq .category "!header" }}
+            <section class="issue-section d-block">
+              <h3><i class="bi bi-tag-fill"></i> {{ .category | humanize | title }}</h3>
+              <ul>
+                {{ range .entries }}
+                  <li>{{ . | markdownify }}</li>
+                {{ end }}
+              </ul>
+            </section>
           {{ end }}
-
-        {{ end }}
-
-        {{ range sort $categories "count" "desc" }}
-          <section class="issue-section d-block">
-            <h3><i class="bi bi-tag-fill"></i> {{ .category | humanize | title }}</h3>
-            <ul>
-              {{ range .entries }}
-                <li>{{ . | markdownify }}</li>
-              {{ end }}
-            </ul>
-          </section>
-        {{ end }}
-
+        {{ end -}}
       </div>
     </section>
 
