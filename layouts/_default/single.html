@@ -1,5 +1,22 @@
 {{ define "main" }}
   <div class="container-lg">
+    <div class="row">
+      <div class="col">
+        <div class="row  text-center justify-content-end ">
+          {{ $shareText := printf site.Params.shareText (string .Params.no) }}
+          <div class="col-sm-auto">
+            <a href="{{ .Permalink }}" class="btn btn-primary btn-sm btn-share"><i class="bi bi-share"></i></a>
+          </div>
+          <div class="col-sm-auto">
+            <a href="https://twitter.com/intent/tweet?text={{ $shareText | safeHTML }}&url={{ .Permalink | safeHTML }}&hashtags=STLGameDevRoundup,GameDev,StLouis" target="_blank" class="btn btn-primary btn-sm  btn-share"><i class="bi bi-twitter-x"></i></a>
+          </div>
+          <div class="col-sm-auto">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink | safeHTML }}" class="btn btn-primary btn-sm btn-share fb-share-button" target="_blank"><i class="bi bi-facebook"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="text-center">
       <h1>Roundup № {{ .Params.no }}</h1>
       {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
@@ -12,48 +29,49 @@
       <p>{{ site.Params.explanation }}</p>
     </div>
 
-    <hr class="my-2 mx-4" />
+    {{ .Content }}
+
+
+    <section class="row py-4">
+      <div class="col issue-content">
+        {{ $categories := dict }}
+
+        {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+        {{ $posts := index .Site.Data $post }}
+        {{ range index $posts.nodes }}
+          {{ $body := .body }}
+          {{ $category := replaceRE `^(?:\{)(.*)(?:\}).*` "$1" $body }}
+          {{ $entry := replaceRE `^(?:\{.*\})(.*)` "$1" $body }}
+
+          {{ $cat := index $categories $category }}
+          {{ if not $cat }}
+            {{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice $entry))) }}
+          {{ else }}
+            {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) | add 1) "entries" (append $entry $cat.entries))) }}
+          {{ end }}
+
+        {{ end }}
+
+        {{ range sort $categories "count" "desc" }}
+          <section class="issue-section d-block">
+            <h3><i class="bi bi-tag-fill"></i> {{ .category | humanize | title }}</h3>
+            <ul>
+              {{ range .entries }}
+                <li>{{ . | markdownify }}</li>
+              {{ end }}
+            </ul>
+          </section>
+        {{ end }}
+
+      </div>
+    </section>
+
+    <hr class="my-4 mx-4" />
 
     <div class="row">
       <div class="col-lg-auto">
-        <a class="btn btn-success btn-sm" role="button" href="https://github.com/AxolStudio/STLGameDevRoundUp/labels/next-roundup"><i class="bi bi-plus-square"></i> Submit an Item for the Next Roundup</a>
-      </div>
-      <div class="col-lg-auto">
         <a class="btn btn-outline-danger  btn-sm" role="button" href="https://github.com/AxolStudio/STLGameDevRoundUp/blob/main/data/issue{{ .Params.no }}.json"><i class="bi bi-pencil-square"></i> Make a Correction</a>
       </div>
-      <div class="col">
-        <div class="row  text-center justify-content-end ">
-          {{ $shareText := printf site.Params.shareText (string .Params.no)  }}
-          <div class="col-2"><a href="{{ .Permalink }}" class="btn btn-primary btn-sm btn-share" ><i class="bi bi-share"></i></a></div>
-          <div class="col-2"><a href="https://twitter.com/intent/tweet?text={{ $shareText | safeHTML }}&url={{ .Permalink | safeURL }}&hashtags=STLGameDevRoundup,GameDev,StLouis" class="btn btn-primary btn-sm  btn-share" ><i class="bi bi-twitter-x"></i></a></div>
-          <div class="col-2"><a href="{{ .Permalink }}" class="btn btn-primary btn-sm btn-share" ><i class="bi bi-facebook"></i></a></div>
-        </div>
-      </div>
     </div>
-
-      {{ .Content }}
-
-      {{ $s := newScratch }}
-      {{ $categories := slice }}
-      {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
-      {{ $posts := index .Site.Data $post }}
-      {{ range index $posts.nodes }}
-        {{ $body := .body }}
-        {{ $category := replaceRE `^(?:\{)(.*)(?:\}).*` "$1" $body }}
-        {{ $entry := replaceRE `^(?:\{.*\})(.*)` "$1" $body }}
-        {{ $s.Set $category ($s.Get $category | append $entry) }}
-        {{ $categories = $categories | append $category }}
-      {{ end }}
-
-      {{ $categories = $categories | uniq }}
-      {{ $categories = $categories | sort }}
-
-      {{ range $categories }}
-        <h3>{{ . }}</h3>
-        {{ range $s.Get . }}
-          <li>{{ . | markdownify }}</li>
-        {{ end }}
-      {{ end }}
-    
   </div>
 {{ end }}

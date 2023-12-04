@@ -8,6 +8,8 @@ enableEmoji = true
   explanation = "The St Louis Game Developer Roundup is a semi-weekly news aggriagator for the St Louis Game Development community.  It is a collection of news, events, and other items of interest to the community."
   github = "https://github.com/AxolStudio/STLGameDevRoundUp"
   shareText = "Check out St Louis Game Dev Roundup № %s!"
+  keywords = "indie game development, game development, game developers, game dev, indie games, indie game developers, indie game dev, st louis, saint louis, missouri, mo"
+  author = "Axol Studio, LLC"
 
 
 relativeURLs = false

@@ -143,7 +143,7 @@ jobs:
                 run: |
                     git pull
                     mkdir -p screenshots
-                    mv ${{ steps.screenshot.outputs.path }} screenshots/issue-${{ needs.deploy.outputs.issue_no }}.png
+                    mv -f ${{ steps.screenshot.outputs.path }} screenshots/issue-${{ needs.deploy.outputs.issue_no }}.png
                     git config --global user.name "GitHub Actions"
                     git config --global user.email "no-reply@github.com"
                     git add screenshots/issue-${{ needs.deploy.outputs.issue_no }}.png
