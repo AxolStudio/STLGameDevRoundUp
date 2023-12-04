@@ -1,4 +1,4 @@
-name: Deploy Hugo Site to GitHub Pages
+name: ▶ Generate a new Roundup Issue!
 
 on:
     workflow_dispatch:
@@ -212,7 +212,7 @@ jobs:
             REPO: ${{ github.event.repository.name }}
         steps:
             -   name: Close Issue
-                run: gh issue close ${{ needs.screenshot.outputs.issue_id }} -c "(Issue № ${{ needs.screenshot.outputs.issue_no }})[${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/] has been released!" -r completed
+                run: gh issue close ${{ needs.screenshot.outputs.issue_id }} -c "[Issue № ${{ needs.screenshot.outputs.issue_no }}](${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/) has been released!" -r completed
             -   name: Open New Issue
                 run: |
                     new_no=${{ needs.screenshot.outputs.issue_no }}+1
