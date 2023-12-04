@@ -9,7 +9,9 @@ enableEmoji = true
   github = "https://github.com/AxolStudio/STLGameDevRoundUp"
   shareText = "Check out St Louis Game Dev Roundup № %s!"
   keywords = "indie game development, game development, game developers, game dev, indie games, indie game developers, indie game dev, st louis, saint louis, missouri, mo"
-  author = "Axol Studio, LLC"
+  [params.author]
+    name = "Tim I Hely"
+    email = "tim@axolstudio.com"
 
 
 relativeURLs = false
@@ -26,7 +28,7 @@ ignoreErrors = ["error-disable-taxonomy", "error-no-layout"]
 
 [outputs]
   home = ["HTML", "RSS"]
-  section = ["HTML"]
+  section = ["HTML", "RSS"]
 
 [module]
   [[module.mounts]]
