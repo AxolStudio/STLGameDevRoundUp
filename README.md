@@ -1,3 +1,5 @@
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+
 <p align="center">
     <img src="assets/images/stlgdru-logo.svg" alt="St Louis Game Developer Roundup Logo" width=220 height=220 />
 </p>
