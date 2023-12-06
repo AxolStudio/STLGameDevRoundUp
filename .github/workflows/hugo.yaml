@@ -52,7 +52,7 @@ jobs:
                                 issues(first: 1, states: OPEN, labels: "next-roundup") {
                                     nodes {
                                         title
-                                        id
+                                        number
                                         comments(first:100) {
                                             nodes {
                                                 body
@@ -63,7 +63,7 @@ jobs:
                             }
                         }
                     ')"
-                    issue_id=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].id')
+                    issue_id=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].number')
                     echo 'issue_id'=$issue_id >> $GITHUB_OUTPUT
                     issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
                     ru_no="${issue_title##*#}"
