@@ -179,11 +179,6 @@ jobs:
                         St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
 
                         ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
-                    media_paths: |
-                        screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
-            -   name: Failure!
-                if: failure()
-                run: echo ${{ steps.tweet.outputs.response }}
             -   name: Bsky's
                 uses: myConsciousness/bluesky-post@v5
                 with: 
