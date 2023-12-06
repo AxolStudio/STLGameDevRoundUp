@@ -164,6 +164,7 @@ jobs:
         needs: screenshot
         steps:
             -   uses: actions/checkout@v4
+            -   run : git pull
             -   run: ls -l
             -   name: Tweet
                 uses: snow-actions/tweet@v1.4.0
@@ -221,7 +222,17 @@ jobs:
             -   name: Open New Issue
                 run: |
                     new_no=${{ needs.screenshot.outputs.issue_no }}+1
-                    gh issue create -t "Roundup Issue #{{ new_no }}" -b "To add to the next roundup, use the following format:\n\n```md\n{category} short description with [link](/link/to/item)\n```\n\nWhich should generate the following:\n\n{category} short description with [link](/link/to/item)" -l "next-roundup"
+                    gh issue create -t "Roundup Issue #".$new_no -b "
+                        "To add to the next roundup, use the following format:
+                            
+                        ```md
+                        {category} short description with [link](/link/to/item)
+                        ```
+                        
+                        Which should generate the following:
+                            
+                        {category} short description with [link](/link/to/item)"
+                    -l "next-roundup"
             
 
 
