@@ -222,7 +222,7 @@ jobs:
             -   name: Open New Issue
                 run: |
                     new_no=${{ needs.screenshot.outputs.issue_no }}+1
-                    gh issue create -t "Roundup Issue #".$new_no -b "
+                    gh issue create -t "Roundup Issue #$new_no" -b "
                         "To add to the next roundup, use the following format:
                             
                         ```md
@@ -231,8 +231,7 @@ jobs:
                         
                         Which should generate the following:
                             
-                        {category} short description with [link](/link/to/item)"
-                    -l "next-roundup"
+                        {category} short description with [link](/link/to/item)" -l "next-roundup"
             
 
 
