@@ -183,7 +183,7 @@ jobs:
                         screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
             -   name: Failure!
                 if: failure()
-                run: echo ${{ steps.tweet.outputs }}
+                run: echo ${{ steps.tweet.outputs.response }}
             -   name: Bsky's
                 uses: myConsciousness/bluesky-post@v5
                 with: 
