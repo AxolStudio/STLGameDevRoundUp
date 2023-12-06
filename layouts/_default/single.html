@@ -62,7 +62,7 @@
         {{- range sort $categories "count" "desc" }}
           {{ if ne .category "!header" }}
             <section class="issue-section d-block">
-              <h3><i class="bi bi-tag-fill"></i> {{ .category | humanize | title }}</h3>
+              <h3><i class="bi bi-tag-fill"></i> {{ .category | title }}</h3>
               <ul>
                 {{ range .entries }}
                   <li>{{ . | markdownify }}</li>
