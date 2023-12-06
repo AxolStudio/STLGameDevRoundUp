@@ -175,6 +175,8 @@ jobs:
                         St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
 
                         ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
+
+                        #STL #gamedev #IndieGameDev #videogames
             -   name: Bsky's
                 uses: myConsciousness/bluesky-post@v5
                 with: 
@@ -218,14 +220,13 @@ jobs:
                 run: |
                     new_no=$((${{ needs.screenshot.outputs.issue_no }}+1))
                     gh issue create -t "Roundup Issue #$new_no" -b "To add to the next roundup, use the following format:
-                            
-                        ```md
-                        {category} short description with [link](/link/to/item)
-                        ```
-                        
-                        Which should generate the following:
-                            
-                        {category} short description with [link](/link/to/item)" -l "next-roundup"
+```md
+{category} short description with [link](/link/to/item)
+```
+
+Which should generate the following:
+
+{category} short description with [link](/link/to/item)" -l "next-roundup"
             
 
 
