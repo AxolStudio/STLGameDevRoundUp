@@ -163,19 +163,15 @@ jobs:
         runs-on: ubuntu-latest
         needs: screenshot
         steps:
-            -   uses: actions/checkout@v4
-            -   run : git pull
-            -   run: ls -l
             -   name: Tweet
                 id: tweet
-                uses: snow-actions/tweet@v1.4.0
-                env:
-                    CONSUMER_API_KEY: ${{ secrets.CONSUMER_API_KEY }}
-                    CONSUMER_API_SECRET_KEY: ${{ secrets.CONSUMER_API_SECRET_KEY }}
-                    ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-                    ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+                uses: dart-actions/tweet@v1.0.0
                 with:
-                    status: |
+                    consumer-key: ${{ secrets.CONSUMER_API_KEY }}
+                    consumer-secret: ${{ secrets.CONSUMER_API_SECRET_KEY }}
+                    access-token: ${{ secrets.ACCESS_TOKEN }}
+                    access-token-secret: ${{ secrets.ACCESS_TOKEN_SECRET }}
+                    text: |
                         St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
 
                         ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
