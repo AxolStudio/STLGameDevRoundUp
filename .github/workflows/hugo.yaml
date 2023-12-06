@@ -162,25 +162,23 @@ jobs:
     share:
         runs-on: ubuntu-latest
         needs: screenshot
-        env:
-            CONSUMER_API_KEY: ${{ secrets.CONSUMER_API_KEY }}
-            CONSUMER_API_SECRET_KEY: ${{ secrets.CONSUMER_API_SECRET_KEY }}
-            ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-            ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
         steps:
-            -   name: Checkout
-                uses: actions/checkout@v4
-                with: 
-                    submodules: recursive
-                    fetch-depth: 0
+            -   uses: actions/checkout@v4
+            -   run: ls -l
             -   name: Tweet
                 uses: snow-actions/tweet@v1.4.0
+                env:
+                    CONSUMER_API_KEY: ${{ secrets.CONSUMER_API_KEY }}
+                    CONSUMER_API_SECRET_KEY: ${{ secrets.CONSUMER_API_SECRET_KEY }}
+                    ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+                    ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
                 with:
                     status: |
                         St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
 
                         ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
-                    media_paths: screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
+                    media_paths: |
+                        screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png
             -   name: Bsky's
                 uses: myConsciousness/bluesky-post@v5
                 with: 
@@ -216,6 +214,8 @@ jobs:
             OWNER: ${{ github.repository_owner }}
             REPO: ${{ github.event.repository.name }}
         steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
             -   name: Close Issue
                 run: gh issue close ${{ needs.screenshot.outputs.issue_id }} -c "[Issue № ${{ needs.screenshot.outputs.issue_no }}](${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/) has been released!" -r completed
             -   name: Open New Issue
