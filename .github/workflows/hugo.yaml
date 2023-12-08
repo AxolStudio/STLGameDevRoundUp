@@ -85,6 +85,8 @@ jobs:
                     ISSUE_NO: ${{ env.ISSUE_NO }}
     build: 
         runs-on: ubuntu-latest
+        if: ${{ success() }} || ${{ github.event_name != 'workflow_dispatch' }}
+        needs: generate
         env:
             HUGO_VERSION: 0.120.4
         outputs:
