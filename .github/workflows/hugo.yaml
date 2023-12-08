@@ -17,35 +17,19 @@ defaults:
         shell: bash
 
 jobs:
-    build: 
+
+    generate:
         runs-on: ubuntu-latest
-        env:
-            HUGO_VERSION: 0.120.4
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         outputs:
             issue_no: ${{ steps.issue.outputs.issue_no }}
             issue_id: ${{ steps.issue.outputs.issue_id }}
-            base_url: ${{ steps.pages.outputs.base_url }}
         steps:
-            -   name: Install Hugo CLI
-                run: |
-                    wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-                    && sudo dpkg -i ${{ runner.temp }}/hugo.deb
-            -   name: Install Dart Sass
-                run: sudo snap install dart-sass
             -   name: Checkout
                 uses: actions/checkout@v4
                 with: 
                     submodules: recursive
                     fetch-depth: 0
-            -   name: Setup Pages
-                id: pages
-                uses: actions/configure-pages@v3
-            -   name: Setup Node
-                uses: actions/setup-node@v3
-                with:
-                    node-version: 20.10.0
-            -   name: Install dependencies
-                run: npm ci
             -   name: Grab Issue Comments
                 id: issue
                 run: |
@@ -99,6 +83,33 @@ jobs:
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     ISSUE_NO: ${{ env.ISSUE_NO }}
+    build: 
+        runs-on: ubuntu-latest
+        env:
+            HUGO_VERSION: 0.120.4
+        outputs:
+            base_url: ${{ steps.pages.outputs.base_url }}
+        steps:
+            -   name: Install Hugo CLI
+                run: |
+                    wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+                    && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+            -   name: Install Dart Sass
+                run: sudo snap install dart-sass
+            -   name: Checkout
+                uses: actions/checkout@v4
+                with: 
+                    submodules: recursive
+                    fetch-depth: 0
+            -   name: Setup Pages
+                id: pages
+                uses: actions/configure-pages@v3
+            -   name: Setup Node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 20.10.0
+            -   name: Install dependencies
+                run: npm ci
             -   name: Build
                 env:
                     HUGO_ENVIRONMENT: production
@@ -118,8 +129,6 @@ jobs:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
         outputs:
-            issue_no: ${{ needs.build.outputs.issue_no }}
-            issue_id: ${{ needs.build.outputs.issue_id }}
             base_url: ${{ needs.build.outputs.base_url }}
         runs-on: ubuntu-latest
         needs: build
@@ -130,10 +139,10 @@ jobs:
     
     screenshot:
         runs-on: ubuntu-latest
-        needs: deploy
+        needs: [generate, deploy]
         outputs:
-            issue_no: ${{ needs.deploy.outputs.issue_no }}
-            issue_id: ${{ needs.deploy.outputs.issue_id }}
+            issue_no: ${{ needs.generate.outputs.issue_no }}
+            issue_id: ${{ needs.generate.outputs.issue_id }}
             path: ${{ steps.screenshot.outputs.path }}
             base_url: ${{ needs.deploy.outputs.base_url }}
         steps: 
@@ -146,17 +155,17 @@ jobs:
                 id: screenshot
                 uses: swinton/screenshot-website@v1.x
                 with:
-                    source: "${{ needs.deploy.outputs.base_url }}/issue-${{ needs.deploy.outputs.issue_no }}/"
-                    destination: "issue-${{ needs.deploy.outputs.issue_no }}.png"
+                    source: "${{ needs.deploy.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/"
+                    destination: "issue-${{ needs.generate.outputs.issue_no }}.png"
             -   name: Commit image
                 run: |
                     git pull
                     mkdir -p screenshots
-                    mv -f ${{ steps.screenshot.outputs.path }} screenshots/issue-${{ needs.deploy.outputs.issue_no }}.png
+                    mv -f ${{ steps.screenshot.outputs.path }} screenshots/issue-${{ needs.generate.outputs.issue_no }}.png
                     git config --global user.name "GitHub Actions"
                     git config --global user.email "no-reply@github.com"
-                    git add screenshots/issue-${{ needs.deploy.outputs.issue_no }}.png
-                    git commit -m "Update issue image ${{ needs.deploy.outputs.issue_no }}"
+                    git add screenshots/issue-${{ needs.generate.outputs.issue_no }}.png
+                    git commit -m "Update issue image ${{ needs.generate.outputs.issue_no }}"
                     git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
                     git push
                 env:
