@@ -2,11 +2,8 @@ name: ▶ Generate a new Roundup Issue!
 
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - main
 
-permissions: write-all    
+permissions: write-all
 
 concurrency:
     group: "pages"
@@ -83,70 +80,19 @@ jobs:
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     ISSUE_NO: ${{ env.ISSUE_NO }}
-    build: 
-        runs-on: ubuntu-latest
-        if: ${{ success() }} || ${{ github.event_name != 'workflow_dispatch' }}
+
+    build:
+        uses: ./.github/workflows/hugo-build.yaml
         needs: generate
-        env:
-            HUGO_VERSION: 0.120.4
-        outputs:
-            base_url: ${{ steps.pages.outputs.base_url }}
-        steps:
-            -   name: Install Hugo CLI
-                run: |
-                    wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-                    && sudo dpkg -i ${{ runner.temp }}/hugo.deb
-            -   name: Install Dart Sass
-                run: sudo snap install dart-sass
-            -   name: Checkout
-                uses: actions/checkout@v4
-                with: 
-                    submodules: recursive
-                    fetch-depth: 0
-            -   name: Setup Pages
-                id: pages
-                uses: actions/configure-pages@v3
-            -   name: Setup Node
-                uses: actions/setup-node@v3
-                with:
-                    node-version: 20.10.0
-            -   name: Install dependencies
-                run: npm ci
-            -   name: Build
-                env:
-                    HUGO_ENVIRONMENT: production
-                    HUGO_ENV: production
-                run: |
-                    hugo \
-                    --gc \
-                    --minify \
-                    --baseURL "${{ steps.pages.outputs.base_url }}/"
-            -   name: Upload Artifact
-                uses: actions/upload-pages-artifact@v2
-                with: 
-                    path: ./public
-        
-    deploy:
-        environment: 
-            name: github-pages
-            url: ${{ steps.deployment.outputs.page_url }}
-        outputs:
-            base_url: ${{ needs.build.outputs.base_url }}
-        runs-on: ubuntu-latest
-        needs: build
-        steps:
-            -   name: Deploy
-                id: deployment
-                uses: actions/deploy-pages@v2
     
     screenshot:
         runs-on: ubuntu-latest
-        needs: [generate, deploy]
+        needs: [generate, build]
         outputs:
             issue_no: ${{ needs.generate.outputs.issue_no }}
             issue_id: ${{ needs.generate.outputs.issue_id }}
             path: ${{ steps.screenshot.outputs.path }}
-            base_url: ${{ needs.deploy.outputs.base_url }}
+            base_url: ${{ needs.build.outputs.base_url }}
         steps: 
             -   name: Checkout
                 uses: actions/checkout@v4
@@ -157,7 +103,7 @@ jobs:
                 id: screenshot
                 uses: swinton/screenshot-website@v1.x
                 with:
-                    source: "${{ needs.deploy.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/"
+                    source: "${{ needs.build.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/"
                     destination: "issue-${{ needs.generate.outputs.issue_no }}.png"
             -   name: Commit image
                 run: |
