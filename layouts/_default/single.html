@@ -1,21 +1,5 @@
 {{ define "main" }}
-  <div class="container-lg">
-    <div class="row">
-      <div class="col">
-        <div class="row  text-center justify-content-end ">
-          {{ $shareText := printf site.Params.shareText (string .Params.no) }}
-          <div class="col-sm-auto">
-            <a href="{{ .Permalink }}" class="btn btn-primary btn-sm btn-share"><i class="bi bi-share"></i></a>
-          </div>
-          <div class="col-sm-auto">
-            <a href="https://twitter.com/intent/tweet?text={{ $shareText | safeHTML }}&url={{ .Permalink | safeHTML }}&hashtags=STLGameDevRoundup,GameDev,StLouis" target="_blank" class="btn btn-primary btn-sm  btn-share"><i class="bi bi-twitter-x"></i></a>
-          </div>
-          <div class="col-sm-auto">
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink | safeHTML }}" class="btn btn-primary btn-sm btn-share fb-share-button" target="_blank"><i class="bi bi-facebook"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
+  
 
     <div class="text-center">
       <h1>Roundup № {{ .Params.no }}</h1>

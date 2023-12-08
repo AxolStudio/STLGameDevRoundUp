@@ -65,6 +65,21 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
     }
 }
 
+#color-switch {
+    font-size:1em;
+    button {
+        border-radius:10rem;
+    }
+    .bi {
+        width:1em;
+        height:1em;
+    }
+}
+
+.bi {
+    fill: currentColor;
+}
+
 .issue-section {
     page-break-inside: avoid;
 
@@ -119,6 +134,7 @@ a.btn-share {
 
     border-radius: 10rem;
     text-align: center;
+    font-size:1em;
 
 
 

@@ -2,7 +2,7 @@
 <ul> {{ range $index, $issue := sort site.RegularPages ".Params.no" "desc" }} <li itemType="http://schema.org/Article"
     id="{{ .Params.no }}">
     <a title="St Louis Game Dev Roundup № {{ $issue.Params.no }}" href="{{ $issue.RelPermalink }}">
-      <h2 itemprop="headline">{{ if eq $index 0 }}<i class="bi bi-stars"></i> {{ end -}}Roundup № {{ $issue.Params.no }}
+      <h2 itemprop="headline">{{ if eq $index 0 }}✨ {{ end -}}Roundup № {{ $issue.Params.no }}
       </h2>
     </a>
     <time datecreated="{{ $issue.Params.Date.Format " 2006-01-02" }}" itemprop="datePublished" pubdate
