@@ -2,16 +2,17 @@
   
 
     <div class="text-center">
-      <h1>Roundup № {{ .Params.no }}</h1>
+      <h1 class="display-2">Roundup № {{ .Params.no }}</h1>
       {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
       {{ $dateHuman := .Date |
         time.Format ":date_full"
       }}
-      <p><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></p>
+      <p class="lead text-body-tertiary"><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></p>
     </div>
-    <div class="p-2  mx-auto">
+    <div class="p-2 fs-5 mx-auto text-body-secondary">
       <p>{{ site.Params.explanation }}</p>
     </div>
+    <hr />
 
     {{- $categories := dict }}
 
@@ -35,7 +36,7 @@
     {{ if $header }}
       <section class="issue-header d-block">
         {{ range $header.entries }}
-          <p>{{ . | markdownify }}</p>
+          <p class="lead fs-4 ">{{ . | markdownify }}</p>
         {{ end }}
       </section>
     {{ end -}}
@@ -46,7 +47,7 @@
         {{- range sort $categories "count" "desc" }}
           {{ if ne .category "!header" }}
             <section class="issue-section d-block">
-              <h3>{{ .category | title }}</h3>
+              <h3 class="display-6">{{ .category | title }}</h3>
               <ul>
                 {{ range .entries }}
                   <li>{{ . | markdownify }}</li>

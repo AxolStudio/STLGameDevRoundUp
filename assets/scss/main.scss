@@ -3,6 +3,12 @@ $color-mode-type: data;
 $enable-gradients: true;
 $enable-shadows: true;
 
+$my-font-family: 'Work sans',
+sans-serif,
+"Noto Color Emoji";
+
+$font-family-base: $my-font-family;
+
 @import "bootstrap/functions";
 
 // colors!

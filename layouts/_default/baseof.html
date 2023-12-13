@@ -1,15 +1,16 @@
 <!doctype html>
 <html class="{{ .Page.RelPermalink }}" lang="{{ or site.Language.LanguageCode site.Language.Lang }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
   {{ partial "icons" . }}
-  {{ partial "color-switch.html" . }}
   <head>
+    
     {{ partial "head.html" . }}
   </head>
-  <body class="d-flex flex-column h-100">
-    <header>
-      {{ partial "header.html" . }}
-    </header>
-    <main class="mh-100 h-100 mb-6">
+  <body class="  ">
+    {{ partial "nav.html" . }}
+    {{- if .IsHome }}
+    {{ partial "header-home.html" . }}
+    {{ end -}}
+    <main class="container">
       {{ block "main" . }}{{ end }}
     </main>
     <footer class="footer mt-3 py-3 ">

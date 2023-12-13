@@ -1,8 +1,8 @@
-<div class="px-4 py-5 my-2 text-center">
+<header class="px-4 py-5 my-2 text-center">
     {{ $logo := resources.Get "images/stlgdru-logo.svg" }}
     <img class="d-block mx-auto mb-4" src="{{ $logo.RelPermalink }}" alt="St Louis Game Developer Roundup Logo" width="144" height="144">
-    <h1>{{ site.Title }}</h1>
+    <h1 class="display-4 fw-light">{{ site.Title }}</h1>
     <div class="col-lg-6 mx-auto">
-        <p class="lead mb-2">{{ site.Params.explanation }}</p>
+        <p class="lead text-body-secondary mb-2">{{ site.Params.explanation }}</p>
     </div>
-</div>
+</header>

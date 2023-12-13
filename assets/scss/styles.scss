@@ -34,6 +34,7 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 
         .issue-content {
             columns: 1;
+            
         }
 }
 
@@ -48,6 +49,7 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 
         .issue-content {
             columns: 2;
+    
         }
 }
 
@@ -62,7 +64,15 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 
     .issue-content {
         columns: 2;
+    
     }
+}
+
+.issue-content {
+    
+    column-gap: 4rem;
+    column-rule-style: dotted;
+    column-rule-color: var(--bs-tertiary-color); 
 }
 
 #color-switch {
@@ -94,6 +104,7 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
     
             li {
                 display: list-item;
+                margin-bottom:.5rem;
     
             }
         }
