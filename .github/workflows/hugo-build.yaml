@@ -11,6 +11,9 @@ on:
             - main
         tags-ignore:
             - generated.**
+        paths-ignore:
+            - '.github/**'
+            
     
 permissions: write-all    
 

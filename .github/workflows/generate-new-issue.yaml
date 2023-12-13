@@ -74,10 +74,11 @@ jobs:
                 run: |
                     git config --global user.name "GitHub Actions"
                     git config --global user.email "no-reply@github.com"
+                    git tag generated-issue-${ISSUE_NO}
                     git add content/issue-${ISSUE_NO}.md data/issue${ISSUE_NO}.json
                     git commit -m "Update issue ${ISSUE_NO}"
                     git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-                    git push origin generated-issue-${ISSUE_NO}
+                    git push --follow-tags 
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     ISSUE_NO: ${{ env.ISSUE_NO }}
@@ -113,10 +114,11 @@ jobs:
                     mv -f ${{ steps.screenshot.outputs.path }} screenshots/issue-${{ needs.generate.outputs.issue_no }}.png
                     git config --global user.name "GitHub Actions"
                     git config --global user.email "no-reply@github.com"
+                    git tag generated-screenshot-${ISSUE_NO}
                     git add screenshots/issue-${{ needs.generate.outputs.issue_no }}.png
                     git commit -m "Update issue image ${{ needs.generate.outputs.issue_no }}"
                     git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-                    git push origin generated-screenshot-${ISSUE_NO}
+                    git push --follow-tags 
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
