@@ -6,7 +6,7 @@ on:
 permissions: write-all
 
 concurrency:
-    group: "pages"
+    group: "generate-pages"
     cancel-in-progress: false
 
 defaults:
