@@ -42,7 +42,7 @@ jobs:
           data_node=$(echo $RESULTS | jq)
           echo $data_node
           data_node_result=$(echo $data_node | jq '.result')
-          echo $data_node_results
+          echo $data_node_result
       - name: Commit Change
         id: commit-change
         run: |
