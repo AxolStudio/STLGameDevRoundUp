@@ -13,24 +13,10 @@
 </header>
 {{ end }}
 {{ define "main" }}
-{{ range $category, $entry := .Site.Data.directory }}
-<h3>{{ $category | title }}</h3>
-<dl class="ms-4">  
-  {{ range $entry }}
-  <dt class="fs-4">
-    <a href="{{ .url }}">{{ .name }}</a>
-  </dt>
-  <dd class="ms-4">{{ .description | markdownify }}</dd>
-  {{ if .projects}}
-  <dd class="ms-4"><ul class="list-inline">
-    <li class="list-inline-item"><strong>Projects:</strong></li>
-    {{ range $project := .projects }}
-    <li class="list-inline-item"><a href="{{ $project.url }}" >{{ $project.name }}</a></li>
-    {{ end }}
-    </ul>
-  </dd>
-  {{ end }}
-  {{ end }}
-</dl>
-{{ end }}
-{{ end }}
+
+
+{{ $entry := .Site.Data.directory.developers }}
+<p>{{ $entry }}</p>
+
+
+{{ end }} 
