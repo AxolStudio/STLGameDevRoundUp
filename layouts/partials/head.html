@@ -1,7 +1,7 @@
 <meta name="generator" content="Hugo {{ hugo.Version }}" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}Roundup № {{ .Params.no }} | {{ site.Title }} {{ end }}</title>
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ if eq .Type "directory" }}Developer Directory{{ else }}Roundup № {{ .Params.no }}{{ end}} | {{ site.Title }} {{ end }}</title>
 
 <meta name="keywords" content="{{ .Param "keywords" }}" />
 <meta name="author" content="{{ .Param "author" }}" />

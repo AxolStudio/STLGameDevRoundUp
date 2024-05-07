@@ -1,6 +1,5 @@
 {{ define "main" }}
   
-
     <div class="text-center">
       <h1 class="display-2">Roundup № {{ .Params.no }}</h1>
       {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}

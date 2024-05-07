@@ -6,9 +6,7 @@
   </head>
   <body class="  ">
     {{ partial "nav.html" . }}
-    {{- if .IsHome }}
-    {{ partial "header-home.html" . }}
-    {{ end -}}
+    {{ block "header" . }}{{ end }}
     <main class="container">
       {{ block "main" . }}{{ end }}
     </main>

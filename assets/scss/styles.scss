@@ -175,6 +175,7 @@ html[class$="/STLGameDevRoundUp/"] {
             justify-content: center;
             list-style-type: none;
             min-height: 20vh;
+            min-width:20vh;
             border-radius: 0.1rem;
             border: 1px solid $gamedev-grey;
             box-shadow: $box-shadow;
