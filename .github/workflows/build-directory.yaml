@@ -41,7 +41,7 @@ jobs:
           mkdir -p data
           data_node=$(echo $RESULTS | jq)
           echo $data_node
-          data_node_result=$(echo $data_node | jq '.[0]')
+          data_node_result=$(echo $data_node | jq '.result')
           echo data_node_results
       - name: Commit Change
         id: commit-change
