@@ -39,7 +39,8 @@ jobs:
         run: |
           data_file="data/directory/developers.json"
           mkdir -p data
-          echo $RESULTS > $data_file
+          data_node=$(echo $RESULTS | jq '.results.result.rawData')
+          echo $data_node > $data_file
       - name: Commit Change
         id: commit-change
         run: |
