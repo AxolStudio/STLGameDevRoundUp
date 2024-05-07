@@ -27,7 +27,7 @@ jobs:
           spreadsheetId: 1baXLkmhphVF2vPQGA0tuFmQgdWkasd0PPqUXqasAc0U
           commands: |
             [
-              { "command": "getData", "args": { "range": "'1449520440'!B2:E99" }}
+              { "command": "getData", "args": { "range": "'1449520440'!B1:E99" }}
             ]
         env:
           GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
@@ -37,7 +37,7 @@ jobs:
         env: 
           RESULTS: ${{ steps.update_worksheet.outputs.results }}
         run: |
-          data_file="data/developers.json"
+          data_file="data/directory/developers.json"
           mkdir -p data
           echo $RESULTS | jq
           cat << EOF >> $data_file
@@ -49,7 +49,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "no-reply@github.com"
           git tag updated-directory
-          git add data/developers.json
+          git add data/directory/developers.json
           git commit -m "Update Developer Directory"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           git push --follow-tags
