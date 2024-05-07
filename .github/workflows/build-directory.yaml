@@ -35,7 +35,7 @@ jobs:
       - name: Save Data
         id: save-data
         env: 
-          RESULTS: ${{ steps.fetch-data.outputs.results.result }}
+          RESULTS: ${{ steps.fetch-data.outputs.results }}
         run: |
           data_file="data/directory/developers.json"
           mkdir -p data
