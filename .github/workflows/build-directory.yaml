@@ -37,14 +37,16 @@ jobs:
         env: 
           RESULTS: ${{ steps.update_worksheet.outputs.results }}
         run: |
-          echo "$RESULTS > data/directory/developers.json"
+          data_file="data/developers.json"
+          mkdir -p data
+          echo "$RESULTS" > $data_file
       - name: Commit Change
         id: commit-change
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "no-reply@github.com"
           git tag updated-directory
-          git add data/directory/developers.json
+          git add data/developers.json
           git commit -m "Update Developer Directory"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           git push --follow-tags
