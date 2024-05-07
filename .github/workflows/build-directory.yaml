@@ -39,7 +39,10 @@ jobs:
         run: |
           data_file="data/developers.json"
           mkdir -p data
-          echo "$RESULTS" > $data_file
+          echo $RESULTS | jq
+          cat << EOF >> $data_file
+          $RESULTS
+          EOF
       - name: Commit Change
         id: commit-change
         run: |
