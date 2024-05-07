@@ -14,16 +14,23 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - id: googlesheet_actions
-        uses: rjoydip/googlesheet-actions@0.1.1
-        with:
-          sheet-id: ${{ secrets.DEV_SHEET_ID }}
-      - name: Grab the Google Sheet Data
-        id: grab
-        run: |
-          echo "${{ steps.googlesheet_actions.outputs.data }}" > data/directory/developers.json
+      - id: 'fetch directory data'
+        name: Fetch Data
+        uses: jroehl/gsheet.action@v2.0.0
+        with: 
+          spreadsheetId: 1baXLkmhphVF2vPQGA0tuFmQgdWkasd0PPqUXqasAc0U
+        commands: |
+          [
+            { "command": "getData", "args": { "range": "'Form Responses 1'!B2:E99" }}
+          ]
+        env:
+          GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
+          GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
+      - name: Save Data
         env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RESULTS: ${{ steps.update_worksheet.outputs.results }}
+        run: |
+          echo "$RESULTS > data/directory/developers.json"
       - name: Commit Change
         run: |
           git config --global user.name "GitHub Actions"
