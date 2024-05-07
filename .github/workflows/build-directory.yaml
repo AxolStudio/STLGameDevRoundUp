@@ -1,0 +1,43 @@
+name: ▶ Build the Developer Directory!
+
+on:
+    workflow_dispatch:
+
+permissions: write-all
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - id: googlesheet_actions
+        uses: rjoydip/googlesheet-actions@0.1.1
+        with:
+          sheet-id: ${{ secrets.DEV_SHEET_ID }}
+      - name: Grab the Google Sheet Data
+        id: grab
+        run: |
+          echo "${{ steps.googlesheet_actions.outputs.data }}" > data/directory/developers.json
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit Change
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "no-reply@github.com"
+          git tag updated-directory
+          git update data/directory/developers.json
+          git commit -m "Update Developer Directory"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+          git push --follow-tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+  build:
+    uses: ./.github/workflows/hugo-build.yaml
+    needs: fetch
+
+
