@@ -35,14 +35,11 @@ jobs:
       - name: Save Data
         id: save-data
         env: 
-          RESULTS: ${{ steps.update_worksheet.outputs.results }}
+          RESULTS: ${{ steps.fetch-data.outputs.results }}
         run: |
           data_file="data/directory/developers.json"
           mkdir -p data
-          echo $RESULTS | jq
-          cat << EOF >> $data_file
-          $RESULTS
-          EOF
+          echo $RESULTS | jq > $data_file
       - name: Commit Change
         id: commit-change
         run: |
