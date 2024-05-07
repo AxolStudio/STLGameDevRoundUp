@@ -14,7 +14,7 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - id: 'fetch directory data'
+      - id: fetch-data
         name: Fetch Data
         uses: jroehl/gsheet.action@v2.0.0
         with: 
@@ -27,11 +27,13 @@ jobs:
           GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
           GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
       - name: Save Data
+        id: save-data
         env: 
           RESULTS: ${{ steps.update_worksheet.outputs.results }}
         run: |
           echo "$RESULTS > data/directory/developers.json"
       - name: Commit Change
+        id: commit-change
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "no-reply@github.com"
