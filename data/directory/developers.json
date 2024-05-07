@@ -1,1 +1,52 @@
-
+{
+  "results": [
+    {
+      "command": {
+        "func": "getData",
+        "kwargs": [
+          {
+            "range": "'Form Responses 1'!B1:E99"
+          },
+          null
+        ]
+      },
+      "result": {
+        "rawData": [
+          [
+            "What is your name? \n\nYou may use your full or partial name, online moniker, company name, or a combination of any of the above.\n\nWe will use whatever you provide exactly to list you in the directory.",
+            "What are you?\n\nThis will allow us to sort and filter entries.",
+            "Where can people find you?\n\nPlease provide a main link to your website, profile, or projects.",
+            "Optional Link 2\n\nIf you have another website, profile, etc, that you want to link people to, enter it here."
+          ],
+          [
+            "Axol Studio, LLC",
+            "Company",
+            "https://axolstudio.com",
+            ""
+          ]
+        ],
+        "formatted": [
+          {
+            "(B)": "What is your name? \n\nYou may use your full or partial name, online moniker, company name, or a combination of any of the above.\n\nWe will use whatever you provide exactly to list you in the directory.",
+            "(C)": "What are you?\n\nThis will allow us to sort and filter entries.",
+            "(D)": "Where can people find you?\n\nPlease provide a main link to your website, profile, or projects.",
+            "(E)": "Optional Link 2\n\nIf you have another website, profile, etc, that you want to link people to, enter it here."
+          },
+          {
+            "(B)": "Axol Studio, LLC",
+            "(C)": "Company",
+            "(D)": "https://axolstudio.com",
+            "(E)": ""
+          }
+        ],
+        "header": [
+          "(B)",
+          "(C)",
+          "(D)",
+          "(E)"
+        ],
+        "range": "'Form Responses 1'!B1:E99"
+      }
+    }
+  ]
+}
