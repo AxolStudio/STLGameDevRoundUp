@@ -27,7 +27,7 @@ jobs:
           spreadsheetId: 1baXLkmhphVF2vPQGA0tuFmQgdWkasd0PPqUXqasAc0U
           commands: |
             [
-              { "command": "getData", "args": { "range": "'Form Responses 1'!B1:E99" }}
+              { "command": "getData", "args": { "range": "'Form Responses 1'!B2:E99" }}
             ]
         env:
           GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
@@ -39,7 +39,7 @@ jobs:
         run: |
           data_file="data/directory/developers.json"
           mkdir -p data
-          echo $RESULTS | jq > $data_file
+          echo $RESULTS > $data_file
       - name: Commit Change
         id: commit-change
         run: |
