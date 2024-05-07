@@ -19,10 +19,10 @@ jobs:
         uses: jroehl/gsheet.action@v2.0.0
         with: 
           spreadsheetId: 1baXLkmhphVF2vPQGA0tuFmQgdWkasd0PPqUXqasAc0U
-        commands: |
-          [
-            { "command": "getData", "args": { "range": "'Form Responses 1'!B2:E99" }}
-          ]
+          commands: |
+            [
+              { "command": "getData", "args": { "range": "'Form Responses 1'!B2:E99" }}
+            ]
         env:
           GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
           GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
