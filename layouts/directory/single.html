@@ -9,7 +9,7 @@
     </p>
     <p class="text-body-secondary">This directory is <em>Opt-In Only</em> — you are welcome to add yourself or your
       organization to this list, but not anyone else (without permission).</p>
-    <p>To add yourself to the Directory, please fill out the <a class="btn btn-primary"
+    <p>To add yourself to the Directory, please fill out the <a 
         href="https://forms.gle/tjtQt2oHDPSeHL919" target="_blank">Developer Profile Submission</a> Form!</p>
   </div>
 </header>
@@ -22,19 +22,19 @@
 {{- $categories = $categories | append (index $entry 1) -}}
 {{- end -}}
 {{- $categories = uniq $categories }}
-<section class="row pt-0 pb-2 ">
-  <div class=" issue-content">
+<section class="row pt-0 pb-2  ">
+  <div class="col-lg-8 mx-auto" >
     {{- range $category := sort $categories }}
-    <div class="border-bottom">
+    <div class="border-bottom responsive">
       <h3>{{ $category | pluralize }}</h3>
-      <dl class="row ">
+      <dl class="ms-4 ">
         {{ range $entry := $devs }}
         {{ if (eq (index $entry 1) $category ) }}
-        <dt class="col-sm-3 offset-sm-1 ">
+        <dt class="">
           <a href="{{ index $entry 2 }}">{{ index $entry 0 }}</a>
         </dt>
         {{ if (index $entry 3) }}
-        <dd class="col-sm-8">{{ index $entry 3 }}</dd>
+        <dd class="ms-4">{{ index $entry 3 }}</dd>
         {{ end }}
         {{ end }}
         {{ end }}

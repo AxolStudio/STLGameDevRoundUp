@@ -1,28 +1,31 @@
-<nav class="navbar bg-body-secondary sticky-top d-lg-flex mb-4">
-  
-    <div class=" container" >
-        
-        <div class="col-lg-2" >
-      {{- if .IsPage }}
-        {{ partial "share-buttons.html" . }}
-      {{ end -}}
-      </div>
-
-      <div class="col-lg-8 text-center">
-{{- if .IsPage }}
-    <a class=" navbar-brand  fs-2 " href="{{ site.BaseURL }}">
-      {{ $logo := resources.Get "images/stlgdru-logo.svg" }}
-      <img  src="{{ $logo.RelPermalink }}" alt="St Louis Game Developer Roundup Logo" width="48" height="48" /> {{ site.Title }}
-    </a>
-    {{ end -}}
+<nav class="py-2 bg-body-tertiary border-bottom">
+    <div class="container d-flex flex-wrap">
+        <div class="col-lg-2">
+            {{- if .IsPage }}
+            {{ partial "share-buttons.html" . }}
+            {{ end -}}
+        </div>
+        <ul class="nav me-auto">
+            <li class="nav-item"><a href="{{ .Site.Home.RelPermalink }}" class="nav-link link-body-emphasis px-2 active"
+                    aria-current="page">Home</a></li>
+            {{ $page := .Site.GetPage "/directory" }}
+            <li class="nav-item"><a href="{{ $page.RelPermalink }}" class="nav-link link-body-emphasis px-2">Developer Directory</a></li>
+            <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Project Showcase</a></li>
+                <li class="nav-item"><a href="http://stlgamedev.com/" class="nav-link link-body-emphasis px-2" target="_blank" >St Louis Game Dev Co-op </a></li>
+        </ul>
+        <div class="d-lg-flex col-lg-2 justify-content-end ">
+            {{ partial "color-switch.html" . }}
+          </div>
     </div>
-
-    
-
-    <div class="d-lg-flex col-lg-2 justify-content-end ">
-      {{ partial "color-switch.html" . }}
-    </div>
-
-    </div>
-  
 </nav>
+{{- if .IsPage }}
+<header class="py-3 mb-4 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-center">
+      <a class=" navbar-brand  fs-2 " href="{{ .Site.Home.RelPermalink }}">
+        {{ $logo := resources.Get "images/stlgdru-logo.svg" }}
+        <img src="{{ $logo.RelPermalink }}" alt="St Louis Game Developer Roundup Logo" width="48" height="48" /> {{
+        site.Title }}
+      </a>
+    </div>
+</header>
+{{ end }}

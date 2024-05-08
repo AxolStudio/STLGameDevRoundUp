@@ -1,0 +1,30 @@
+
+
+
+
+
+<nav class="navbar bg-body-secondary sticky-top d-lg-flex mb-4">
+
+  <div class=" container">
+
+    <div class="col-lg-2">
+      {{- if .IsPage }}
+      {{ partial "share-buttons.html" . }}
+      {{ end -}}
+    </div>
+
+    <div class="col-lg-8 text-center">
+      {{- if .IsPage }}
+      <a class=" navbar-brand  fs-2 " href="{{ site.BaseURL }}">
+        {{ $logo := resources.Get "images/stlgdru-logo.svg" }}
+        <img src="{{ $logo.RelPermalink }}" alt="St Louis Game Developer Roundup Logo" width="48" height="48" /> {{
+        site.Title }}
+      </a>
+      {{ end -}}
+    </div>
+
+    
+
+  </div>
+
+</nav>
