@@ -1,4 +1,4 @@
-<nav class="py-2 bg-body-tertiary border-bottom">
+<nav class="pt-2 pb-0 bg-body-tertiary border-bottom">
     <div class="container d-flex flex-wrap">
         <div class="col-lg-2">
             {{- if .IsPage }}
@@ -6,12 +6,17 @@
             {{ end -}}
         </div>
         <ul class="nav me-auto">
-            <li class="nav-item"><a href="{{ .Site.Home.RelPermalink }}" class="nav-link link-body-emphasis px-2 active"
-                    aria-current="page">Home</a></li>
+            {{ $currentPage := . }}
+            <li class="nav-item "><a href="{{ .Site.Home.RelPermalink }}" class="nav-link px-2 {{ if eq $currentPage .Site.Home }} active{{ end }}"
+                    {{ if eq $currentPage .Site.Home }}aria-current="page"{{ end }}>Home</a></li>
             {{ $page := .Site.GetPage "/directory" }}
-            <li class="nav-item"><a href="{{ $page.RelPermalink }}" class="nav-link link-body-emphasis px-2">Developer Directory</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Project Showcase</a></li>
-                <li class="nav-item"><a href="http://stlgamedev.com/" class="nav-link link-body-emphasis px-2" target="_blank" >St Louis Game Dev Co-op </a></li>
+            <li class="nav-item"><a href="{{ $page.RelPermalink }}" class="nav-link px-2{{ if eq $currentPage $page }} active{{ end }}"
+                {{ if eq $currentPage $page }}aria-current="page"{{ end }}>Developer Directory</a></li>
+            {{ $page := .Site.GetPage "/showcase" }}
+            <li class="nav-item"><a href="#" class="nav-link  px-2{{ if eq $currentPage $page }} active{{ end }}"
+                {{ if eq $currentPage $page }}aria-current="page"{{ end }}>Project Showcase</a></li>
+            <li class="nav-item"><p class="nav-link px-2">|</p></li>
+            <li class="nav-item "><a href="http://stlgamedev.com/" class="nav-link  px-2" target="_blank" >St Louis Game Dev Co-op </a></li>
         </ul>
         <div class="d-lg-flex col-lg-2 justify-content-end ">
             {{ partial "color-switch.html" . }}
