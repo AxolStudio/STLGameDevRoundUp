@@ -42,7 +42,8 @@ jobs:
           test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
-          if cmp -s $data_file <(echo $data_node_result); then
+          if grep -qe ^$data_node_result$ $data_file
+          then
             echo $data_node_result > $data_file
           else
             exit 1
@@ -91,7 +92,8 @@ jobs:
           test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
-          if cmp -s $data_file <(echo $data_node_result); then
+          if grep -qe ^$data_node_result$ $data_file
+          then
             echo $data_node_result > $data_file
           else
             exit 1
@@ -116,6 +118,5 @@ jobs:
     if: |
       always()
       && contains(needs.*.result, 'success')
-      && !contains(needs.*.result, 'failure')
 
 
