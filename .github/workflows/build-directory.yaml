@@ -44,6 +44,7 @@ jobs:
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
           if cmp -s $data_file <(echo $data_node_result); then
             echo $data_node_result > $data_file
+          else
             exit 1
           fi
       - name: Commit Change
@@ -92,6 +93,7 @@ jobs:
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
           if cmp -s $data_file <(echo $data_node_result); then
             echo $data_node_result > $data_file
+          else
             exit 1
           fi
       - name: Commit Change
