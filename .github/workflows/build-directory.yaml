@@ -1,4 +1,4 @@
-name: ▶ Build the Developer Directory!
+name: ▶ Build the Directory!
 
 on:
     workflow_dispatch:
@@ -39,7 +39,7 @@ jobs:
         run: |
           data_file="data/directory/developers.json"
           mkdir -p data
-          touch -n $data_file
+          test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
           if cmp -s $data_file <(echo $data_node_result); then
@@ -87,7 +87,7 @@ jobs:
         run: |
           data_file="data/directory/projects.json"
           mkdir -p data
-          touch -n $data_file
+          test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
           if cmp -s $data_file <(echo $data_node_result); then
