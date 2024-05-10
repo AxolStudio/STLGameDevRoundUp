@@ -1,0 +1,39 @@
+{{ define "header" }}
+  <header class="px-4 py-5 my-2 text-center">
+    <h1 class="display-4 fw-light">{{ .Title }}</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead text-body-secondary mb-2">This is a list of projects made by people and/or teams who are part of our community</p>
+      <p class="text-body-secondary">This showcase is <em>Opt-In Only</em> — you are welcome to add your own project(s) but not anyone else's (without permission).</p>
+      <p>To add your project to the Showcase, please fill out the <a href="https://forms.gle/PSRp9J7jEcHfKFPg8" target="_blank">Project Showcase Submission</a> Form!</p>
+    </div>
+  </header>
+{{ end }}
+{{ define "main" -}}
+  {{- $projects := .Site.Data.directory.projects -}}
+
+  {{- $makers := slice -}}
+  {{- range $entry := $projects -}}
+    {{- $makers = $makers | append (index $entry 4) -}}
+  {{- end -}}
+  {{- $makers = uniq $makers }}
+  <section class="row pt-0 pb-2  ">
+    <div class="col-lg-8 mx-auto">
+      {{- range $maker := sort $makers }}
+        <div class="border-bottom responsive">
+          <h3>{{ $maker }}:</h3>
+          <dl class="ms-4 ">
+            {{ range $entry := $projects }}
+              {{ if (eq (index $entry 4) $maker ) }}
+                <dt class="">
+                  <a href="{{ index $entry 2 }}">{{ index $entry 0 }}</a> —
+                  {{ index $entry 3 }}
+                </dt>
+                <dd class="ms-4">{{ index $entry 1 | humanize }}</dd>
+              {{ end }}
+            {{ end }}
+          </dl>
+        </div>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

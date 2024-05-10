@@ -13,7 +13,7 @@
             <li class="nav-item"><a href="{{ $page.RelPermalink }}" class="nav-link px-2{{ if eq $currentPage $page }} active{{ end }}"
                 {{ if eq $currentPage $page }}aria-current="page"{{ end }}>Developer Directory</a></li>
             {{ $page := .Site.GetPage "/showcase" }}
-            <li class="nav-item"><a href="#" class="nav-link  px-2{{ if eq $currentPage $page }} active{{ end }}"
+            <li class="nav-item"><a href="{{ $page.RelPermalink }}" class="nav-link px-2{{ if eq $currentPage $page }} active{{ end }}"
                 {{ if eq $currentPage $page }}aria-current="page"{{ end }}>Project Showcase</a></li>
             <li class="nav-item"><p class="nav-link px-2">|</p></li>
             <li class="nav-item "><a href="http://stlgamedev.com/" class="nav-link  px-2" target="_blank" >St Louis Game Dev Co-op </a></li>

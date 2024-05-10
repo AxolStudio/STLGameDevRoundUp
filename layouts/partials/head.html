@@ -20,6 +20,8 @@
 {{ partial "head/home.html" . }}
 {{ else if eq .Type "directory" }}
 {{ partial "head/directory.html" . }}
+{{ else if eq .Type "showcase" }}
+{{ partial "head/showcase.html" . }}
 {{ else }}
 {{ partial "head/page.html" . }}
 {{ end -}}
