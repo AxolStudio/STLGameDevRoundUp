@@ -1,0 +1,16 @@
+{{- $devs := shuffle .Site.Data.directory.developers -}}
+{{- if $devs -}}
+<div class="row">
+    <h3>🧑‍💻 Check out this featured developer from our Community!</h3>
+    <dl class="ms-4 ">
+        {{- range $dev := first 1 $devs -}}
+        <dt class="">
+            <a href="{{ index $dev 2 }}">{{ index $dev 0 }}</a>
+          </dt>
+          {{- if (index $dev 3) -}}
+            <dd class="ms-4">{{ index $dev 3 }}</dd>
+          {{- end -}}
+        {{- end -}}
+    </dl>
+</div>
+{{- end -}}
