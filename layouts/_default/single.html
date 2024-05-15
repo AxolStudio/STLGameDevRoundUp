@@ -61,9 +61,7 @@
 
 <hr class="my-4 mx-4" />
 
-{{- $r := (math.Rand | mul 2 | math.Floor) -}}
-
-{{- if eq $r 0 -}}
+{{- if modBool ( int .Params.no ) 2 -}}
 
 {{ partial "partials/random-devs.html" . }}
 
@@ -73,9 +71,6 @@
 
 {{- end -}}
 
-{{ end }}
-
-{{ define "footer" }}
 
 <div class="row">
   <div class="col-lg-auto">
