@@ -19,7 +19,7 @@
   <section class="row pt-0 pb-2  ">
     <div class="col-lg-8 mx-auto">
       {{- range $category := sort $categories }}
-        <div class="border-bottom responsive">
+        <div class="responsive">
           <h3>{{ $category | pluralize }}</h3>
           <dl class="ms-4 ">
             {{ range $entry := $devs }}
@@ -30,6 +30,7 @@
                 {{ if (index $entry 3) }}
                   <dd class="ms-4">{{ index $entry 3 }}</dd>
                 {{ end }}
+                <dd class="border-bottom border-secondary-subtle"></dd>
               {{ end }}
             {{ end }}
           </dl>

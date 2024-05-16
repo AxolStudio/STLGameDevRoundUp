@@ -1,9 +1,10 @@
 {{- $projs := .Site.Data.directory.projects -}}
 {{- if $projs -}}
+
 <div class="row">
     <h3>⚙ Check out this featured project from our Community!</h3>
-    <dl class="ms-4 ">
-        {{- range $proj := first 1 $projs -}}
+    <dl class="ms-4 border-bottom">
+        {{- range $proj := first 1 ( $projs | shuffle ) -}}
         <dt class="">
             <a href="{{ index $proj 2 }}">{{ index $proj 0 }}</a> —
             {{ index $proj 3 }}
