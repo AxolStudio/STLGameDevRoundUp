@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       - id: fetch-devs
         name: Fetch Devs
-        uses: jroehl/gsheet.action@v2.0.0
+        uses: jroehl/gsheet.action@latest
         with: 
           spreadsheetId: 1baXLkmhphVF2vPQGA0tuFmQgdWkasd0PPqUXqasAc0U
           commands: |
