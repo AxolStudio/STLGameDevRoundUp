@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       - id: fetch-devs
         name: Fetch Devs
-        uses: jroehl/gsheet.action@latest
+        uses: jroehl/gsheet.action@v2.1.1
         with: 
           spreadsheetId: 1baXLkmhphVF2vPQGA0tuFmQgdWkasd0PPqUXqasAc0U
           commands: |
@@ -46,7 +46,7 @@ jobs:
           echo $RESULTS > "data/directory/dev-log.json"
       - id: fetch-projects
         name: Fetch Projects
-        uses: jroehl/gsheet.action@v2.0.0
+        uses: jroehl/gsheet.action@v2.1.1
         with: 
           spreadsheetId: 1ohwGWivfroYJHw-vItRxOptz3VgIn_L500gP4bV6Mhk
           commands: |
