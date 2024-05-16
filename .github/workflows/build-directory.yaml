@@ -85,12 +85,12 @@ jobs:
           then
             git config --global user.name "GitHub Actions"
             git config --global user.email "no-reply@github.com"
-            if [ $had_devs ]
+            if [ $had_devs == true ]
             then
               git tag updated-developer-directory
               git add data/directory/developers.json
             fi
-            if [ $had_projs ]
+            if [ $had_projs == true ]
             then
               git tag updated-projects-showcase
               git add data/directory/projects.json
