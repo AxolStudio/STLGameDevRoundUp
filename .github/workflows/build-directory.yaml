@@ -54,6 +54,7 @@ jobs:
       - name: Commit Change
         id: commit-change
         run: |
+          git pull
           git config --global user.name "GitHub Actions"
           git config --global user.email "no-reply@github.com"
           git tag updated-developer-directory
@@ -104,6 +105,7 @@ jobs:
       - name: Commit Change
         id: commit-change
         run: |
+          git pull
           git config --global user.name "GitHub Actions"
           git config --global user.email "no-reply@github.com"
           git tag updated-projects-showcase
