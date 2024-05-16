@@ -81,7 +81,7 @@ jobs:
       - name: Commit Change
         id: commit-change
         run: |
-          if [ $had_devs ] || [ $had_projs ]
+          if [ $had_devs == true ] || [ $had_projs == true ]
           then
             git config --global user.name "GitHub Actions"
             git config --global user.email "no-reply@github.com"
