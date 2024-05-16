@@ -11,7 +11,7 @@ defaults:
 
 jobs:
 
-  fetch-devs:
+  fetch-data:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
@@ -20,9 +20,9 @@ jobs:
         with: 
           submodules: recursive
           fetch-depth: 0
-      - id: fetch-data
-        name: Fetch Data
-        uses: jroehl/gsheet.action@v2.0.0
+      - id: fetch-devs
+        name: Fetch Devs
+        uses: jroehl/gsheet.action@v2.1.1
         with: 
           spreadsheetId: 1baXLkmhphVF2vPQGA0tuFmQgdWkasd0PPqUXqasAc0U
           commands: |
@@ -32,8 +32,8 @@ jobs:
         env:
           GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
           GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
-      - name: Save Data
-        id: save-data
+      - name: Save Devs
+        id: save-devs
         env: 
           RESULTS: ${{ steps.fetch-data.outputs.results }}
         run: |
@@ -42,36 +42,10 @@ jobs:
           test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
-          if [ $data_node_result = $(cat $data_file) ]
-          then
-            exit 1
-          fi
           echo $data_node_result > $data_file
-      - name: Commit Change
-        id: commit-change
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "no-reply@github.com"
-          git tag updated-developer-directory
-          git add data/directory/developers.json
-          git commit -m "Update Developer Directory"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-          git push --follow-tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  fetch-projs:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with: 
-          submodules: recursive
-          fetch-depth: 0
-      - id: fetch-data
-        name: Fetch Data
-        uses: jroehl/gsheet.action@v2.0.0
+      - id: fetch-projs
+        name: Fetch Projs
+        uses: jroehl/gsheet.action@v2.1.1
         with: 
           spreadsheetId: 1ohwGWivfroYJHw-vItRxOptz3VgIn_L500gP4bV6Mhk
           commands: |
@@ -81,8 +55,8 @@ jobs:
         env:
           GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
           GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
-      - name: Save Data
-        id: save-data
+      - name: Save Projs
+        id: save-projs
         env: 
           RESULTS: ${{ steps.fetch-data.outputs.results }}
         run: |
@@ -91,29 +65,23 @@ jobs:
           test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
-          if [ $data_node_result = $(cat $data_file) ]
-          then
-            exit 1
-          fi
           echo $data_node_result > $data_file
       - name: Commit Change
         id: commit-change
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "no-reply@github.com"
-          git tag updated-projects-showcase
+          git tag updated-directory
+          git add data/directory/developers.json
           git add data/directory/projects.json
-          git commit -m "Update Projects Showcase"
+          git commit -m "Update Directorys"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           git push --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          
 
   build:
     uses: ./.github/workflows/hugo-build.yaml
-    needs: [fetch-devs, fetch-projs]
-    if: |
-      always()
-      && contains(needs.*.result, 'success')
+    needs: fetch-data
 
