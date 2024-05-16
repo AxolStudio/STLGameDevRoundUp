@@ -38,11 +38,12 @@ jobs:
           RESULTS: ${{ steps.fetch-data.outputs.results }}
         run: |
           data_file="data/directory/developers.json"
-          echo $RESULTS
+          mkdir -p data
+          test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
           echo $data_node_result > $data_file
-          
+          echo $RESULTS > "data/directory/dev-log.json"
       - id: fetch-projects
         name: Fetch Projects
         uses: jroehl/gsheet.action@v2.0.0
@@ -61,7 +62,8 @@ jobs:
           RESULTS: ${{ steps.fetch-data.outputs.results }}
         run: |
           data_file="data/directory/projects.json"
-          echo $RESULTS
+          mkdir -p data
+          test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
           echo $data_node_result > $data_file
