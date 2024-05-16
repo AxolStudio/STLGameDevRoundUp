@@ -74,6 +74,7 @@ jobs:
             git config --global user.email "no-reply@github.com"
             git tag updated-directory
             git add data/directory/developers.json
+            git add data/directory/dev-log.json
             git add data/directory/projects.json
             git commit -m "Update Directory + Showcase"
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
