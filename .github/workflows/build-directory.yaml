@@ -46,7 +46,7 @@ jobs:
           test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
-          if [ $data_node_result = $(cat $data_file) ]
+          if [ "$data_node_result" = "$(cat $data_file)" ]
           then
             exit 1
           fi
@@ -97,7 +97,7 @@ jobs:
           test -f $data_file || touch $data_file
           data_node=$(echo $RESULTS | jq)
           data_node_result=$(echo $data_node | jq -r '.results[0].result.rawData' )
-          if [ $data_node_result = $(cat $data_file) ]
+          if [ "$data_node_result" = "$(cat $data_file)" ]
           then
             exit 1
           fi
