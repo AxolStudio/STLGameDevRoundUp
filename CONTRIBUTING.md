@@ -10,6 +10,8 @@ This document is a set of guidelines meant to help you with your contribution.
 
 Ultimately, we want to err on the side of inclusion. If you think you have a piece of news, a video, a project, or anything that you think would be of some interest to the *St Louis Game Development Community* [**SLGDC**], then we encourage you to share! If it turns out not to be appropriate for some reason, we can always remove it and speak to you about it. Don't be afraid to share!
 
+*DO NOT SPAM!* Do *not* keep sharing news about the same *Project* every issue. Do not try to promote something completely outside the scope of this website.
+
 #### Who is a *Community Member*?
 
 It is important to know who we consider a *Community Member* for the purpose of drawing some kind of line on the map for the sake of brevity. Again, these are *loose guidelines* and if you think you are *close enough* to count, you're welcome to!
@@ -90,9 +92,26 @@ Make sure the final file is proper Json syntax and submit the change as a PR.
 
 ## The Developer Directory / Project Showcase
 
+The [Developer Directory](https://axolstudio.github.io/STLGameDevRoundUp/directory/) & [Project Showcase](https://axolstudio.github.io/STLGameDevRoundUp/showcase/) are places where we can gather and list people and projects who are part of our Community.
+
+We hope that people checking out the RoundUPs from time to time may visit these pages to see who's doing things in the Community or what Projects are being worked on/released.
+
+We also randomly grab one Developer or one Project to highlight at the bottom of each RoundUp Issue to help them get more exposure.
+
+Both of these lists are *100% Opt-in Only*. You/your project(s) will only show up in them if you - yourself - add them.
+
 ### Adding yourself / your project
 
+We have a Google Form for anyone who is a *Community Member* to add themselves to our lists. 
+
+Just follow the link(s) below and fill out the form(s)!
+
+* [Developer Profile Submission Form](https://forms.gle/injxef96o8osugUW7)
+* [Project Showcase Submission Form](https://forms.gle/eJRSWmAyqZCC8UrJ8)
+
 ### Fixing an error / Requesting Removal
+
+Currently, there is no simple way for someone to edit or remove themselves from either list. Simply reach out to [SeiferTim](https://github.com/SeiferTim) with your request and they will take care of it for you.
 
 ## Contributing to the Project's Code
 
