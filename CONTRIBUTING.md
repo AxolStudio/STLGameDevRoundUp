@@ -115,3 +115,14 @@ Currently, there is no simple way for someone to edit or remove themselves from 
 
 ## Contributing to the Project's Code
 
+If anyone has any changes to the site itself they think would be useful, we welcome the suggestion!
+
+Feel free to make changes and submit PRs as long as you think that the change fits within our goals for the project.
+
+Thos goals are:
+
+* To be a small and simple place for *Community Members* to get some useful news about stuff going on, as well as to help promote *Projects* made by *Community Members*.
+* The focus should *always* be on the community - not trying to market stuff to make money or share random stuff that is not at all interesting.
+* Growing the reach of these RoundUps - and in turn helping to spread awareness of the people and projects mentioned in them - is paramount. If we can find new ways to get these out to people, that would be great.
+
+The site is made with [Hugo](https://gohugo.io/) and [Bootstrap](https://gohugo.io/), and is fairly simple and straightforward (by design). This is to encourage less experienced people to try contributing by appearing simple and approachable.
