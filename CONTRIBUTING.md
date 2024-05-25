@@ -115,14 +115,16 @@ Currently, there is no simple way for someone to edit or remove themselves from 
 
 ## Contributing to the Project's Code
 
-If anyone has any changes to the site itself they think would be useful, we welcome the suggestion!
+We encourage anyone who wants to help improve the site to contribute to the site's code as long as those changes adhere to the core values of this project.
 
-Feel free to make changes and submit PRs as long as you think that the change fits within our goals for the project.
+Those values are:
+* To help facilitate spreading awareness of the people and projects that are part of our community first and foremost
+* To be a *free* resource for anyone to see what's happing in and around our community
+* To be as simple and hassle-free for anyone to include their news to future RoundUps
+* To never 'sell out', or include advertisements anywhere on our site
 
-Thos goals are:
+The site is made with [Hugo](https://gohugo.io/) and [Bootstrap](https://gohugo.io/).
 
-* To be a small and simple place for *Community Members* to get some useful news about stuff going on, as well as to help promote *Projects* made by *Community Members*.
-* The focus should *always* be on the community - not trying to market stuff to make money or share random stuff that is not at all interesting.
-* Growing the reach of these RoundUps - and in turn helping to spread awareness of the people and projects mentioned in them - is paramount. If we can find new ways to get these out to people, that would be great.
+The site is deliberately designed to be fairly simple to encourage even less experienced developers to take the plunge and share their changes.
 
-The site is made with [Hugo](https://gohugo.io/) and [Bootstrap](https://gohugo.io/), and is fairly simple and straightforward (by design). This is to encourage less experienced people to try contributing by appearing simple and approachable.
+We use [GitHub Actions](https://github.com/AxolStudio/STLGameDevRoundUp/actions) to automatically build and deploy the site whenever changes to the code are committed.
