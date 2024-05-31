@@ -1,5 +1,7 @@
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
+[![⚙ Build the Hugo Site](https://github.com/AxolStudio/STLGameDevRoundUp/actions/workflows/hugo-build.yaml/badge.svg)](https://github.com/AxolStudio/STLGameDevRoundUp/actions/workflows/hugo-build.yaml)
+
 <p align="center">
     <img src="assets/images/stlgdru-logo.svg" alt="St Louis Game Developer Roundup Logo" width=220 height=220 />
 </p>
@@ -10,37 +12,12 @@ This is the repository for the St Louis Game Developer Roundup: a semi-regular n
 
 ## How to Contribute
 
-If you have any news, announcements, or anything relevant to the St Louis Game Development Community that you would like to share in an upcoming Roundup, simply find the Issue for the next Roundup and leave a new comment with the format:
+EVERYONE IS ENCOURAGED TO CONTRIBUTE* 
 
-```md
-{category} Your news info [Optional Link](https:/link/to/something)
-```
+It is simple and easy to contribute: read how [HERE](https://github.com/AxolStudio/STLGameDevRoundUp/blob/main/CONTRIBUTING.md).
 
-You can add any markdown you want, really, but it *must* start with the category in curly braces. You can make up any category you want, but ideally you should try to match an existing category.
-You should not include a whole ton of text, either - just a blurb that says what your news is about and then a link so someone can learn more.
 
-If you discover an error or need to remove something from a live Roundup, you can edit the cooresponding `issue-number.json` file in `data` and submit a Pull Request. 
-
-Simply change or remove the erroneous entry like this:
-
-```json
-[
-    {
-        "nodes":
-        [
-            {
-                "body": "{news} Your news info [Optional Link](https:/link/to/something)",
-            }
-            // ---- remove from here
-            ,
-            {
-                "body": "{news} oops we made a mistake [Optional Link](https:/link/to/something)",
-            }
-            // --- to here
-        ]
-    }
-]
-```
+*(as long as their contribution adheres to our guidelines)!
 
 If you have questions or comments you can open a new Issue or contact [Tim I Hely](mailto:tim@axolstudio.com) for help.
 
