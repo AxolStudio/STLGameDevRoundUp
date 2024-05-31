@@ -210,12 +210,8 @@ html[class$="/STLGameDevRoundUp/"] {
 }
 
 nav {
-    a.nav-link {
-        color:white; 
-    }
-    a.active {
-        color:$gamedev-red;
+    a.nav-link.active {
+        color:$gamedev-red !important;
         font-weight: bold;
-        
     }
 }
