@@ -41,6 +41,7 @@ jobs:
         env: 
           RESULTS: ${{ steps.fetch-data.outputs.results }}
         run: |
+          git pull
           data_file="data/directory/developers.json"
           mkdir -p data
           test -f $data_file || touch $data_file
@@ -54,7 +55,6 @@ jobs:
       - name: Commit Change
         id: commit-change
         run: |
-          git pull
           git config --global user.name "GitHub Actions"
           git config --global user.email "no-reply@github.com"
           git tag updated-developer-directory
@@ -92,6 +92,7 @@ jobs:
         env: 
           RESULTS: ${{ steps.fetch-data.outputs.results }}
         run: |
+          git pull
           data_file="data/directory/projects.json"
           mkdir -p data
           test -f $data_file || touch $data_file
@@ -105,7 +106,6 @@ jobs:
       - name: Commit Change
         id: commit-change
         run: |
-          git pull
           git config --global user.name "GitHub Actions"
           git config --global user.email "no-reply@github.com"
           git tag updated-projects-showcase
