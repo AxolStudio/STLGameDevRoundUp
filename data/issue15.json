@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "body": "{📅 events} The next [Share and Play event](https://www.meetup.com/st-louis-game-developers/events/300761573/) is this Sunday, July 28th! Bring your game and get feedback on it!"
+    },
+    {
+      "body": "{📅 events} The [August Drinkup](https://www.meetup.com/st-louis-game-developers/events/302380640/) is on August 8th at [Dirty 20 Bar](https://www.dirty20bar.com/)! Come hang out with us!"
+    },
+    {
+      "body": "{📣 announcements} The release date for the Full Release of [Bring It On!](https://bringiton.axolstudio.com/) by [Axol Studio, LLC](https://axolstudio.com/) has been announced! You can get the full game on August 16, 2024! [More details here](https://store.steampowered.com/news/app/2020460/view/4335361829048618741)!"
+    },
+    {
+      "body": "{🎮 releases} [Veritus](https://store.steampowered.com/app/2513580/Veritus/) by [Colorgrave](https://www.colorgrave.com/) was just released! Featuring art by [Brendan Steppig](https://x.com/looloopaa)!"
+    },
+    {
+      "body": "{!header} Just a few things going on this time. While I would love to be able to put out a fresh RoundUp every single week, it is hard to find things to talk about sometimes, so we might only get these out once a month. ...unless? We can get more people to share and [contribute](https://github.com/AxolStudio/STLGameDevRoundUp/blob/main/CONTRIBUTING.md)! 😉"
+    }
+  ]
+}
