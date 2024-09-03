@@ -56,7 +56,7 @@ jobs:
         id: commit-change
         run: |
           git config --global user.name "GitHub Actions"
-          git config --global user.email "
+          git config --global user.email "no-reply@github.com"
           git tag updated-event-list
           git add data/events.json
           git commit -m "Updated event list"
