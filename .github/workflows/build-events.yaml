@@ -33,9 +33,9 @@ jobs:
             [
               { "command": "getData", "args": { "range": "'Form Responses 1'!B1:E99", "hasHeaderRow": true }}
             ]
-          env:
-            GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
-            GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
+        env:
+          GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
+          GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
       - name: Save Data
         id: save-data
         env: 
@@ -64,7 +64,7 @@ jobs:
           git push --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
   build:
     uses: ./.github/workflows/hugo-build.yaml
     needs: fetch-events
