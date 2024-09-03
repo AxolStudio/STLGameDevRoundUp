@@ -64,7 +64,7 @@ jobs:
           git push --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+          
   build:
     uses: ./.github/workflows/hugo-build.yaml
     needs: fetch-events
