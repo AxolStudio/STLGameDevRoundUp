@@ -1,0 +1,18 @@
+{{ define "header" }}
+  <header class="px-4 py-5 my-2 text-center">
+    <h1 class="display-4 fw-light">{{ .Title }}</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead text-body-secondary mb-2">This is a list of upcoming Game Developer-related Events happening around the St Louis Area.</p>
+      <p class="text-body-secondary">If you know about an event that is related to Game Development that is not listed here, please feel free to add it.</p>
+      <p>To add an event, please fill out the <a href="https://forms.gle/hZX71rwHsAwTd8oMA" target="_blank">Event Submission</a> Form!</p>
+    </div>
+  </header>
+{{ end }}
+
+{{ define "main" -}}
+  {{- $events := .Site.Data.events -}}
+
+  {{- range $event := $events -}}
+    {{ $event }}
+  {{- end -}}
+{{ end }}

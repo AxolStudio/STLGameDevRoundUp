@@ -1,0 +1,17 @@
+<!doctype html>
+<html class="{{ .Page.RelPermalink }}" lang="{{ or site.Language.LanguageCode site.Language.Lang }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+  {{ partial "icons" . }}
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="  ">
+    {{ partial "nav.html" . }}
+    {{ block "header" . }}{{ end }}
+    <main class="container">
+      {{ block "main" . }}{{ end }}
+    </main>
+    <footer class="footer mt-3 py-3 ">
+      {{ partial "footer.html" . }}
+    </footer>
+  </body>
+</html>
