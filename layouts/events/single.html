@@ -10,9 +10,56 @@
 {{ end }}
 
 {{ define "main" -}}
-  {{- $events := .Site.Data.events -}}
-
-  {{- range $event := $events -}}
-    {{ $event }}
+<section class="row pt-0 pb-events2 ">
+  <div class="col-lg-8 mx-auto">
+  {{- $eventsRaw := .Site.Data.events -}}
+  {{- $events := slice -}}
+  {{- range $eventRaw := $eventsRaw -}}
+    {{- $rawD := time.AsTime (index $eventRaw 1) -}}
+    {{- if (ge $rawD (time.Format ":date_short" time.Now )) -}}
+      {{- $events = $events | append (dict 
+        "name" (index $eventRaw 0)
+        "when" (index $eventRaw 1)
+        "desc" (index $eventRaw 2)
+        "where" (index $eventRaw 3))
+      -}}
+    {{- end -}}
   {{- end -}}
-{{ end }}
+  
+  {{- $lastDate := "" -}}
+  {{- $lastTime := "" -}}
+  {{- range $event := (sort $events "when" "asc") -}}
+
+  
+  {{- $rawDate := time.AsTime $event.when -}}
+  
+  {{- $eventDate := time.Format "January 2, 2006" $rawDate -}}
+    
+
+    
+    {{- if (ne $lastDate $eventDate) -}}
+      {{- if (ne $lastDate "") -}}
+        
+      </div>
+      {{- end -}}
+      <div class="responsive">
+        <h3>{{ $eventDate }}:</h3>
+    {{- end -}}
+    <div class="px-4">
+      <dl class=" ">
+        <dt class="">{{ $event.name }}</dt>
+        <dd class=""><small>When:</small> {{ time.Format ":time_short" $rawDate }}</dd>
+        
+        <dd class=""><small>Where:</small> {{ $event.where }}</dd>
+        <dd class="">{{ $event.desc }}</dd>
+      </dl>
+    </div>
+    
+  {{- end -}}
+  {{- if (ne $lastDate "") -}}
+        
+      </div>
+      {{- end -}}
+</div>
+</section>
+{{- end }}
