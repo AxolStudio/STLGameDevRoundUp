@@ -33,9 +33,9 @@ jobs:
     - name: Grab Issue Comments
       id: issue
       run: |
-        RUIssue="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
-          query($name: String!, $owner: String!) {
-            search(query: \"repo:$OWNER/$REPO in:title issue #${{ inputs.issue_no }}\", type:ISSUE, first: 1 ) {
+        RUIssue="$(gh api graphql -F owner=$OWNER -F name=$REPO -F ino=${{ inputs.issue_no }} -f query='
+          query($name: String!, $owner: String!, $ino: String!) {
+            search(query: \"repo:$owner/$repo in:title issue $ino\", type:ISSUE, first: 1 ) {
               nodes {
                 title
                 number
