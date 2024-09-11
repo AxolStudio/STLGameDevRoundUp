@@ -1,13 +1,29 @@
 {
   "nodes": [
 
-"{📣 announcements} Broski McDave released a demo version of Campaign Season available at [link](https://broskimcdave.itch.io/campaign-season)"
-"{📅 events} The [September GameDev Drinkup](https://www.meetup.com/st-louis-game-developers/events/303180698/) is on Thursday, September 19th at [Dirty 20 Bar](https://www.dirty20bar.com/)! It's our monthly hangout open to everyone! Come and chat about game making or game playing or game admiring! Drinking 100% optional!"
-"{📅 events} The [September 15th Code & Coffee event](https://www.meetup.com/code-and-coffee-st-louis/events/301820289/) will feature a talk on \"Developer Psychology!\""
-"{📣 announcements} [Hive Jump 2: Survivors](https://store.steampowered.com/app/2545740/Hive_Jump_2_Survivors/) left Early Access on September 10th!!! Congratulations! ⁂gif of Kermit the Frog wildly waving his arms in excitement⁂"
-"{📼 videos} Check out Tashkas's progress on their game with [their YouTube Shorts](https://www.youtube.com/watch?v=zQ1ffDGiGRY)! "
-"{💲jobs} thewojnartist is looking to hire someone to help with sound effects for their game *Dribble 2*. Specifically they are looking for cartoony, mascot-platformer sounds and not music. Contact [anthonywojnar@gmail.com](mailto:anthonywojnar@gmail.com) for details!"
-"{!header} Games!"
+[
+  {
+    "body": "{📣 announcements} Broski McDave released a demo version of Campaign Season available at [link](https://broskimcdave.itch.io/campaign-season)"
+  },
+  {
+    "body": "{📅 events} The [September GameDev Drinkup](https://www.meetup.com/st-louis-game-developers/events/303180698/) is on Thursday, September 19th at [Dirty 20 Bar](https://www.dirty20bar.com/)! It's our monthly hangout open to everyone! Come and chat about game making or game playing or game admiring! Drinking 100% optional!"
+  },
+  {
+    "body": "{📅 events} The [September 15th Code & Coffee event](https://www.meetup.com/code-and-coffee-st-louis/events/301820289/) will feature a talk on \"Developer Psychology!\""
+  },
+  {
+    "body": "{📣 announcements} [Hive Jump 2: Survivors](https://store.steampowered.com/app/2545740/Hive_Jump_2_Survivors/) left Early Access on September 10th!!! Congratulations! ⁂gif of Kermit the Frog wildly waving his arms in excitement⁂"
+  },
+  {
+    "body": "{📼 videos} Check out Tashkas's progress on their game with [their YouTube Shorts](https://www.youtube.com/watch?v=zQ1ffDGiGRY)! "
+  },
+  {
+    "body": "{💲jobs} thewojnartist is looking to hire someone to help with sound effects for their game *Dribble 2*. Specifically they are looking for cartoony, mascot-platformer sounds and not music. Contact [anthonywojnar@gmail.com](mailto:anthonywojnar@gmail.com) for details!"
+  },
+  {
+    "body": "{!header} Games!"
+  }
+]
 
   ]
 }
