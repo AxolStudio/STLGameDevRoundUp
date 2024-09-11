@@ -34,7 +34,7 @@ jobs:
       id: issue
       run: |
         RUIssue="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
-          search(query: "repo:$OWNER/$REPO in:title 'issue #${{ inputs.issue_no }}'", type: ISSUE, first: 1) {
+          search(query: \"repo:$OWNER/$REPO in:title issue #${{ inputs.issue_no }}\", type: ISSUE, first: 1) {
             nodes {
               title
               number
