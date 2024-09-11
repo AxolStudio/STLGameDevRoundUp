@@ -40,11 +40,6 @@ jobs:
                 ... on Issue {
                   title
                   number
-                  comments(first:100) {
-                    nodes {
-                      body
-                    }
-                  }
                 }
               }
             }
@@ -56,7 +51,25 @@ jobs:
         ru_no="${issue_title##*#}"
         save_to="data/issue${ru_no}.json"
         mkdir -p data
-        echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments' > $save_to
+
+        RUIssueComments="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
+            query($name: String!, $owner: String!) {
+                repository(name: $name, owner: $owner) {
+                    issues(number: $issue_id) {
+                        nodes {
+                            title
+                            number
+                            comments(first:100) {
+                                nodes {
+                                    body
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ')"
+        echo $RUIssueComments | jq -r '.data.repository.issues.nodes[].comments | with_entries( select(.comments | startswith('''{''''))) > $save_to
         echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
         echo 'issue_no'=$ru_no >> $GITHUB_OUTPUT
         md_file="content/issue-${ru_no}.md"
