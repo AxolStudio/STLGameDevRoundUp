@@ -5,10 +5,10 @@ on:
     inputs:
       issue_no:
         required: true
-        type: number
+        type: string
       issue_id:
         required: true
-        type: number
+        type: string
       base_url:
         required: true
         type: string
