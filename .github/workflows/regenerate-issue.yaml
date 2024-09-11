@@ -81,7 +81,14 @@ jobs:
         OWNER: ${{ github.repository_owner }}
         REPO: ${{ github.event.repository.name }}
     - name: Commit change
-      run: "git config --global user.name \"GitHub Actions\"\ngit config --global user.email \"no-reply@github.com\"\ngit tag generated-issue-${ISSUE_NO}\ngit add content/issue-${ISSUE_NO}.md data/issue${ISSUE_NO}.json\ngit commit -m \"Update issue ${ISSUE_NO}\"\ngit remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}\ngit push --follow-tags \n"
+      run: |
+                    git config --global user.name "GitHub Actions"
+                    git config --global user.email "no-reply@github.com"
+                    git tag re-generated-issue-${ISSUE_NO}
+                    git add data/issue${ISSUE_NO}.json
+                    git commit -m "Regenerated issue ${ISSUE_NO}"
+                    git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+                    git push --follow-tags 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ISSUE_NO: ${{ env.ISSUE_NO }}
