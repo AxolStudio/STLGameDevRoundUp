@@ -68,7 +68,7 @@ jobs:
         ')"
         
         echo "{
-          "nodes": [
+          """nodes""": [
         " > $save_to
         echo $RUIssueComments | jq -r '.data.repository.issue.comments.nodes[] | select(.body | startswith("{"))' >> $save_to
         echo "
