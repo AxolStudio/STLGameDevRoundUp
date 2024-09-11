@@ -9,7 +9,6 @@ concurrency:
     group: "generate-pages"
     cancel-in-progress: false
 
-
 defaults:
     run:
         shell: bash
@@ -86,41 +85,15 @@ jobs:
     build:
         uses: ./.github/workflows/hugo-build.yaml
         needs: generate
-    
+
     screenshot:
-        runs-on: ubuntu-latest
         needs: [generate, build]
-        outputs:
-            issue_no: ${{ needs.generate.outputs.issue_no }}
-            issue_id: ${{ needs.generate.outputs.issue_id }}
-            path: ${{ steps.screenshot.outputs.path }}
-            base_url: ${{ needs.build.outputs.base_url }}
-        steps: 
-            -   name: Checkout
-                uses: actions/checkout@v4
-                with: 
-                    submodules: recursive
-                    fetch-depth: 0
-            -   name: Screenshot
-                id: screenshot
-                uses: swinton/screenshot-website@v1.x
-                with:
-                    source: "${{ needs.build.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/"
-                    destination: "issue-${{ needs.generate.outputs.issue_no }}.png"
-            -   name: Commit image
-                run: |
-                    git pull
-                    mkdir -p screenshots
-                    mv -f ${{ steps.screenshot.outputs.path }} screenshots/issue-${{ needs.generate.outputs.issue_no }}.png
-                    git config --global user.name "GitHub Actions"
-                    git config --global user.email "no-reply@github.com"
-                    git tag generated-screenshot-${ISSUE_NO}
-                    git add screenshots/issue-${{ needs.generate.outputs.issue_no }}.png
-                    git commit -m "Update issue image ${{ needs.generate.outputs.issue_no }}"
-                    git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-                    git push --follow-tags 
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ./.github/workflows/generate-screenshot.yaml
+        with:
+            issue_no: ${{ steps.generate.outputs.issue_no }}
+            issue_id: ${{ steps.generate.outputs.issue_id }}
+            base_url: ${{ steps.build.outputs.base_url }}
+
     
     share:
         runs-on: ubuntu-latest
@@ -136,19 +109,19 @@ jobs:
                     access-token: ${{ secrets.ACCESS_TOKEN }}
                     access-token-secret: ${{ secrets.ACCESS_TOKEN_SECRET }}
                     text: |
-                        St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
+                        St Louis Game Developer Roundup Issue № ${{ steps.generate.outputs.issue_no }} is out!
 
-                        ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
+                        ${{ steps.build.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/
 
                         #STL #gamedev #IndieGameDev #videogames
             -   name: Bsky's
                 uses: myConsciousness/bluesky-post@v5
                 with: 
                     text:
-                        St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!
+                        St Louis Game Developer Roundup Issue № ${{  steps.generate.outputs.issue_no }} is out!
 
-                        ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
-                    link-preview-url: ${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/
+                        ${{ steps.build.outputs.base_url }}/issue-${{  steps.generate.outputs.issue_no }}/
+                    link-preview-url: ${{ steps.build.outputs.base_url }}/issue-${{  steps.generate.outputs.issue_no }}/
                     identifier: "axolstudio.com"
                     password: ${{ secrets.BLUESKY_PASSWORD }}
             -   name: Discord
@@ -158,15 +131,15 @@ jobs:
                     DISCORD_EMBEDS: |
                         [
                             {
-                                "title": "St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }}",
-                                "url": "${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/",
+                                "title": "St Louis Game Developer Roundup Issue № ${{ steps.generate.outputs.issue_no }}",
+                                "url": "${{ steps.generate.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/",
                                 "image": {
-                                    "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ needs.screenshot.outputs.issue_no }}.png"
+                                    "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ steps.generate.outputs.issue_no }}.png"
                                 }
                             }
                         ]
                 with:
-                    args: ":sparkles: St Louis Game Developer Roundup Issue № ${{ needs.screenshot.outputs.issue_no }} is out!"
+                    args: ":sparkles: St Louis Game Developer Roundup Issue № ${{ steps.generate.outputs.issue_no }} is out!"
                     
     finish:
         runs-on: ubuntu-latest
@@ -177,13 +150,11 @@ jobs:
             OWNER: ${{ github.repository_owner }}
             REPO: ${{ github.event.repository.name }}
         steps:
-            -   name: Checkout
-                uses: actions/checkout@v4
             -   name: Close Issue
-                run: gh issue close ${{ needs.screenshot.outputs.issue_id }} -c "[Issue № ${{ needs.screenshot.outputs.issue_no }}](${{ needs.screenshot.outputs.base_url }}/issue-${{ needs.screenshot.outputs.issue_no }}/) has been released!" -r completed
+                run: gh issue close ${{ steps.generate.outputs.issue_id }} -c "[Issue № ${{ steps.generate.outputs.issue_no }}](${{ steps.build.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/) has been released!" -r completed
             -   name: Open New Issue
                 run: |
-                    new_no=$((${{ needs.screenshot.outputs.issue_no }}+1))
+                    new_no=$((${{ steps.generate.outputs.issue_no }}+1))
                     gh issue create -t "Roundup Issue #$new_no" -b "To add to the next roundup, use the following format:
                     \`\`\`md
                     {category} short description with [link](/link/to/item)

@@ -1,0 +1,97 @@
+name: ♻️ Regenerate a Roundup Issue
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_no:
+        type: number
+        required: true
+
+concurrency:
+    group: "generate-pages"
+    cancel-in-progress: false
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+
+  generate:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    outputs:
+        issue_no: ${{ steps.issue.outputs.issue_no }}
+        issue_id: ${{ steps.issue.outputs.issue_id }}
+    steps:
+        -   name: Checkout
+            uses: actions/checkout@v4
+            with: 
+                submodules: recursive
+                fetch-depth: 0
+        -   name: Grab Issue Comments
+            id: issue
+            run: |
+                RUIssue="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
+                    query($name: String!, $owner: String!) {
+                        repository(name: $name, owner: $owner) {
+                            issues(first: 1, query: "title:\"Roundup Issue #${{ inputs.issue_no }}\"" ) {
+                                nodes {
+                                    title
+                                    number
+                                    comments(first:100) {
+                                        nodes {
+                                            body
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ')"
+                issue_id=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].number')
+                echo 'issue_id'=$issue_id >> $GITHUB_OUTPUT
+                issue_title=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].title')
+                ru_no="${issue_title##*#}"
+                save_to="data/issue${ru_no}.json"
+                mkdir -p data
+                echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments' > $save_to
+                echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
+                echo 'issue_no'=$ru_no >> $GITHUB_OUTPUT
+                md_file="content/issue-${ru_no}.md"
+                cat << EOF >> $md_file
+                ---
+                title: "Issue #$ru_no"
+                date: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+                draft: false
+                no: $ru_no
+                ---
+                EOF
+            env: 
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                OWNER: ${{ github.repository_owner }}
+                REPO: ${{ github.event.repository.name }}
+        -   name: Commit change
+            run: |
+                git config --global user.name "GitHub Actions"
+                git config --global user.email "no-reply@github.com"
+                git tag generated-issue-${ISSUE_NO}
+                git add content/issue-${ISSUE_NO}.md data/issue${ISSUE_NO}.json
+                git commit -m "Update issue ${ISSUE_NO}"
+                git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+                git push --follow-tags 
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                ISSUE_NO: ${{ env.ISSUE_NO }}
+  
+  build:
+        uses: ./.github/workflows/hugo-build.yaml
+        needs: generate
+  
+  screenshot:
+        needs: [generate, build]
+        uses: ./.github/workflows/generate-screenshot.yaml
+        with:
+            issue_no: ${{ steps.generate.outputs.issue_no }}
+            issue_id: ${{ steps.generate.outputs.issue_id }}
+            base_url: ${{ steps.build.outputs.base_url }}
