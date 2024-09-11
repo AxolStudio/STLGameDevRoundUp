@@ -41,7 +41,7 @@ jobs:
         -   name: Commit image
             run: |
                 mkdir -p screenshots
-                mv -f ${{ inputs.outputs.path }} screenshots/issue-${{inputs.issue_no }}.png
+                mv -f ${{ steps.screenshot.outputs.path }} screenshots/issue-${{inputs.issue_no }}.png
                 git config --global user.name "GitHub Actions"
                 git config --global user.email "no-reply@github.com"
                 git tag generated-screenshot-${{ inputs.issue_no }}
