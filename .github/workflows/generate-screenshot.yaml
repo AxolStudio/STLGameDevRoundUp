@@ -16,31 +16,40 @@ on:
 permissions: write-all
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    group: "pages"
+    cancel-in-progress: false
 
 defaults:
-  run:
-    shell: bash
+    run:
+      shell: bash
 
 jobs:
   screenshot:
     runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive
-        fetch-depth: 0
-    - name: Screenshot
-      id: screenshot
-      uses: swinton/screenshot-website@v1.x
-      with:
-        source: "${{ inputs.base_url }}/issue-${{ inputs.issue_no }}/"
-        destination: "issue-${{ inputs.issue_no }}.png"
-    - name: Commit image
-      run: "git pull\nmkdir -p screenshots\nmv -f ${{ inputs.outputs.path }} screenshots/issue-${{inputs.issue_no }}.png\ngit config --global user.name \"GitHub Actions\"\ngit config --global user.email \"no-reply@github.com\"\ngit tag generated-screenshot-${{ inputs.issue_no }}\ngit add screenshots/issue-${{ inputs.issue_no }}.png\ngit commit -m \"Update issue image ${{ inputs.issue_no }}\"\ngit remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}\ngit push --follow-tags \n"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
+    steps: 
+        -   name: Checkout
+            uses: actions/checkout@v4
+            with: 
+                submodules: recursive
+                fetch-depth: 0
+        -   name: Screenshot
+            id: screenshot
+            uses: swinton/screenshot-website@v1.x
+            with:
+                source: "${{ inputs.base_url }}/issue-${{ inputs.issue_no }}/"
+                destination: "issue-${{ inputs.issue_no }}.png"
+        -   name: Commit image
+            run: |
+                mkdir -p screenshots
+                mv -f ${{ inputs.outputs.path }} screenshots/issue-${{inputs.issue_no }}.png
+                git config --global user.name "GitHub Actions"
+                git config --global user.email "no-reply@github.com"
+                git tag generated-screenshot-${{ inputs.issue_no }}
+                git add screenshots/issue-${{ inputs.issue_no }}.png
+                git commit -m "Update issue image ${{ inputs.issue_no }}"
+                git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+                git push --follow-tags 
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            
+  
