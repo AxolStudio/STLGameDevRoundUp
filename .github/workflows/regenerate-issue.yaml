@@ -80,6 +80,8 @@ jobs:
         OWNER: ${{ github.repository_owner }}
         REPO: ${{ github.event.repository.name }}
     - name: Commit change
+      id: commit
+      continue-on-error: true
       run: |
                     git config --global user.name "GitHub Actions"
                     git config --global user.email "no-reply@github.com"
