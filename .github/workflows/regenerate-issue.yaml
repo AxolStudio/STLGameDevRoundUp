@@ -86,6 +86,6 @@ jobs:
     needs: [generate, build]
     uses: ./.github/workflows/generate-screenshot.yaml
     with:
-      issue_no: ${{ steps.generate.outputs.issue_no }}
-      issue_id: ${{ steps.generate.outputs.issue_id }}
-      base_url: ${{ steps.build.outputs.base_url }}
+      issue_no: ${{ needs.generate.outputs.issue_no }}
+      issue_id: ${{ needs.generate.outputs.issue_id }}
+      base_url: ${{ needs.build.outputs.base_url }}
