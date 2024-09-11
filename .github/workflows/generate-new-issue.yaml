@@ -162,4 +162,4 @@ jobs:
 
                     Which should generate the following:
 
-                    {category} short description with [link](/link/to/item)" -l "next-roundup"
+                    {category} short description with [link](/link/to/item)" -l "next-roundup" "issue-$new_no" 
