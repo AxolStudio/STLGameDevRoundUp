@@ -55,7 +55,7 @@ jobs:
         RUIssueComments="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
             query($name: String!, $owner: String!) {
                 repository(name: $name, owner: $owner) {
-                    issues(number: $issue_id) {
+                    issue(number: $issue_id) {
                         nodes {
                             title
                             number
