@@ -70,7 +70,7 @@ jobs:
         echo '{
           "nodes": [
         ' > $save_to
-        echo $RUIssueComments | jq '.data.repository.issue.comments.nodes[] | select(.body | startswith("{")) | join(', \\n')' >> $save_to
+        echo $RUIssueComments | jq '.data.repository.issue.comments.nodes[] | select(.body | startswith("{")) | join(', ')' >> $save_to
         echo '
           ]
         }' >> $save_to
