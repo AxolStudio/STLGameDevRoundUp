@@ -34,21 +34,17 @@ jobs:
       id: issue
       run: |
         RUIssue="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
-          query($name: String!, $owner: String!) {
-            repository(name: $name, owner: $owner) {
-              issues(first: 1, states: CLOSED, labels: "issue-${{ inputs.issue_no }}") {
+          search(query: "repo:$OWNER/$REPO in:title 'issue #${{ inputs.issue_no }}'", type: ISSUE, first: 1) {
+            nodes {
+              title
+              number
+              comments(first:100) {
                 nodes {
-                      title
-                      number
-                      comments(first:100) {
-                        nodes {
-                          body
-                        }
-                      }
-                    }
-                  }
+                  body
                 }
+              }
             }
+          }
         ')"
         issue_id=$(echo $RUIssue | jq -r '.data.repository.issues.nodes[0].number')
         echo 'issue_id'=$issue_id >> $GITHUB_OUTPUT
