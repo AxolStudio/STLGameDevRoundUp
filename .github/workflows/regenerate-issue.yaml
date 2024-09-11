@@ -67,7 +67,7 @@ jobs:
             }
         ')"
         echo $RUIssueComments;
-        echo $RUIssueComments | jq -r '.data.repository.issue.nodes[].comments | with_entries( select(.comments | startswith("{")))' > $save_to
+        echo $RUIssueComments | jq -r '.data.repository.issue.nodes[] | with_entries( select(.comments | startswith("{")))' > $save_to
         echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
         echo 'issue_no'=$ru_no >> $GITHUB_OUTPUT
         md_file="content/issue-${ru_no}.md"
