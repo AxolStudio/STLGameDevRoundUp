@@ -3,8 +3,17 @@
 {{- range $eventRaw := $eventsRaw -}}
     {{- $rawD := time.AsTime (index $eventRaw 1) -}}
     {{- $endDate := time.Now -}}
-    {{- $endDate.AddDate 0 2 0 -}}
-    {{- if and (ge $rawD (time.Format ":date_short" time.Now )) (le $rawD (time.Format ":date_short" $endDate)) -}}
+    {{- $endDate = $endDate.AddDate 0 3 0 -}}
+    ---
+    {{ time.Format ":date_short" $rawD }}
+    {{ time.Format ":time_short" $rawD }}
+    {{ time.Format ":date_short" $rawD }}
+    {{ time.Format ":time_short" $rawD }}
+    {{ ( ge $rawD ( time.Format ":date_short" time.Now )) }}
+    {{ ( le $rawD ( time.Format ":date_short" $endDate )) }}
+    {{ and ( ge $rawD ( time.Format ":date_short" time.Now )) ( le $rawD ( time.Format ":date_short" $endDate )) }}
+    ---
+    {{- if and ( ge $rawD ( time.Format ":date_short" time.Now )) ( le $rawD ( time.Format ":date_short" $endDate )) -}}
         {{- $events = $events | append (dict
             "name" (index $eventRaw 0)  
             "when" (index $eventRaw 1)
