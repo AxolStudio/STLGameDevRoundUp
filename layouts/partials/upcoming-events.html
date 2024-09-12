@@ -15,8 +15,9 @@
         -}}
     {{- end -}}
 {{- end -}}
-{{- if $events -}}
 <div class="row">
+    {{ $page := .Site.GetPage "/events" }}
+    {{- if $events -}}
     <h4>📅 Upcoming Events</h4>
     <dl class="ms-4">
         {{- range $event := (sort $events "when" "asc") -}}
@@ -28,7 +29,10 @@
             <dd class="ms-4">{{ $event.desc }}</dd>
         {{- end -}}
     </dl>
-    {{ $page := .Site.GetPage "/events" }}
     <p><a href="{{ $page.RelPermalink }}">View all of our Events!</a></p>
+    {{- else -}}
+    There are no events coming up between {{ time.Format "2006-01-02" .context.site.RUDate }} and {{ time.Format
+    "2006-01-02" $endDate }}. Check out our <a href="{{ $page.RelPermalink }}">Upcoming Events</a> page for events that
+    might be further out!
+    {{- end -}}
 </div>
-{{- end -}}
