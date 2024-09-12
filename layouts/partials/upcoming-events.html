@@ -1,9 +1,10 @@
+{{- $endDate := .context.site.RUDate -}}
+{{- $endDate = $endDate.AddDate 0 1 0 -}}
 {{- $eventsRaw := .Site.Data.events -}}
 {{- $events := slice -}}
 {{- range $eventRaw := $eventsRaw -}}
     {{- $rawD := time.AsTime (index $eventRaw 1) -}}
-    {{- $endDate := .context.site.RUDate -}}
-    {{- $endDate = $endDate.AddDate 0 1 0 -}}
+    
     {{- if and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" .context.site.RUDate ))) ( le $rawD ( time.AsTime (
     time.Format
     "2006-01-02" $endDate ))) -}}
