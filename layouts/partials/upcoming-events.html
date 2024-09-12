@@ -4,7 +4,7 @@
     {{- $rawD := time.AsTime (index $eventRaw 1) -}}
     {{- $endDate := time.Now -}}
     {{- $endDate.AddDate 0 2 0 -}}
-    {{- if ((ge $rawD (time.Format ":date_short" time.Now )) and (le $rawD (time.Format ":date_short" $endDate))) -}}
+    {{- if and (ge $rawD (time.Format ":date_short" time.Now )) (le $rawD (time.Format ":date_short" $endDate)) -}}
         {{- $events = $events | append (dict
             "name" (index $eventRaw 0)  
             "when" (index $eventRaw 1)
