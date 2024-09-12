@@ -2,7 +2,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ if eq .Type "directory" }}Developer Directory
-  {{ else if eq .Type "showcase" }}Project Showcase{{ else }}Roundup № {{ .Params.no }}{{ end}} | {{ site.Title }} {{ end }}</title>
+  {{ else if eq .Type "showcase" }}Project Showcase{{ else }}RoundUp № {{ .Params.no }}{{ end}} | {{ site.Title }} {{ end
+  }}</title>
 
 <meta name="keywords" content="{{ .Param "keywords" }}" />
 <meta name="author" content="{{ .Param "author" }}" />
@@ -10,7 +11,9 @@
 <link rel="canonical" href="{{ .Permalink }}" />
 
 {{ with .OutputFormats.Get "rss" -}}
-  {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink "St Louis Game Developer Roundup RSS Feed" | safeHTML }}
+  {{ printf `
+  <link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink "St Louis Game Developer RoundUp RSS Feed" |
+  safeHTML }}
 {{ end }}
 
 <meta name="robots" content="all" />

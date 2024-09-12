@@ -1,4 +1,4 @@
-name: ▶ Generate a new Roundup Issue!
+name: ▶ Generate a new RoundUp Issue!
 
 on:
     workflow_dispatch:
@@ -115,7 +115,7 @@ jobs:
                     access-token: ${{ secrets.ACCESS_TOKEN }}
                     access-token-secret: ${{ secrets.ACCESS_TOKEN_SECRET }}
                     text: |
-                        St Louis Game Developer Roundup Issue № ${{ steps.generate.outputs.issue_no }} is out!
+                        St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }} is out!
 
                         ${{ steps.build.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/
 
@@ -124,7 +124,7 @@ jobs:
                 uses: myConsciousness/bluesky-post@v5
                 with: 
                     text:
-                        St Louis Game Developer Roundup Issue № ${{  steps.generate.outputs.issue_no }} is out!
+                        St Louis Game Developer RoundUp Issue № ${{  steps.generate.outputs.issue_no }} is out!
 
                         ${{ steps.build.outputs.base_url }}/issue-${{  steps.generate.outputs.issue_no }}/
                     link-preview-url: ${{ steps.build.outputs.base_url }}/issue-${{  steps.generate.outputs.issue_no }}/
@@ -137,7 +137,7 @@ jobs:
                     DISCORD_EMBEDS: |
                         [
                             {
-                                "title": "St Louis Game Developer Roundup Issue № ${{ steps.generate.outputs.issue_no }}",
+                                "title": "St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }}",
                                 "url": "${{ steps.generate.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/",
                                 "image": {
                                     "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ steps.generate.outputs.issue_no }}.png"
@@ -145,7 +145,7 @@ jobs:
                             }
                         ]
                 with:
-                    args: ":sparkles: St Louis Game Developer Roundup Issue № ${{ steps.generate.outputs.issue_no }} is out!"
+                    args: ":sparkles: St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }} is out!"
                     
     finish:
         runs-on: ubuntu-latest
@@ -161,7 +161,7 @@ jobs:
             -   name: Open New Issue
                 run: |
                     new_no=$((${{ steps.generate.outputs.issue_no }}+1))
-                    gh issue create -t "Roundup Issue #$new_no" -b "To add to the next roundup, use the following format:
+                    gh issue create -t "RoundUp Issue #$new_no" -b "To add to the next roundup, use the following format:
                     \`\`\`md
                     {category} short description with [link](/link/to/item)
                     \`\`\`
