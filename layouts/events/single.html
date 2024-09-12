@@ -29,14 +29,9 @@
   {{- $lastDate := "" -}}
   {{- $lastTime := "" -}}
   {{- range $event := (sort $events "when" "asc") -}}
-
-  
   {{- $rawDate := time.AsTime $event.when -}}
-  
   {{- $eventDate := time.Format "January 2, 2006" $rawDate -}}
-    
 
-    
     {{- if (ne $lastDate $eventDate) -}}
       {{- if (ne $lastDate "") -}}
         

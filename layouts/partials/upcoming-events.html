@@ -1,0 +1,34 @@
+{{- $eventsRaw := .Site.Data.events -}}
+{{- $events := slice -}}
+{{- range $eventRaw := $eventsRaw -}}
+    {{- $rawD := time.AsTime (index $eventRaw 1) -}}
+    {{- $endDate := time.Now -}}
+    {{- $endDate.AddDate 0 2 0 -}}
+    {{- if ((ge $rawD (time.Format ":date_short" time.Now )) && (le $rawD (time.Format ":date_short" $endDate))) -}}
+        {{- $events = $events | append (dict
+            "name" (index $eventRaw 0)  
+            "when" (index $eventRaw 1)
+            "desc" (index $eventRaw 2)
+            "where" (index $eventRaw 3))
+        -}}
+    {{- end -}}
+{{- end -}}
+{{- if $events -}}
+<div class="row">
+    <h3>📅 Upcoming Events</h3>
+    <dl class="ms-4">
+        {{- range $event := (sort $events "when" "asc") -}}
+            {{- $rawDate := time.AsTime $event.when -}}
+            <dt class="">
+                <time datetime='{{ $rawDate }}'>{{ $rawDate | time.Format ":date_full" }} - {{ $rawDate | time.Format ":time_medium" }}</time>
+            </dt>
+            <dd class="">{{ $event.name }} at {{ $event.where }}</dd>
+            <dd class="">{{ $event.desc }}</dd>
+        {{- end -}}
+    </dl>
+</div>
+<div class="row">
+    {{ $page := .Site.GetPage "/events" }}
+    <p><a href="{{ $page.RelPermalink }}">View all of our Events!</a></p>
+</div>
+{{- end -}}

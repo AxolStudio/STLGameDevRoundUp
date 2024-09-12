@@ -13,4 +13,8 @@
         {{- end -}}
     </dl>
 </div>
+<div class="row">
+  {{ $page := .Site.GetPage "/directory" }}
+  <p><a href="{{ $page.RelPermalink }}">View more developers in our Directory!</a></p>
+</div>
 {{- end -}}

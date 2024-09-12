@@ -34,6 +34,12 @@
                         }}aria-current="page" {{ end }}>Project Showcase</a>
 
                 </li>
+                <li class="nav-item"></li>
+                {{ $page := .Site.GetPage "/events" }}
+                <a class='nav-link {{ if eq $currentPage.Title "Upcoming Events" }}active{{ end }}'' href="{{ $page.RelPermalink }}" {{
+                                    if eq $currentPage.Title "Upcoming Events" }}aria-current="page" {{ end }}>Upcoming Events</a>
+
+                </li>
             </ul>
             <div class="d-lg-flex col-lg-2 justify-content-end ">
                 {{ partial "color-switch.html" . }}
