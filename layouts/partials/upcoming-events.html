@@ -20,14 +20,14 @@
     {{ $page := .Site.GetPage "/events" }}
     {{- if $events -}}
     <h4>📅 Upcoming Events</h4>
-    <dl class="ms-4">
+    <dl class="ps-4">
         {{- range $event := (sort $events "when" "asc") -}}
             {{- $rawDate := time.AsTime $event.when -}}
-            <dt class="h5 ms-2">
+            <dt class="h5 ps-2">
                 <time datetime='{{ $rawDate }}'>{{ $rawDate | time.Format ":date_full" }} - {{ $rawDate | time.Format ":time_medium" }}</time>
             </dt>
-            <dd class="ms-4">{{ $event.name }} at {{ $event.where }}</dd>
-            <dd class="ms-4">{{ $event.desc }}</dd>
+            <dd class="ps-4">{{ $event.name }} at {{ $event.where }}</dd>
+            <dd class="ps-4">{{ $event.desc }}</dd>
         {{- end -}}
     </dl>
     <p><a href="{{ $page.RelPermalink }}">View all of our Events!</a></p>
