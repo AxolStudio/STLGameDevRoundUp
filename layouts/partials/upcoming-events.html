@@ -4,19 +4,6 @@
     {{- $rawD := time.AsTime (index $eventRaw 1) -}}
     {{- $endDate := time.Now -}}
     {{- $endDate = $endDate.AddDate 0 3 0 -}}
-    ---<br />
-    {{ time.Format ":date_short" $rawD }}
-    {{ time.Format ":time_short" $rawD }}
-    <br />
-    {{ time.Format ":date_short" $endDate }}
-    {{ time.Format ":time_short" $endDate }}
-    <br />
-    {{ ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" time.Now ))) }}
-    {{ ( lt $rawD ( time.AsTime ( time.Format "2006-01-02" $endDate ))) }}
-    {{ and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" time.Now ))) ( lt $rawD ( time.AsTime ( time.Format
-    "2006-01-02" $endDate ))) }}
-    <br />
-    ---
     {{- if and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" time.Now ))) ( lt $rawD ( time.AsTime ( time.Format
     "2006-01-02" $endDate ))) -}}
         {{- $events = $events | append (dict
@@ -29,15 +16,15 @@
 {{- end -}}
 {{- if $events -}}
 <div class="row">
-    <h3>📅 Upcoming Events</h3>
+    <h4>📅 Upcoming Events</h4>
     <dl class="ms-4">
         {{- range $event := (sort $events "when" "asc") -}}
             {{- $rawDate := time.AsTime $event.when -}}
-            <dt class="">
+            <dt class="h5 ms-2">
                 <time datetime='{{ $rawDate }}'>{{ $rawDate | time.Format ":date_full" }} - {{ $rawDate | time.Format ":time_medium" }}</time>
             </dt>
-            <dd class="">{{ $event.name }} at {{ $event.where }}</dd>
-            <dd class="">{{ $event.desc }}</dd>
+            <dd class="ms-4">{{ $event.name }} at {{ $event.where }}</dd>
+            <dd class="ms-4">{{ $event.desc }}</dd>
         {{- end -}}
     </dl>
 </div>
