@@ -11,14 +11,14 @@
     {{ time.Format ":date_short" $endDate }}
     {{ time.Format ":time_short" $endDate }}
     <br />
-    {{ ( ge $rawD ( time.AsTime ( time.Format ":date_short" time.Now ))) }}
-    {{ ( lt $rawD ( time.AsTime ( time.Format ":date_short" $endDate ))) }}
-    {{ and ( ge $rawD ( time.AsTime ( time.Format ":date_short" time.Now ))) ( lt $rawD ( time.AsTime ( time.Format
-    ":date_short" $endDate ))) }}
+    {{ ( ge $rawD ( time.AsTime ( time.Format ":2006-01-02" time.Now ))) }}
+    {{ ( lt $rawD ( time.AsTime ( time.Format ":2006-01-02" $endDate ))) }}
+    {{ and ( ge $rawD ( time.AsTime ( time.Format ":2006-01-02" time.Now ))) ( lt $rawD ( time.AsTime ( time.Format
+    ":2006-01-02" $endDate ))) }}
     <br />
     ---
-    {{- if and ( ge $rawD ( time.AsTime ( time.Format ":date_short" time.Now ))) ( lt $rawD ( time.AsTime ( time.Format
-    ":date_short" $endDate ))) -}}
+    {{- if and ( ge $rawD ( time.AsTime ( time.Format ":2006-01-02" time.Now ))) ( lt $rawD ( time.AsTime ( time.Format
+    ":2006-01-02" $endDate ))) -}}
         {{- $events = $events | append (dict
             "name" (index $eventRaw 0)  
             "when" (index $eventRaw 1)
