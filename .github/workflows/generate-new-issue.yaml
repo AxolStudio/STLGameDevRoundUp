@@ -53,7 +53,13 @@ jobs:
                     ru_no="${issue_title##*#}"
                     save_to="data/issue${ru_no}.json"
                     mkdir -p data
-                    echo $RUIssue | jq -r '.data.repository.issues.nodes[].comments' > $save_to
+
+                    echo '{
+                        "nodes": 
+                    ' > $save_to
+                    echo $RUIssueComments | jq '[.data.repository.issues.nodes[].comments | select(.body | startswith("{"))]' >> $save_to
+                    echo '
+                    }' >> $save_to
                     echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
                     echo 'issue_no'=$ru_no >> $GITHUB_OUTPUT
                     md_file="content/issue-${ru_no}.md"
