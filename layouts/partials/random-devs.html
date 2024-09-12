@@ -1,6 +1,6 @@
 {{- $devs := .Site.Data.directory.developers -}}
 {{- if $devs -}}
-<div class="row">
+<div class="row border-bottom">
     <h4>🧑‍💻 Check out this featured developer from our Community!</h4>
     <dl class="ms-4  ">
         {{- range $dev := first 1 ( $devs | shuffle ) -}}
