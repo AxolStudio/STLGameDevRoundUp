@@ -61,7 +61,7 @@
 
 <hr class="my-4 mx-4" />
 
-{{ partial "partials/upcoming-events.html" . }}
+{{ partial "partials/upcoming-events.html" ( dict "context" . "RUDate" $dateMachine ) }}
 
 <hr class="my-4 mx-4" />
 

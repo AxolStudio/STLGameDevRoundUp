@@ -2,9 +2,10 @@
 {{- $events := slice -}}
 {{- range $eventRaw := $eventsRaw -}}
     {{- $rawD := time.AsTime (index $eventRaw 1) -}}
-    {{- $endDate := time.Now -}}
+    {{- $endDate := .context.site.RUDate -}}
     {{- $endDate = $endDate.AddDate 0 1 0 -}}
-    {{- if and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" time.Now ))) ( le $rawD ( time.AsTime ( time.Format
+    {{- if and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" .context.site.RUDate ))) ( le $rawD ( time.AsTime (
+    time.Format
     "2006-01-02" $endDate ))) -}}
         {{- $events = $events | append (dict
             "name" (index $eventRaw 0)  
