@@ -32,10 +32,11 @@
     </dl>
     <p><a href="{{ $page.RelPermalink }}">View all of our Events!</a></p>
     {{- else -}}
-    There are no events coming up between {{ $ruDate | time.Format ":date_short" }} and {{ $endDate |
+    <p>There are no events coming up between {{ $ruDate | time.Format ":date_short" }} and {{ $endDate |
     time.Format
-    ":date_short" }}. Check out our <a href="{{ $page.RelPermalink }}">Upcoming Events</a> page to see how to add an event
+    ":date_short" }}.</p>
+    <p>Check out our <a href="{{ $page.RelPermalink }}">Upcoming Events</a> page to see how to add an event
     or to check for events that
-    might be further out!
+    might be further out!</p>
     {{- end -}}
 </div>
