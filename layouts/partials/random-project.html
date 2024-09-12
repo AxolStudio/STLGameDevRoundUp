@@ -1,7 +1,7 @@
 {{- $projs := .Site.Data.directory.projects -}}
 {{- if $projs -}}
 
-<div class="row border-bottom">
+<div class="row ">
     <h4>⚙ Check out this featured project from our Community!</h4>
     <dl class="ms-4 ">
         {{- range $proj := first 1 ( $projs | shuffle ) -}}
