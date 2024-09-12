@@ -1,4 +1,4 @@
-{{- $ruDate := time.AsTime .context.site.ruDate -}}
+{{- $ruDate := ( .context.site.ruDate | time.AsTime ) -}}
 {{- $endDate = $ruDate.AddDate 0 1 0 -}}
 {{- $eventsRaw := .Site.Data.events -}}
 {{- $events := slice -}}
