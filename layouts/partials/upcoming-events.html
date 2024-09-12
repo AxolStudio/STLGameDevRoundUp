@@ -1,11 +1,11 @@
-{{- $ruDate := ( .context.site.ruDate | time.AsTime ) -}}
+{{- $endDate := time.Now -}}
 {{- $endDate = $ruDate.AddDate 0 1 0 -}}
 {{- $eventsRaw := .Site.Data.events -}}
 {{- $events := slice -}}
 {{- range $eventRaw := $eventsRaw -}}
     {{- $rawD := time.AsTime (index $eventRaw 1) -}}
     
-    {{- if and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" $ruDate ))) ( le $rawD ( time.AsTime (
+    {{- if and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" .context.site.ruDate ))) ( le $rawD ( time.AsTime (
     time.Format
     "2006-01-02" $endDate ))) -}}
         {{- $events = $events | append (dict
@@ -32,8 +32,10 @@
     </dl>
     <p><a href="{{ $page.RelPermalink }}">View all of our Events!</a></p>
     {{- else -}}
-    There are no events coming up between {{ $ruDate | time.Format ":date_short" }} and {{ $endDate | time.Format
-    ":date_short" }}. Check out our <a href="{{ $page.RelPermalink }}">Upcoming Events</a> page for events that
+    There are no events coming up between {{ .context.site.ruDate | time.Format ":date_short" }} and {{ $endDate |
+    time.Format
+    ":date_short" }}. Check out our <a href="{{ $page.RelPermalink }}">Upcoming Events</a> page to see how to add an event
+    or to check for events that
     might be further out!
     {{- end -}}
 </div>
