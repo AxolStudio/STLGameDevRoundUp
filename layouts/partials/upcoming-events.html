@@ -1,4 +1,4 @@
-{{- $ruDate := time.AsTime .Scratch.Get "rudate" -}}
+{{- $ruDate := .Scratch.Get "rudate" | time.AsTime -}}
 {{- $endDate = $ruDate.AddDate 0 1 0 -}}
 {{- $eventsRaw := .Site.Data.events -}}
 {{- $events := slice -}}
