@@ -3,8 +3,8 @@
 {{- range $eventRaw := $eventsRaw -}}
     {{- $rawD := time.AsTime (index $eventRaw 1) -}}
     {{- $endDate := time.Now -}}
-    {{- $endDate = $endDate.AddDate 0 3 0 -}}
-    {{- if and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" time.Now ))) ( lt $rawD ( time.AsTime ( time.Format
+    {{- $endDate = $endDate.AddDate 0 1 0 -}}
+    {{- if and ( ge $rawD ( time.AsTime ( time.Format "2006-01-02" time.Now ))) ( le $rawD ( time.AsTime ( time.Format
     "2006-01-02" $endDate ))) -}}
         {{- $events = $events | append (dict
             "name" (index $eventRaw 0)  
@@ -27,8 +27,6 @@
             <dd class="ms-4">{{ $event.desc }}</dd>
         {{- end -}}
     </dl>
-</div>
-<div class="row">
     {{ $page := .Site.GetPage "/events" }}
     <p><a href="{{ $page.RelPermalink }}">View all of our Events!</a></p>
 </div>

@@ -12,5 +12,7 @@
           <dd class="ms-4">{{ index $proj 1 | humanize }}</dd>
         {{- end -}}
     </dl>
+    {{ $page := .Site.GetPage "/showcase" }}
+    <p><a href="{{ $page.RelPermalink }}">View more projects in our Showcase!</a></p>
 </div>
 {{- end -}}
