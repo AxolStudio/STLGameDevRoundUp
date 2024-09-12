@@ -1,3 +1,5 @@
+{{ .context.site.ruDate }}
+{{ .context.ruDate }}
 {{- $ruDate := .context.site.ruDate -}}
 {{- $endDate = $ruDate.AddDate 0 1 0 -}}
 {{- $eventsRaw := .Site.Data.events -}}
