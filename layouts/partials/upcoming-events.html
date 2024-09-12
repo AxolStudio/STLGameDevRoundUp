@@ -7,8 +7,10 @@
     ---
     {{ time.Format ":date_short" $rawD }}
     {{ time.Format ":time_short" $rawD }}
-    {{ time.Format ":date_short" $rawD }}
-    {{ time.Format ":time_short" $rawD }}
+    <br />
+    {{ time.Format ":date_short" $endDate }}
+    {{ time.Format ":time_short" $endDate }}
+    <br />
     {{ ( ge $rawD ( time.Format ":date_short" time.Now )) }}
     {{ ( le $rawD ( time.Format ":date_short" $endDate )) }}
     {{ and ( ge $rawD ( time.Format ":date_short" time.Now )) ( le $rawD ( time.Format ":date_short" $endDate )) }}
