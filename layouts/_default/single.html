@@ -60,8 +60,8 @@
 </section>
 
 <hr class="my-4 mx-4" />
-
-{{ partial "partials/upcoming-events.html" ( dict "context" . "ruDate" $dateMachine ) }}
+{{- .Scratch.Set "rudate" $dateMachine -}}
+{{ partial "partials/upcoming-events.html" . }}
 
 <hr class="my-4 mx-4" />
 
