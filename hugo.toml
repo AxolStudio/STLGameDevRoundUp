@@ -1,4 +1,4 @@
-baseURL = 'https://axolstudio.github.io/STLGameDevRoundUp/' # this will change eventually
+baseURL = 'https://roundup.stlgame.dev' # this will change eventually
 languageCode = 'en-us'
 title = 'St Louis Game Developer RoundUp'
 
