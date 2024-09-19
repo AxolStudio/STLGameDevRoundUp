@@ -10,7 +10,7 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 
 
 @media (min-width: 400px) {
-    html[class$="/"] main ul li {
+     ul#home-list li {
         flex-basis: calc(50% - 0.5vw);
 
         &:first-child {
@@ -24,7 +24,7 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 }
 
 @media (min-width: 650px) {
-    html[class$="/"] main ul li {
+     ul#home-list li {
         margin: 0.6rem 0.7rem;
         flex-basis: calc(33.33% - 3vw);
 
@@ -40,7 +40,7 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 }
 
 @media (min-width: 900px) {
-    html[class$="/STLGameDevRoundUp/"] main ul li {
+    ul#home-list li {
         flex-basis: calc(25% - 3.5vw);
 
         &:first-child {
@@ -55,7 +55,7 @@ $gamedev-darkgrey-rgb: rgb(52, 56, 63);
 }
 
 @media (min-width: 1100px) {
-    html[class$="/"] main ul li {
+    ul#home-list li {
         flex-basis: calc(20% - 4vw);
 
         &:first-child {
@@ -163,8 +163,8 @@ footer {
     color: white;
 }
 
-html[class$="/"] {
-    main ul {
+
+    ul#home-list {
         display: flex;
         flex-wrap: wrap;
         margin: 0;
@@ -207,7 +207,7 @@ html[class$="/"] {
             }
         }
     }
-}
+
 
 nav {
     a.nav-link.active {
