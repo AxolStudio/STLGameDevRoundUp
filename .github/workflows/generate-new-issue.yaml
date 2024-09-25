@@ -130,10 +130,26 @@ jobs:
                     link-preview-url: ${{ steps.build.outputs.base_url }}/issue-${{  steps.generate.outputs.issue_no }}/
                     identifier: "axolstudio.com"
                     password: ${{ secrets.BLUESKY_PASSWORD }}
-            -   name: Discord
+            -   name: Axol Discord
                 uses: Ilshidur/action-discord@master
                 env:
                     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+                    DISCORD_EMBEDS: |
+                        [
+                            {
+                                "title": "St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }}",
+                                "url": "${{ steps.generate.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/",
+                                "image": {
+                                    "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ steps.generate.outputs.issue_no }}.png"
+                                }
+                            }
+                        ]
+                with:
+                    args: ":sparkles: St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }} is out!"
+            -   name: STL Game Dev Discord
+                uses: Ilshidur/action-discord@master
+                env:
+                    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_2 }}
                     DISCORD_EMBEDS: |
                         [
                             {
