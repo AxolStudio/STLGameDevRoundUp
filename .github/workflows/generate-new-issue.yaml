@@ -1,4 +1,5 @@
 name: ▶ Generate a new RoundUp Issue!
+run-name: Generate a new Issue by @${{ github.actor }}
 
 on:
     workflow_dispatch:
