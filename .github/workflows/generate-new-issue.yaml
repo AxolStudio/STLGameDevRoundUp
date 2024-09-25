@@ -13,7 +13,7 @@ concurrency:
 defaults:
     run:
         shell: bash
-
+ 
 jobs:
 
     generate:
@@ -97,9 +97,9 @@ jobs:
         needs: [generate, build]
         uses: ./.github/workflows/generate-screenshot.yaml
         with:
-            issue_no: ${{ steps.generate.outputs.issue_no }}
-            issue_id: ${{ steps.generate.outputs.issue_id }}
-            base_url: ${{ steps.build.outputs.base_url }}
+            issue_no: ${{ jobs.generate.outputs.issue_no }}
+            issue_id: ${{ jobs.generate.outputs.issue_id }}
+            base_url: ${{ jobs.build.outputs.base_url }}
 
     
     share:
