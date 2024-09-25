@@ -106,7 +106,7 @@ jobs:
     
     share:
         runs-on: ubuntu-latest
-        needs: screenshot
+        needs: [screenshot, generate, build]
         if: ${{ github.event_name == 'workflow_dispatch' }}
         steps:
             -   name: Tweet
@@ -118,19 +118,19 @@ jobs:
                     access-token: ${{ secrets.ACCESS_TOKEN }}
                     access-token-secret: ${{ secrets.ACCESS_TOKEN_SECRET }}
                     text: |
-                        St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }} is out!
+                        St Louis Game Developer RoundUp Issue № ${{ needs.generate.outputs.issue_no }} is out!
 
-                        ${{ steps.build.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/
+                        ${{ needs.build.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/
 
                         #STL #gamedev #IndieGameDev #videogames
             -   name: Bsky's
                 uses: myConsciousness/bluesky-post@v5
                 with: 
                     text:
-                        St Louis Game Developer RoundUp Issue № ${{  steps.generate.outputs.issue_no }} is out!
+                        St Louis Game Developer RoundUp Issue № ${{  needs.generate.outputs.issue_no }} is out!
 
-                        ${{ steps.build.outputs.base_url }}/issue-${{  steps.generate.outputs.issue_no }}/
-                    link-preview-url: ${{ steps.build.outputs.base_url }}/issue-${{  steps.generate.outputs.issue_no }}/
+                        ${{ needs.build.outputs.base_url }}/issue-${{  needs.generate.outputs.issue_no }}/
+                    link-preview-url: ${{ needs.build.outputs.base_url }}/issue-${{  needs.generate.outputs.issue_no }}/
                     identifier: "axolstudio.com"
                     password: ${{ secrets.BLUESKY_PASSWORD }}
             -   name: Axol Discord
@@ -140,15 +140,15 @@ jobs:
                     DISCORD_EMBEDS: |
                         [
                             {
-                                "title": "St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }}",
-                                "url": "${{ steps.generate.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/",
+                                "title": "St Louis Game Developer RoundUp Issue № ${{ needs.generate.outputs.issue_no }}",
+                                "url": "${{ needs.generate.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/",
                                 "image": {
-                                    "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ steps.generate.outputs.issue_no }}.png"
+                                    "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ needs.generate.outputs.issue_no }}.png"
                                 }
                             }
                         ]
                 with:
-                    args: ":sparkles: St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }} is out!"
+                    args: ":sparkles: St Louis Game Developer RoundUp Issue № ${{ needs.generate.outputs.issue_no }} is out!"
             -   name: STL Game Dev Discord
                 uses: Ilshidur/action-discord@master
                 env:
@@ -156,19 +156,19 @@ jobs:
                     DISCORD_EMBEDS: |
                         [
                             {
-                                "title": "St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }}",
-                                "url": "${{ steps.generate.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/",
+                                "title": "St Louis Game Developer RoundUp Issue № ${{ needs.generate.outputs.issue_no }}",
+                                "url": "${{ needs.generate.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/",
                                 "image": {
-                                    "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ steps.generate.outputs.issue_no }}.png"
+                                    "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ needs.generate.outputs.issue_no }}.png"
                                 }
                             }
                         ]
                 with:
-                    args: ":sparkles: St Louis Game Developer RoundUp Issue № ${{ steps.generate.outputs.issue_no }} is out!"
+                    args: ":sparkles: St Louis Game Developer RoundUp Issue № ${{ needs.generate.outputs.issue_no }} is out!"
                     
     finish:
         runs-on: ubuntu-latest
-        needs: screenshot
+        needs: [screenshot, generate, build]
         if: ${{ github.event_name == 'workflow_dispatch' }}
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -176,10 +176,10 @@ jobs:
             REPO: ${{ github.event.repository.name }}
         steps:
             -   name: Close Issue
-                run: gh issue close ${{ steps.generate.outputs.issue_id }} -c "[Issue № ${{ steps.generate.outputs.issue_no }}](${{ steps.build.outputs.base_url }}/issue-${{ steps.generate.outputs.issue_no }}/) has been released!" -r completed
+                run: gh issue close ${{ needs.generate.outputs.issue_id }} -c "[Issue № ${{ needs.generate.outputs.issue_no }}](${{ needs.build.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/) has been released!" -r completed
             -   name: Open New Issue
                 run: |
-                    new_no=$((${{ steps.generate.outputs.issue_no }}+1))
+                    new_no=$((${{ needs.generate.outputs.issue_no }}+1))
                     gh issue create -t "RoundUp Issue #$new_no" -b "To add to the next roundup, use the following format:
                     \`\`\`md
                     {category} short description with [link](/link/to/item)

@@ -12,6 +12,10 @@ on:
       base_url:
         required: true
         type: string
+    outputs: 
+      base_url: 
+          description: "The Base URL of the site"
+          value: ${{ jobs.build.outputs.base_url }}
 
 permissions: write-all
 
