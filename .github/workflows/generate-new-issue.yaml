@@ -141,7 +141,7 @@ jobs:
                         [
                             {
                                 "title": "St Louis Game Developer RoundUp Issue № ${{ needs.generate.outputs.issue_no }}",
-                                "url": "${{ needs.generate.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/",
+                                "url": "${{ needs.build.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/",
                                 "image": {
                                     "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ needs.generate.outputs.issue_no }}.png"
                                 }
@@ -157,7 +157,7 @@ jobs:
                         [
                             {
                                 "title": "St Louis Game Developer RoundUp Issue № ${{ needs.generate.outputs.issue_no }}",
-                                "url": "${{ needs.generate.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/",
+                                "url": "${{ needs.build.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/",
                                 "image": {
                                     "url": "https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/main/screenshots/issue-${{ needs.generate.outputs.issue_no }}.png"
                                 }

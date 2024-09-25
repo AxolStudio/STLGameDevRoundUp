@@ -38,7 +38,7 @@ jobs:
                 fetch-depth: 0
         -   name: Screenshot
             id: screenshot
-            uses: AxolStudio/screenshot-website@1.0
+            uses: AxolStudio/screenshot-website@1.1
             with:
                 source: "${{ inputs.base_url }}/issue-${{ inputs.issue_no }}/"
                 destination: "issue-${{ inputs.issue_no }}.png"
