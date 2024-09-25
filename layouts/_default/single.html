@@ -19,8 +19,8 @@
 {{ $posts := index .Site.Data $post }}
 {{ range index $posts.nodes }}
 {{ $body := .body }}
-{{ $category := replaceRE `^(?:\{)(.*)(?:\}).*`gs "$1" $body }}
-{{ $entry := replaceRE `^(?:\{.*\})(.*)`gs "$1" $body }}
+{{ $category := replaceRE `^(?s:\{)(.*)(?:\}).*` "$1" $body }}
+{{ $entry := replaceRE `^(?s:\{.*\})(.*)` "$1" $body }}
 
 {{ $cat := index $categories $category }}
 {{ if not $cat }}
