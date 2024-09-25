@@ -58,7 +58,7 @@ jobs:
                     echo '{
                         "nodes": 
                     ' > $save_to
-                    echo $RUIssueComments | jq '[.data.repository.issues.nodes[].comments | select(.body | startswith("{"))]' >> $save_to
+                    echo $RUIssueC | jq '[.data.repository.issues.nodes[].comments.nodes[] | select(.body | startswith("{"))]' >> $save_to
                     echo '
                     }' >> $save_to
                     echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
