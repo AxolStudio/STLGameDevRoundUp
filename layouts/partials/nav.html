@@ -11,39 +11,8 @@
             aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarToggler">
-            {{ $currentPage := . }}
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link {{ if eq $currentPage.Title "Home" }}active{{ end }}"
-                        href="{{ .Site.Home.RelPermalink }}" {{ if eq $currentPage.Title "Home" }}aria-current="page" {{
-                        end }}>Home</a>
-
-                </li>
-                <li class="nav-item">
-                    {{ $page := .Site.GetPage "/directory" }}
-                    <a class="nav-link {{ if eq $currentPage.Title "Developer Directory" }}active{{ end }}"
-                        href="{{ $page.RelPermalink }}" {{ if eq $currentPage.Title "Developer Directory"
-                        }}aria-current="page" {{ end }}>Developer Directory</a>
-
-                </li>
-                <li class="nav-item">
-                    {{ $page := .Site.GetPage "/showcase" }}
-                    <a class="nav-link {{ if eq $currentPage.Title "Project Showcase" }}active{{ end }}"
-                        href="{{ $page.RelPermalink }}" {{ if eq $currentPage.Title "Project Showcase"
-                        }}aria-current="page" {{ end }}>Project Showcase</a>
-
-                </li>
-                <li class="nav-item"></li>
-                {{ $page := .Site.GetPage "/events" }}
-                <a class='nav-link {{ if eq $currentPage.Title "Upcoming Events" }}active{{ end }}' href="{{ $page.RelPermalink }}" {{
-                                    if eq $currentPage.Title "Upcoming Events" }}aria-current="page" {{ end }}>Upcoming Events</a>
-
-                </li>
-            </ul>
-            <div class="d-lg-flex col-lg-2 justify-content-end ">
-                {{ partial "color-switch.html" . }}
-              </div>
+        <div class="d-lg-flex col-lg-2 justify-content-end ">
+            {{ partial "color-switch.html" . }}
         </div>
     </div>
 </nav>

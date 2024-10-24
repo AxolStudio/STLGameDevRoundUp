@@ -1,0 +1,11 @@
+[
+    {{- range $index, $issue := sort site.RegularPages ".Params.no" "desc" }}
+    {{ if ne $issue.Params.no nil -}}
+    {
+        "no": {{ $issue.Params.no }},
+        "permalink": "{{ $issue.Permalink }}",
+        "created": "{{ $issue.Date.Format "2006-01-02" }}"
+    },
+    {{- end }}
+    {{ end -}}
+]

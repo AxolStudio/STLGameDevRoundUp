@@ -27,7 +27,7 @@ ignoreErrors = ["error-disable-taxonomy", "error-no-layout"]
   unsafe = true
 
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML", "RSS", "json"]
   section = ["HTML", "RSS"]
 
 [module]

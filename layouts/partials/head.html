@@ -1,8 +1,7 @@
 <meta name="generator" content="Hugo {{ hugo.Version }}" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ if eq .Type "directory" }}Developer Directory
-  {{ else if eq .Type "showcase" }}Project Showcase{{ else }}RoundUp № {{ .Params.no }}{{ end}} | {{ site.Title }} {{ end
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}RoundUp № {{ .Params.no }} | {{ site.Title }} {{ end
   }}</title>
 
 <meta name="keywords" content="{{ .Param "keywords" }}" />
@@ -24,10 +23,6 @@
 
 {{ if .IsHome }}
 {{ partial "head/home.html" . }}
-{{ else if eq .Type "directory" }}
-{{ partial "head/directory.html" . }}
-{{ else if eq .Type "showcase" }}
-{{ partial "head/showcase.html" . }}
 {{ else }}
 {{ partial "head/page.html" . }}
 {{ end -}}

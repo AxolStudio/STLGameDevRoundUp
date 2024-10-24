@@ -50,7 +50,7 @@ Every future RoundUp Issue will have an Open Issue pre-generated under the [Repo
 
 When adding your news item, it should match the following format:
 
-```
+```text
 {🤖 category} Your news info [Optional Link](https:/link/to/something)
 ```
 
@@ -82,32 +82,13 @@ To remove an entry from an *already generated RoundUp* you must edit the file as
 
 For example:
 
-```
+```json
 {
       "body": "The incorrect news item!"
 },
 ```
 
 Make sure the final file is proper Json syntax and submit the change as a PR.
-
-## The Developer Directory / Project Showcase
-
-The [Developer Directory](https://axolstudio.github.io/STLGameDevRoundUp/directory/) & [Project Showcase](https://axolstudio.github.io/STLGameDevRoundUp/showcase/) are places where we can gather and list people and projects who are part of our Community.
-
-We hope that people checking out the RoundUPs from time to time may visit these pages to see who's doing things in the Community or what Projects are being worked on/released.
-
-We also randomly grab one Developer or one Project to highlight at the bottom of each RoundUp Issue to help them get more exposure.
-
-Both of these lists are *100% Opt-in Only*. You/your project(s) will only show up in them if you - yourself - add them.
-
-### Adding yourself / your project
-
-We have a Google Form for anyone who is a *Community Member* to add themselves to our lists. 
-
-Just follow the link(s) below and fill out the form(s)!
-
-* [Developer Profile Submission Form](https://forms.gle/injxef96o8osugUW7)
-* [Project Showcase Submission Form](https://forms.gle/eJRSWmAyqZCC8UrJ8)
 
 ### Fixing an error / Requesting Removal
 
@@ -118,6 +99,7 @@ Currently, there is no simple way for someone to edit or remove themselves from 
 We encourage anyone who wants to help improve the site to contribute to the site's code as long as those changes adhere to the core values of this project.
 
 Those values are:
+
 * To help facilitate spreading awareness of the people and projects that are part of our community first and foremost
 * To be a *free* resource for anyone to see what's happing in and around our community
 * To be as simple and hassle-free for anyone to include their news to future RoundUps
