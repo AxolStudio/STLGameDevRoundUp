@@ -64,9 +64,9 @@ jobs:
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
 
-              escaped_content=$(echo "$ru_content" | sed 'sτ"τ\\"τg' | sed "sτ'τ\\'τg")
-              email_content=$(echo "$email_content" | sed "sτ*|ISSUE_NO|*τ${{ env.ISSUE_NO }}τg")
-              email_content=$(echo "$email_content" | sed "sτ*|CONTENT|*τ$escaped_contentτg")
+              escaped_content=$(echo "$ru_content" | sed 's▓"▓\\"▓g' | sed "s▓'▓\\'▓g")
+              email_content=$(echo "$email_content" | sed "s▓*|ISSUE_NO|*▓${{ env.ISSUE_NO }}▓g")
+              email_content=$(echo "$email_content" | sed "s▓*|CONTENT|*▓$escaped_content▓g")
 
               echo "content=$email_content" >> $GITHUB_ENV
           env:
