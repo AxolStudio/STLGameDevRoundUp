@@ -87,6 +87,8 @@ jobs:
       -   name: update campaign
           run: |
                 id=${{ env.campaign_id }}
+                
+                echo ${{ env.email_content }}
 
                 curl -X PUT \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
