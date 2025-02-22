@@ -75,6 +75,8 @@ jobs:
               
               email_content=$(echo "$email_content" | sed "s~'~\\'~g")
 
+              email_content=$(echo $email_content)
+
               echo "email_content=$email_content" >> $GITHUB_ENV
 
           env:
