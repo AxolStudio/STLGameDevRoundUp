@@ -66,14 +66,14 @@ jobs:
 
               issue_no=${{ env.ISSUE_NO }}
 
-              email_content=$(echo "$email_content" | sed "s~\*\|ISSUE_NO\|\*~$issue_no~g")
-              email_content=$(echo "$email_content" | sed "s~\*\|CONTENT\|\*~$escaped_content~g")
+              email_content=$(echo "$email_content" | sed "s~*|ISSUE_NO|*~$issue_no~g")
+              email_content=$(echo "$email_content" | sed "s~*|CONTENT|*~$escaped_content~g")
 
               email_content=$(echo "$email_content" | tr -d '\n' | tr -d '\r')
 
               email_content=$(jq -n --raw-output --arg html "$email_content" '{html: $html}')
               
-              email_content=$(echo "$email_content" | sed "s~'~\\'~g")
+              email_content="$(echo "$email_content" | sed "s~'~\\'~g")"
 
               echo $email_content;
 
