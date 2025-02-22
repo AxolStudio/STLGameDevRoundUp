@@ -73,12 +73,6 @@ jobs:
               email_content=$(echo "$email_content" | sed "s~$search~$escaped_content~g")
 
               email_content=$(echo "$email_content" | tr -d '\n' | tr -d '\r')
-
-              echo $email_content; 
-
-              email_content=$(echo "$email_content" | jq -sRr @uri)
-
-              echo $email_content;
               
               email_content=$(echo $email_content)
 
