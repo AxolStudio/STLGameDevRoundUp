@@ -63,7 +63,7 @@ jobs:
               fi
               
 
-              $template_path='./email-template.html'
+              $template_path='${{ github.workspace }}/email-template.html'
               email_content=$(cat $template_path)              
 
               content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
