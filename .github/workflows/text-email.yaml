@@ -64,7 +64,7 @@ jobs:
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
 
-              search="*|ISSUE|*"
+              search="*|ISSUE_NO|*"
               replace=${{ env.ISSUE_NO }}
               email_content=$(echo $email_content | sed "s@$search@$replace@g")
 
@@ -99,7 +99,7 @@ jobs:
             id=${{ env.campaign_id }}
 
             curl -X POST \
-                "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
+                "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/actions/test" \
                 --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
                 -d '{"test_emails":["tim@axolstudio.com"],"send_type":"html"}'
           env:
