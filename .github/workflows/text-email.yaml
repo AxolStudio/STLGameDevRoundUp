@@ -53,9 +53,7 @@ jobs:
           run: |
               url="https://roundup.stlgame.dev/issue-${{ env.ISSUE_NO }}/"
               div_id="issue"
-              ru_content=$(curl -s $url | awk '/<div id=$div_id>/,/<\/div>/ )
-
-              echo $ru_content;
+              ru_content=$(curl -s $url | awk '/<div id=$div_id>/,/<\/div>/' )
 
               if [ -z "$ru_content" ]; then
                 echo "Error: Failed to extract content from the URL $url"
