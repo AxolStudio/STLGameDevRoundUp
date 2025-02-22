@@ -64,16 +64,16 @@ jobs:
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
 
-              $ru_content=$(echo $ru_content | sed 's/"/\\"/g')
-              $email_content=$(echo $email_content | sed 's/"/\\"/g')
 
-              search="\*\|ISSUE_NO\|\*"
+              search="*|ISSUE_NO|*"
               replace=${{ env.ISSUE_NO }}
-              email_content=$(echo $email_content | sed "s@$search@$replace@g")
 
-              search="\*\|CONTENT\|\*"
+              email_content="${email_content//$search/$replace}"
+
+              search="*|CONTENT|*"
               replace=$ru_content
-              email_content=$(echo $email_content | sed "s@$search@$replace@g")
+
+              email_content="${email_content//$search/$replace}"
 
               echo "content=$email_content" >> $GITHUB_ENV
           env:
