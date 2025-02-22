@@ -68,12 +68,12 @@ jobs:
               search="*|ISSUE_NO|*"
               replace=${{ env.ISSUE_NO }}
 
-              email_content="${email_content//$search/$replace}"
+              #email_content="${email_content//$search/$replace}"
 
               search="*|CONTENT|*"
               replace=$ru_content
 
-              email_content="${email_content//$search/$replace}"
+              #email_content="${email_content//$search/$replace}"
 
               echo "content=$email_content" >> $GITHUB_ENV
           env:
