@@ -189,7 +189,7 @@ jobs:
                     url="${{ needs.build.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/"
                     div_id="issue"
                     // get the contents between <div id="content"> and </div> in url
-                    ru_content=$(curl -s $url | grep -A 1 "<div id=\"$div_id\">" | tail -n 1)
+                    ru_content=$(curl -s $url | grep -A 1 "<div id=$div_id>" | tail -n 1)
                     email_template=".github/workflows/email-template.html"
                     email_content=$(cat $email_template)
                     content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ needs.generate.outputs.issue_no }}/g")
