@@ -28,7 +28,7 @@ jobs:
                   id=$(curl -X POST \
                   https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns \
                   --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}"' \
-                  --data-raw '{"type":"regular","recipients":{"list_id":"c120d5d29b"},"settings":{"subject_line":"St Louis Game Developer RoundUp Issue № ${{ env.ISSUE_NO }}","preview_text":"Monthly Game Development News from STLGameDev!","title": "RoundUp № ${{ env.ISSUE_NO }}","from_name": "STLGameDev","reply_to": "news@stlgame.dev","use_conversation": false,"to_name": "*|FNAME|*","auto_footer": true,"inline_css": true,"template_id": 10138330},"content_type": "template"}' \
+                  --data-raw '{"type": "regular","recipients": {"list_id": "c120d5d29b"},"settings": {"subject_line": "St Louis Game Developer RoundUp Issue № ${{ env.ISSUE_NO }}","preview_text": "Monthly Game Development News from STLGameDev!","title": "RoundUp № ${{ env.ISSUE_NO }}","from_name": "STLGameDev","reply_to": "news@stlgame.dev","use_conversation": false,"to_name": "*|FNAME|*","auto_footer": true,"inline_css": true,"template_id": 10138330},"content_type": "template"}' \
                   | jq -r '.id')
                   echo "campaign_id=$id" >> $GITHUB_ENV
           -   name: get content
