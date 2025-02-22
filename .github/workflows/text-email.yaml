@@ -67,18 +67,18 @@ jobs:
               issue_no=${{ env.ISSUE_NO }}
 
               search="\\*|ISSUE_NO|\\*"
-              email_content=$(echo "$email_content" | "sed s~$search~$issue_no~g" )
+              email_content=$(echo "$email_content" | sed "s~$search~$issue_no~g" )
 
               search="\\*|CONTENT|\\*"
-              email_content=$(echo "$email_content" | "sed s~$search~$ru_content~g")
+              email_content=$(echo "$email_content" | sed "s~$search~$ru_content~g")
               
               search='"'
               replace='\\"'
-              email_content=$(echo "$email_content" | "sed s~$search~$replace~g")
+              email_content=$(echo "$email_content" | sed "s~$search~$replace~g")
             
               search="'"
               replace="\\'"
-              email_content=$(echo "$email_content" | "sed s~$search~$replace~g")
+              email_content=$(echo "$email_content" | sed "s~$search~$replace~g")
 
               echo $email_content
 
