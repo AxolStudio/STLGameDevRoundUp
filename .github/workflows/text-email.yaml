@@ -65,19 +65,13 @@ jobs:
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
 
-              
-
               search="*|ISSUE|*"
               replace=${{ env.ISSUE_NO }}
               email_content=$(echo $email_content | sed "s@$search@$replace@g")
 
-              # ru_content=$(echo $ru_content | jq -sRr @json)
-
               search="*|CONTENT|*"
               replace=$ru_content
               email_content=$(echo $email_content | sed "s@$search@$replace@g")
-
-              echo $email_content
 
               echo "content=$email_content" >> $GITHUB_ENV
           env:
@@ -87,12 +81,13 @@ jobs:
             ISSUE_NO: 19
       -   name: update campaign
           run: |
-              id=$(echo ${{ env.campaign_id }})
+                id=${{ env.campaign_id }}
 
-              curl -X PUT \
-              https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content \
-              --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
-              -d "{\"html\": \"${{ env.content }}\"}"
+                curl -X PUT \
+                https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content \
+                --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
+                -H "Content-Type: application/json" \
+                --data-raw '{"html": "${{ env.content }}"}'
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
