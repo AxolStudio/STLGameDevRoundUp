@@ -62,8 +62,10 @@ jobs:
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
               
-              content=$(echo $email_content | sed "s/\\*|ISSUE_NO|\\*/${{ env.ISSUE_NO }}/g")
-              content=$(echo $content | sed "s/\\*|CONTENT|\\*/${ru_content}/g")
+              escaped_ru_content=$(echo "$ru_content" | sed 's/\//\\\//g')
+
+              content=$(echo "$email_content" | sed "s/\*|ISSUE_NO|\\*/${{ env.ISSUE_NO }}/g")
+              content=$(echo "$content" | sed "s/\*|CONTENT|\\*/$escaped_ru_content/g")
 
               content=$(echo $content | jq -sR .)
 
