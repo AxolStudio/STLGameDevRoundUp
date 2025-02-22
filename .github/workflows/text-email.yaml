@@ -86,11 +86,14 @@ jobs:
           run: |
                 id=${{ env.campaign_id }}
 
+                email_content=$(jq -r '.html' <<< "${{ env.email_content }}" | jq -sRr @uri)
+                email_content=$(jq -n --arg html "$email_content" '{html: $html}')
+
                 curl -X PUT \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
                 --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
                 --header "Content-Type: application/json" \
-                --data "${{ env.email_content }}"
+                --data '$email_content'
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
