@@ -62,14 +62,13 @@ jobs:
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
               
-              escaped_ru_content=$(echo "$ru_content" | sed 's/\//\\\//g')
+              # replace all instances of the string "*|ISSUE|*" in email_content with ${{ env.ISSUE_NO }}
+              email_content=$(echo $email_content | sed "s/\*|ISSUE|\*/${{ env.ISSUE_NO }}/g")
 
-              content=$(echo "$email_content" | sed "s/\*|ISSUE_NO|\\*/${{ env.ISSUE_NO }}/g")
-              content=$(echo "$content" | sed "s/\*|CONTENT|\\*/$escaped_ru_content/g")
+              # replace all instances of the string "*|CONTENT|*" in email_content with $ru_content
+              email_content=$(echo $email_content | sed "s/\*|CONTENT|\*/$ru_content/g")
 
-              content=$(echo $content | jq -sR .)
-
-              echo "content=$content" >> $GITHUB_ENV
+              echo "content=$email_content" >> $GITHUB_ENV
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
@@ -79,6 +78,9 @@ jobs:
           run: |
               id=$(echo ${{ env.campaign_id }})
               content=$(echo ${{ env.content }} )
+              // json encode $content
+              content=$(echo $content | jq -sRr @json)
+              echo $content
               curl -X PUT \
               https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content \
               --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
