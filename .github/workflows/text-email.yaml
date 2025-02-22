@@ -76,7 +76,7 @@ jobs:
               replace='\\"'
               email_content=$(echo "$email_content" | sed "s~$search~$replace~g")
             
-              email_content=$(echo "$email_content" | sed s~"'"~"\\'"~g")
+              email_content=$(echo "$email_content" | sed s~"'"~"\\'"~g)
 
               echo $email_content
 
