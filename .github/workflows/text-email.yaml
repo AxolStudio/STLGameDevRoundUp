@@ -56,7 +56,7 @@ jobs:
                 exit 1
               fi
 
-              email_content=$(cat ./email-template.html)
+              email_content=$(cat ${GITHUB_WORKSPACE}/email-template.html)
 
               content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
               content=$(echo $content | sed "s/\*|CONTENT|\*/$ru_content/g")
