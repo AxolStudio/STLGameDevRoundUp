@@ -66,12 +66,12 @@ jobs:
 
               issue_no=${{ env.ISSUE_NO }}
 
-              escaped_content=$(echo "$ru_content" | sed 's~"~\\"~g' | sed "s~'~\\'~g")
-              email_content=$(echo "$email_content" | sed 's~"~\\"~g' | sed "s~'~\\'~g")
+              # escaped_content=$(echo "$ru_content" | sed 's~"~\\"~g' | sed "s~'~\\'~g")
+              # email_content=$(echo "$email_content" | sed 's~"~\\"~g' | sed "s~'~\\'~g")
               email_content=$(echo "$email_content" | sed "s~\*\|ISSUE_NO\|\*~$issue_no~g")
               email_content=$(echo "$email_content" | sed "s~\*\|CONTENT\|\*~$escaped_content~g")
 
-              email_content=$(echo "$email_content" | sed 's~\\\\"~"~g' | sed "s~\\'~'~g")
+              # email_content=$(echo "$email_content" | sed 's~\\\\"~"~g' | sed "s~\\'~'~g")
 
               email_content=$(jq -n --arg html "$email_content" '{html: $html}')
 
