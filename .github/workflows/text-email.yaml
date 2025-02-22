@@ -75,7 +75,7 @@ jobs:
 
               email_content=$(jq -n --arg html "$email_content" '{html: $html}')
 
-              # email_content=$(echo "$email_content" | jq -Rs .)
+              email_content=$(echo "$email_content" | jq -Rs .)
 
               echo 'content="$email_content"' >> $GITHUB_ENV
 
@@ -89,6 +89,8 @@ jobs:
                 id=${{ env.campaign_id }}
 
                 data=${{ env.content }}
+
+                echo $data;
 
                 curl -X PUT \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
