@@ -44,6 +44,12 @@ jobs:
           MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
           BASE_URL: https://roundup.stlgame.dev
           ISSUE_NO: 19
+      -   name: Checkout
+          uses: actions/checkout@v4
+          with:
+            sparse-checkout: |
+              email-template.html
+            sparse-checkout-cone-mode: false
       -   name: get content
           id: get-content
           run: |
@@ -56,8 +62,9 @@ jobs:
                 exit 1
               fi
               
-              $template_url='https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/refs/heads/main/email-template.html'
-              email_content=$(curl -s $template_url)
+
+              $template_path='./email-template.html'
+              email_content=$(cat $template_path)              
 
               content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
               content=$(echo $content | sed "s/\*|CONTENT|\*/$ru_content/g")
