@@ -77,8 +77,6 @@ jobs:
               replace=$ru_content
               email_content=$(echo $email_content | sed "s@$search@$replace@g")
 
-              email_content=$(echo $email_content | jq -Rsa @json )
-
               echo $email_content
 
               echo "content=$email_content" >> $GITHUB_ENV
