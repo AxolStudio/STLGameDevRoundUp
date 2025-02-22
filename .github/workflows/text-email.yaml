@@ -65,6 +65,12 @@ jobs:
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
             BASE_URL: https://roundup.stlgame.dev
             ISSUE_NO: 19
+
+      -   name: Checkout
+          uses: actions/checkout@v4
+          with:
+              sparse-checkout: "email-template.html"
+
       -   name: get template
           id: get-template
           run: |
