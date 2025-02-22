@@ -62,9 +62,9 @@ jobs:
               fi
               
               // display the contents of the file ${{ github.workspace }}/email-template.html
-              cat ${{ github.workspace }}/email-template.html
+              cat ${{ github.workspace }}email-template.html
 
-              email_content=$(cat ${{ github.workspace }}/email-template.html)
+              email_content=$(cat ${{ github.workspace }}email-template.html)
               
 
               content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
