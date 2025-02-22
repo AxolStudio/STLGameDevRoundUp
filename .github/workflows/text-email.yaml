@@ -75,7 +75,7 @@ jobs:
 
               email_content=$(jq -n --arg html "$email_content" '{html: $html}')
 
-              email_content=$(echo "$email_content" | jq -Rs .)
+              # email_content=$(echo "$email_content" | jq -Rs .)
 
               echo "content=$email_content" >> $GITHUB_ENV
 
