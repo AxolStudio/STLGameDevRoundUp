@@ -47,12 +47,11 @@ jobs:
       -   name: Checkout
           uses: actions/checkout@v4
           with:
-            sparse-checkout: |
-              email-template.html
-            sparse-checkout-cone-mode: false
+            sparse-checkout: "email-template.html"
       -   name: get content
           id: get-content
           run: |
+              ls ${{ github.workspace }}
               url="https://roundup.stlgame.dev/issue-${{ env.ISSUE_NO }}/"
               div_id="issue"
               ru_content=$(curl -s $url | grep -A 1 "<div id=$div_id>" | tail -n 1)
