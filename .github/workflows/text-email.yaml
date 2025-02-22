@@ -61,10 +61,14 @@ jobs:
               fi
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
-              
+
+              email_content=$(echo $email_content | jq -sRr @json)
+
               search="*|CONTENT|*"
               replace=${{ env.ISSUE_NO }}
               email_content=$(echo $email_content | sed "s/$search/$replace/g")
+
+              ru_content=$(echo $ru_content | jq -sRr @json)
 
               search="*|CONTENT|*"
               replace=$ru_content
@@ -80,9 +84,6 @@ jobs:
           run: |
               id=$(echo ${{ env.campaign_id }})
               content=$(echo ${{ env.content }} )
-              // json encode $content
-              content=$(echo $content | jq -sRr @json)
-              echo $content
               curl -X PUT \
               https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content \
               --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
