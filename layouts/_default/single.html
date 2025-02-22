@@ -29,24 +29,23 @@
 {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) | add 1)
 "entries" (append $entry $cat.entries))) }}
 {{ end }}
-
 {{ end -}}
 
+<div id="content">
 {{- $header := index $categories "!header" }}
 {{ if $header }}
-<section class="issue-header d-block">
+<section class="issue-header d-block" >
   {{ range $header.entries }}
   <p class="lead fs-4 ">{{ . | markdownify }}</p>
   {{ end }}
 </section>
 {{ end -}}
 
-
 <section class="row py-4">
   <div class="col issue-content">
     {{- range sort $categories "count" "desc" }}
     {{ if ne .category "!header" }}
-    <section class="issue-section d-block">
+    <section class="issue-section d-block" >
       <h3 class="display-6">{{ .category | title }}</h3>
       <ul>
         {{ range .entries }}
@@ -58,7 +57,7 @@
     {{ end -}}
   </div>
 </section>
-
+</div>
 
 <hr class="my-4 mx-4" />
 
