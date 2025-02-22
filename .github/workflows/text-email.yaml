@@ -70,6 +70,8 @@ jobs:
               email_content=$(echo "$email_content" | sed "s~\*\|ISSUE_NO\|\*~$issue_no~g")
               email_content=$(echo "$email_content" | sed "s~\*\|CONTENT\|\*~$escaped_content~g")
 
+              email_content=$(jq -n --arg html "$email_content" '{html: $html}')
+
               echo "content=$email_content" >> $GITHUB_ENV
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
@@ -80,7 +82,7 @@ jobs:
           run: |
                 id=${{ env.campaign_id }}
 
-                data=$(jq -n --arg html "$content" '{html: $html}')
+                data=${{ env.content }}
 
                 curl -X PUT \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
