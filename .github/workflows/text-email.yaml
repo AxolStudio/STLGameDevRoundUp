@@ -62,11 +62,13 @@ jobs:
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
               
-              # replace all instances of the string "*|ISSUE|*" in email_content with ${{ env.ISSUE_NO }}
-              email_content=$(echo $email_content | sed "s/\*|ISSUE|\*/${{ env.ISSUE_NO }}/g")
+              search="*|CONTENT|*"
+              replace=${{ env.ISSUE_NO }}
+              email_content=$(echo $email_content | sed "s/$search/$replace/g")
 
-              # replace all instances of the string "*|CONTENT|*" in email_content with $ru_content
-              email_content=$(echo $email_content | sed "s/\*|CONTENT|\*/$ru_content/g")
+              search="*|CONTENT|*"
+              replace=$ru_content
+              email_content=$(echo $email_content | sed "s/$search/$replace/g")
 
               echo "content=$email_content" >> $GITHUB_ENV
           env:
