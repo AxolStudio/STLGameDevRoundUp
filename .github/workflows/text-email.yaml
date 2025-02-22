@@ -73,9 +73,7 @@ jobs:
 
               # email_content=$(echo "$email_content" | sed 's~\\\\"~"~g' | sed "s~\\'~'~g")
 
-              email_content=$(jq -n --arg html "$email_content" '{html: $html}')
-
-              email_content=$(echo "$email_content" | jq -Rsa .)
+              email_content=$(jq -nRsa --arg html "$email_content" '{html: $html}')
 
               echo $email_content
 
