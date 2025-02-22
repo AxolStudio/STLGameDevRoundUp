@@ -55,8 +55,9 @@ jobs:
                 echo "Error: Failed to extract content from the URL $url"
                 exit 1
               fi
-
-              email_content=$(cat ${GITHUB_WORKSPACE}/email-template.html)
+              
+              $template_url='https://raw.githubusercontent.com/AxolStudio/STLGameDevRoundUp/refs/heads/main/email-template.html'
+              email_content=$(curl -s $template_url)
 
               content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
               content=$(echo $content | sed "s/\*|CONTENT|\*/$ru_content/g")
