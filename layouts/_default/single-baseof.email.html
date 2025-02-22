@@ -1,0 +1,126 @@
+<html>
+
+</html>
+{{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
+{{ $dateHuman := .Date |
+time.Format ":date_full"
+-}}
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: "Work Sans", sans-serif, "Noto Color Emoji";
+      width: 60%;
+      margin: auto;
+    }
+
+    header {
+      background-color: black;
+      text-align: center;
+      padding: 20px 0;
+      color: #ffffff;
+    }
+
+    section.content {
+      text-align: center;
+      background-color: dimgrey;
+      color: #ffffff;
+      padding: 20px 2rem;
+    }
+
+    footer {
+      background-color: black;
+      text-align: center;
+      padding: 20px 0;
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <section>
+      <p><a href="*|ARCHIVE|*" tabindex="-1"><span><span style="font-size: 10px; color:white;">View this email in your
+              browser</span></span></a></p>
+    </section>
+    <section>
+      <a href="https://stlgame.dev"><img src="https://stlgame.dev/images/stlgd-logo.svg" width="50%" /></a>
+    </section>
+  </header>
+  <section class="content">
+    <a style="display:inline-block; text-align: center; padding-top:1rem 0;"
+      href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/"><img
+        src="https://roundup.stlgame.dev/images/stlgdru-logo.svg" width="20%"></a>
+    <h1>St Louis Game Developer RoundUp</h1>
+    <h2><a href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/">Issue № {{ .Params.no }}</a></h2>
+    <h3><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></h3>
+    <p style="text-align:justify;">The St Louis Game Developer RoundUp is a monthly news aggregator for the St Louis
+      Game Development community. It is a collection of news, events, and other items of interest to the community
+      brought to you by <a href="https://stlgame.dev">STLGameDev</a></p>
+    <div style="text-align:justify;">
+      {{- $categories := dict }}
+
+{{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+{{ $posts := index .Site.Data $post }}
+{{ range index $posts.nodes }}
+{{ $body := .body }}
+{{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
+{{ $entry := replaceRE `(?s)^(?:\{.*\})(.*)` "$1" $body }}
+
+{{ $cat := index $categories $category }}
+{{ if not $cat }}
+{{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice $entry))) }}
+{{ else }}
+{{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) | add 1)
+"entries" (append $entry $cat.entries))) }}
+{{ end }}
+{{ end -}}
+      <div id="issue">
+        {{- $header := index $categories "!header" }}
+        {{ if $header }}
+        <section class="issue-header d-block">
+          {{ range $header.entries }}
+          <p class="lead fs-4 ">{{ . | markdownify }}</p>
+          {{ end }}
+        </section>
+        {{ end -}}
+
+        <section class="row py-4">
+          <div class="col issue-content">
+            {{- range sort $categories "count" "desc" }}
+            {{ if ne .category "!header" }}
+            <section class="issue-section d-block">
+              <h3 class="display-6">{{ .category | title }}</h3>
+              <ul>
+                {{ range .entries }}
+                <li>{{ . | markdownify }}</li>
+                {{ end }}
+              </ul>
+            </section>
+            {{ end }}
+            {{ end -}}
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <section>
+      <p>Copyright (C) *|CURRENT_YEAR|* *|LIST:COMPANY|*. All rights reserved.</p>
+      <p>*|IFNOT:ARCHIVE_PAGE|**|LIST:DESCRIPTION|**|END:IF|*</p>
+      <p></p>
+      <p>Our mailing address is:</p>
+      <p>*|IFNOT:ARCHIVE_PAGE|**|HTML:LIST_ADDRESS|**|END:IF|*</p>
+      <p></p>
+      <p>Want to change how you receive these emails?You can update your preferences or unsubscribe</p>
+    </section>
+  </footer>
+
+</body>
+
+</html>

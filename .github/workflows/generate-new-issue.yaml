@@ -166,46 +166,7 @@ jobs:
                 with:
                     args: ":sparkles: St Louis Game Developer RoundUp Issue № ${{ needs.generate.outputs.issue_no }} is out!"
     
-    mailchimp:
-        runs-on: ubuntu-latest
-        needs: [screenshot, generate, build]
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        steps:
-            -   name: add campaign
-                id: add-campaign
-                run: |
-                    id=$(curl -X POST \
-                    https://${dc}.api.mailchimp.com/3.0/campaigns \
-                    --user "admin@stlgame.dev:${apikey}"' \
-                    --data-raw '{"type":"regular","recipients":{"list_id":"c120d5d29b"},"settings":{"subject_line":"St Louis Game Developer RoundUp Issue № TEST","preview_text":"Monthly Game Development News from STLGameDev!","title": "RoundUp № TEST","from_name": "STLGameDev","reply_to": "news@stlgame.dev","use_conversation": false,"to_name": "*|FNAME|*","auto_footer": true,"inline_css": true,"template_id": 10138330},"content_type": "template"}' \
-                    | jq -r '.id')
-                    echo "campaign_id=$id" >> $GITHUB_ENV
-                env:
-                    dc: ${{ secrets.MAILCHIMP_DC }}
-                    apikey: ${{ secrets.MAILCHIMP_API_KEY }}
-            -   name: get content
-                id: get-content
-                run: |
-                    url="${{ needs.build.outputs.base_url }}/issue-${{ needs.generate.outputs.issue_no }}/"
-                    div_id="issue"
-                    // get the contents between <div id="content"> and </div> in url
-                    ru_content=$(curl -s $url | grep -A 1 "<div id=$div_id>" | tail -n 1)
-                    email_template=".github/workflows/email-template.html"
-                    email_content=$(cat $email_template)
-                    content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ needs.generate.outputs.issue_no }}/g")
-                    content=$(echo $content | sed "s/\*|CONTENT|\*/$ru_content/g")
-                    echo "content=$content" >> $GITHUB_ENV
-            -   name: update campaign
-                run: |
-                    id=$(echo ${{ env.campaign_id }})
-                    content=$(echo ${{ env.content }} )
-                    curl -X PUT \
-                    https://${dc}.api.mailchimp.com/3.0/campaigns/$id/content \
-                    --user "anystring:${apikey}" \
-                    -d '{"html":"'$content'"}'
-                env:
-                    dc: ${{ secrets.MAILCHIMP_DC }}
-                    apikey: ${{ secrets.MAILCHIMP_API_KEY }}
+    
                 
 
     finish:

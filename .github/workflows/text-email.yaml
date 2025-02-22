@@ -47,20 +47,12 @@ jobs:
       -   name: get issue content
           id: issue-content
           run: |
-              url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/"
+              url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/email.html"
               
-              ru_content=$(curl -s $url | awk '/<div id=issue>/,/<\/div>/' )
+              ru_content=$(curl -s $url )
 
               echo $ru_content
               echo "---"
-
-              if [ -z "$ru_content" ]; then
-                ru_content=$(curl -s $url | awk '/<div id="issue">/,/<\/div>/' )
-                if [ -z "$ru_content" ]; then
-                  echo "Error: Failed to extract content from the URL $url"
-                  exit 1
-                fi
-              fi
 
               echo "issue_content=$ru_content" >> $GITHUB_ENV
           env:
@@ -69,48 +61,7 @@ jobs:
             BASE_URL: https://roundup.stlgame.dev
             ISSUE_NO: 19
 
-      -   name: Checkout
-          uses: actions/checkout@v4
-          with:
-              sparse-checkout: "email-template.html"
-
-      -   name: get template
-          id: get-template
-          run: |
-              email_content=$(cat ${{ github.workspace }}/email-template.html)
-              email_content=$(echo $email_content)
-
-              # issue_no=${{ env.ISSUE_NO }}
-
-              # search="\\*|ISSUE_NO|\\*"
-              # email_content=$(echo $email_content | sed "s~$search~$issue_no~g" )
-
-              # search="\\*|CONTENT|\\*"
-              # email_content=$(echo $email_content | sed "s~$search~$ru_content~g")
-              
-
-              # email_content=$(echo $email_content | tr -d '\n' | tr -d '\r')
-              
-              
-
-              echo "email_content=$email_content" >> $GITHUB_ENV
-
-          env:
-            MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
-            MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
-            BASE_URL: https://roundup.stlgame.dev
-            ISSUE_NO: 19
-      -   name: combine text
-          id: combine-text
-          run: |
-              issue_content=${{ env.issue_content }}
-
-              email_content=${{ env.email_content }}
-
-              echo $issue_content
-              echo "!!!"
-              echo $email_content
-              
+      
 
       # -   name: update campaign
       #     run: |
