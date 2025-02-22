@@ -72,7 +72,7 @@ jobs:
               search="\\*|CONTENT|\\*"
               email_content=$(echo "$email_content" | sed "s~$search~$ru_content~g")
 
-              search="'"
+              search="\'"
               replace="\\'"
               email_content=$(echo "$email_content" | sed "s~$search~$replace~g")
               search='"'
