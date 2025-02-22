@@ -49,7 +49,7 @@ jobs:
           run: |
               url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/email.html"
               
-              ru_content=$(curl -s $url )
+              ru_content=$(curl -s $url | jq -Rs .)
 
               echo $ru_content
               echo "---"
