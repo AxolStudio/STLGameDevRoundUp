@@ -86,7 +86,7 @@ jobs:
 
                 curl -X PUT \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
-                --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
+                --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
                 --header "Content-Type: application/json" \
                 --data-raw "$data"
           env:
@@ -100,7 +100,7 @@ jobs:
 
             curl -X POST \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
-                --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
+                --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
                 -d '{"test_emails":["tim@axolstudio.com"],"send_type":"html"}'
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
