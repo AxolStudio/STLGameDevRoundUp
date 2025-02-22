@@ -70,10 +70,13 @@ jobs:
               email_content=$(echo "$email_content" | sed "s~$search~$issue_no~g")
 
               search="\\*|CONTENT|\\*"
-              email_content=$(echo "$email_content" | sed "s~$search~$escaped_content~g")
+              email_content=$(echo "$email_content" | sed "s~$search~$ru_content~g")
 
               search="'"
               replace="\\'"
+              email_content=$(echo "$email_content" | sed "s~$search~$replace~g")
+              search='"'
+              replace='\\"'
               email_content=$(echo "$email_content" | sed "s~$search~$replace~g")
 
               email_content=$(echo "$email_content" | tr -d '\n' | tr -d '\r')
