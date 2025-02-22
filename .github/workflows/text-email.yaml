@@ -73,7 +73,7 @@ jobs:
 
               email_content=$(jq -n --raw-output --arg html "$email_content" '{html: $html}')
               
-              email_content=$(echo "$email_content" | "sed s~'~\\'~g")
+              email_content=$(echo "$email_content" | sed "s~'~\\'~g")
 
               echo "email_content=$email_content" >> $GITHUB_ENV
 
