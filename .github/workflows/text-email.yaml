@@ -77,7 +77,7 @@ jobs:
               replace=$ru_content
               email_content=$(echo $email_content | sed "s@$search@$replace@g")
 
-              email_content=$(echo $email_content | tr -d '\n' | tr -d '\r' | jq -sRr @json )
+              email_content=$(echo $email_content | jq -Rsa @json )
 
               echo $email_content
 
