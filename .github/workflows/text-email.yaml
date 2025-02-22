@@ -87,7 +87,7 @@ jobs:
                 https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content \
                 --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
                 -H "Content-Type: application/json" \
-                --data-raw '{"html": "${{ env.content }}"}'
+                --data-raw "{'html': '${{ env.content }}'}"
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
