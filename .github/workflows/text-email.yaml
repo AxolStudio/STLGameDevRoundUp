@@ -52,12 +52,15 @@ jobs:
           id: get-content
           run: |
               url="https://roundup.stlgame.dev/issue-${{ env.ISSUE_NO }}/"
-              div_id="issue"
-              ru_content=$(curl -s $url | awk '/<div id=$div_id>/,/<\/div>/' )
+              
+              ru_content=$(curl -s $url | awk '/<div id=issue>/,/<\/div>/' )
 
               if [ -z "$ru_content" ]; then
-                echo "Error: Failed to extract content from the URL $url"
-                exit 1
+                ru_content=$(curl -s $url | awk '/<div id="issue">/,/<\/div>/' )
+                if [ -z "$ru_content" ]; then
+                  echo "Error: Failed to extract content from the URL $url"
+                  exit 1
+                fi
               fi
               
               email_content=$(cat ${{ github.workspace }}/email-template.html)
