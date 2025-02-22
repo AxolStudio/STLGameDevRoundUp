@@ -89,6 +89,8 @@ jobs:
                 # url encode ${{ env.email_content }}
                 escaped_content=$(echo ${{ env.email_content }} | jq -sRr @uri)
 
+                echo $escaped_content
+
                 curl -X PUT \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
                 --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
