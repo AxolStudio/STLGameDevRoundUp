@@ -73,11 +73,9 @@ jobs:
 
               email_content=$(jq -n --raw-output --arg html "$email_content" '{html: $html}')
               
-              content=$(echo $email_content)
+              email_content=$(echo $email_content)
 
-              echo $content;
-
-              echo "content=$content" >> $GITHUB_ENV
+              echo "email_content=$email_content" >> $GITHUB_ENV
 
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
@@ -88,13 +86,11 @@ jobs:
           run: |
                 id=${{ env.campaign_id }}
 
-                data='${{ env.content }}'
-                
                 curl -X PUT \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
                 --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
                 --header "Content-Type: application/json" \
-                --data-raw $data
+                --data-raw '${{ env.email_content }}'
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
