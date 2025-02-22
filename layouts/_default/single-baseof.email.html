@@ -1,6 +1,5 @@
+<!DOCTYPE html>
 <html>
-
-</html>
 {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
 {{ $dateHuman := .Date |
 time.Format ":date_full"
@@ -28,9 +27,19 @@ time.Format ":date_full"
 
     section.content {
       text-align: center;
-      background-color: rgb(33,37,41);
-      color: rgb(222,226,230)
+      background-color: rgb(33, 37, 41);
+      color: rgb(222, 226, 230);
       padding: 20px 2rem;
+
+      a {
+        color: rgb(228, 135, 35);
+
+      }
+
+      a:hover,
+      a:focus {
+        color: rgb(245, 233, 47);
+      }
     }
 
     footer {
@@ -65,21 +74,22 @@ time.Format ":date_full"
     <div style="text-align:justify;">
       {{- $categories := dict }}
 
-{{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
-{{ $posts := index .Site.Data $post }}
-{{ range index $posts.nodes }}
-{{ $body := .body }}
-{{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
-{{ $entry := replaceRE `(?s)^(?:\{.*\})(.*)` "$1" $body }}
+      {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+      {{ $posts := index .Site.Data $post }}
+      {{ range index $posts.nodes }}
+      {{ $body := .body }}
+      {{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
+      {{ $entry := replaceRE `(?s)^(?:\{.*\})(.*)` "$1" $body }}
 
-{{ $cat := index $categories $category }}
-{{ if not $cat }}
-{{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice $entry))) }}
-{{ else }}
-{{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) | add 1)
-"entries" (append $entry $cat.entries))) }}
-{{ end }}
-{{ end -}}
+      {{ $cat := index $categories $category }}
+      {{ if not $cat }}
+      {{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice $entry)))
+      }}
+      {{ else }}
+      {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) | add 1)
+      "entries" (append $entry $cat.entries))) }}
+      {{ end }}
+      {{ end -}}
       <div id="issue">
         {{- $header := index $categories "!header" }}
         {{ if $header }}
