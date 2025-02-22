@@ -11,42 +11,65 @@ defaults:
         shell: bash
 
 jobs:
-
-    mailchimp:
-
-      runs-on: ubuntu-latest
-      if: ${{ github.event_name == 'workflow_dispatch' }}
-      env:
+  mailchimp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Mailchimp Campaign
+        run: |
+          id=$(curl -X POST \
+          "https://***.api.mailchimp.com/3.0/campaigns" \
+          --user "admin@stlgame.dev:***" \
+          --data-raw '{
+            "type": "regular",
+            "recipients": {
+              "list_id": "c120d5d29b"
+            },
+            "settings": {
+              "subject_line": "St Louis Game Developer RoundUp Issue № 19",
+              "preview_text": "Monthly Game Development News from STLGameDev!",
+              "title": "RoundUp № 19",
+              "from_name": "STLGameDev",
+              "reply_to": "news@stlgame.dev",
+              "use_conversation": false,
+              "to_name": "*|FNAME|*",
+              "auto_footer": true,
+              "inline_css": true,
+              "template_id": 10138330
+            },
+            "content_type": "template"
+          }' | jq -r '.id')
+          echo "campaign_id=$id" >> $GITHUB_ENV
+        env:
           MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
-          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }} 
-          BASE_URL: "https://roundup.stlgame.dev"
-          ISSUE_NO: "19"
-      steps:
-          -   name: add campaign
-              id: add-campaign
-              run: |
-                  id=$(curl -X POST \
-                  https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns \
-                  --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}"' \
-                  --data-raw '{"type": "regular","recipients": {"list_id": "c120d5d29b"},"settings": {"subject_line": "St Louis Game Developer RoundUp Issue № ${{ env.ISSUE_NO }}","preview_text": "Monthly Game Development News from STLGameDev!","title": "RoundUp № ${{ env.ISSUE_NO }}","from_name": "STLGameDev","reply_to": "news@stlgame.dev","use_conversation": false,"to_name": "*|FNAME|*","auto_footer": true,"inline_css": true,"template_id": 10138330},"content_type": "template"}' \
-                  | jq -r '.id')
-                  echo "campaign_id=$id" >> $GITHUB_ENV
-          -   name: get content
-              id: get-content
-              run: |
-                  url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/"
-                  div_id="content"
-                  ru_content=$(curl -s $url | grep -A 1 "<div id=\"$div_id\">" | tail -n 1)
-                  email_template=".github/workflows/email-template.html"
-                  email_content=$(cat $email_template)
-                  content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
-                  content=$(echo $content | sed "s/\*|CONTENT|\*/$ru_content/g")
-                  echo "content=$content" >> $GITHUB_ENV
-          -   name: update campaign
-              run: |
-                  id=$(echo ${{ env.campaign_id }})
-                  content=$(echo ${{ env.content }} )
-                  curl -X PUT \
-                  https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content \
-                  --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
-                  -d '{"html":"'$content'"}'
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          BASE_URL: https://roundup.stlgame.dev
+          ISSUE_NO: 19
+      -   name: get content
+          id: get-content
+          run: |
+              url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/"
+              div_id="content"
+              ru_content=$(curl -s $url | grep -A 1 "<div id=\"$div_id\">" | tail -n 1)
+              email_template=".github/workflows/email-template.html"
+              email_content=$(cat $email_template)
+              content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
+              content=$(echo $content | sed "s/\*|CONTENT|\*/$ru_content/g")
+              echo "content=$content" >> $GITHUB_ENV
+          env:
+            MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
+            MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+            BASE_URL: https://roundup.stlgame.dev
+            ISSUE_NO: 19
+      -   name: update campaign
+          run: |
+              id=$(echo ${{ env.campaign_id }})
+              content=$(echo ${{ env.content }} )
+              curl -X PUT \
+              https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content \
+              --user "anystring:${{ env.MAILCHIMP_API_KEY }}" \
+              -d '{"html":"'$content'"}'
+          env:
+            MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
+            MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+            BASE_URL: https://roundup.stlgame.dev
+            ISSUE_NO: 19
