@@ -56,7 +56,7 @@ jobs:
                 exit 1
               fi
 
-              email_template="email-template.html"
+              email_template="static/email-template.html"
               email_content=$(cat $email_template)
 
               content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
