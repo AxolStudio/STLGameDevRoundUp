@@ -51,6 +51,9 @@ jobs:
               
               ru_content=$(curl -s $url | awk '/<div id=issue>/,/<\/div>/' )
 
+              echo $ru_content
+              echo "---"
+
               if [ -z "$ru_content" ]; then
                 ru_content=$(curl -s $url | awk '/<div id="issue">/,/<\/div>/' )
                 if [ -z "$ru_content" ]; then
@@ -75,6 +78,7 @@ jobs:
           id: get-template
           run: |
               email_content=$(cat ${{ github.workspace }}/email-template.html)
+              email_content=$(echo $email_content)
 
               # issue_no=${{ env.ISSUE_NO }}
 
@@ -87,7 +91,7 @@ jobs:
 
               # email_content=$(echo $email_content | tr -d '\n' | tr -d '\r')
               
-              # email_content=$(echo $email_content)
+              
 
               echo "email_content=$email_content" >> $GITHUB_ENV
 
