@@ -56,11 +56,12 @@ jobs:
                 exit 1
               fi
 
-              email_template="static/email-template.html"
-              email_content=$(cat $email_template)
+              email_content=$(cat email-template.html)
 
               content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
               content=$(echo $content | sed "s/\*|CONTENT|\*/$ru_content/g")
+
+              content=$(echo $content | jq -sR .)
 
               echo "content=$content" >> $GITHUB_ENV
           env:
