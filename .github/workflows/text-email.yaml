@@ -73,8 +73,9 @@ jobs:
 
               email_content=$(jq -n --arg html "$email_content" '{html: $html}')
 
-
-              echo "content='$email_content'" >> $GITHUB_ENV
+              email_content=$(echo "$email_content" | jq -Rs .)
+              
+              echo "content=$email_content" >> $GITHUB_ENV
 
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
