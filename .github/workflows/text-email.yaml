@@ -51,7 +51,6 @@ jobs:
       -   name: get content
           id: get-content
           run: |
-              ls ${{ github.workspace }}
               url="https://roundup.stlgame.dev/issue-${{ env.ISSUE_NO }}/"
               div_id="issue"
               ru_content=$(curl -s $url | grep -A 1 "<div id=$div_id>" | tail -n 1)
@@ -61,14 +60,10 @@ jobs:
                 exit 1
               fi
               
-              
-              cat ${{ github.workspace }}/email-template.html
-
               email_content=$(cat ${{ github.workspace }}/email-template.html)
               
-
-              content=$(echo $email_content | sed "s/\*|ISSUE_NO|\*/${{ env.ISSUE_NO }}/g")
-              content=$(echo $content | sed "s/\*|CONTENT|\*/$ru_content/g")
+              content=$(echo $email_content | sed "s/\\*|ISSUE_NO|\\*/${{ env.ISSUE_NO }}/g")
+              content=$(echo $content | sed "s/\\*|CONTENT|\\*/${ru_content}/g")
 
               content=$(echo $content | jq -sR .)
 
