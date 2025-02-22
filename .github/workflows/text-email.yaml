@@ -68,14 +68,17 @@ jobs:
 
               # escaped_content=$(echo "$ru_content" | sed 's~"~\\"~g' | sed "s~'~\\'~g")
               # email_content=$(echo "$email_content" | sed 's~"~\\"~g' | sed "s~'~\\'~g")
+
               email_content=$(echo "$email_content" | sed "s~\*\|ISSUE_NO\|\*~$issue_no~g")
               email_content=$(echo "$email_content" | sed "s~\*\|CONTENT\|\*~$escaped_content~g")
 
               # email_content=$(echo "$email_content" | sed 's~\\\\"~"~g' | sed "s~\\'~'~g")
 
+              email_content=$(echo "$email_content" | tr -d '\n' | tr -d '\r')
+
               email_content=$(jq -n --arg html "$email_content" '{html: $html}')
 
-              email_content=$(echo "$email_content" | jq -Rsa @json)
+              email_content=$(echo "$email_content" | jq -Rs @json)
 
               echo $email_content
 
