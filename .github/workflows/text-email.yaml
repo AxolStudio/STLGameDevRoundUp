@@ -33,7 +33,12 @@ jobs:
               "use_conversation": false,
               "to_name": "*|FNAME|*",
               "auto_footer": true,
-              "inline_css": true
+              "inline_css": true,
+              "auto_tweet": false,
+              "fb_comments": true,
+              "timewarp": false,
+              "template_id": 10138330,
+              "drag_and_drop": false
             },
             "content_type": "template"
           }' | jq -r '.id')
