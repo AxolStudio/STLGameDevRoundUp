@@ -1,8 +1,12 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 
-{{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
-{{ $dateHuman := .Date |
-time.Format ":date_full"
--}}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
+  {{ $dateHuman := .Date |
+  time.Format ":date_full"
+  -}}
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,8 +14,6 @@ time.Format ":date_full"
     href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
   <style>
-    
-
     .container,
     .container-fluid,
     .container-xxl,
@@ -74,7 +76,7 @@ time.Format ":date_full"
       .container-sm,
       .container {
         max-width: 1320px;
-        
+
       }
     }
 
@@ -113,7 +115,9 @@ time.Format ":date_full"
       color: #ffffff;
     }
   </style>
+</head>
 
+<body>
   <div class="container">
     <header>
       <section>
@@ -195,3 +199,5 @@ time.Format ":date_full"
       </section>
     </footer>
   </div>
+</body>
+</html>
