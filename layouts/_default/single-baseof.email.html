@@ -101,23 +101,25 @@ w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     .header {
       background-color: black;
       text-align: center;
-      padding: 20px 0;
+      
       color: #ffffff;
+      
     }
 
     .content {
       text-align: center;
       background-color: rgb(33, 37, 41);
       color: rgb(222, 226, 230);
-      padding: 20px 2rem;
-
+      td {
+        padding: 2rem;
+      }
 
     }
 
     .footer {
       background-color: black;
       text-align: center;
-      padding: 20px 0;
+      padding: 2rem;
       color: #ffffff;
     }
   </style>
@@ -130,21 +132,22 @@ ng: 0; background-color: #FAFAFA;width: 100% !important;">
  0;background-color: #FAFAFA;height: 100% !important;width: 100% !important;">
       <tr class="header">
         <td>
-          <p><a href="*|ARCHIVE|*" tabindex="-1" target="_blank"><span><span style="font-size: 10px; color:white;">View this email in your browser</span></span></a></p>
+          <p><a href="*|ARCHIVE|*" tabindex="-1" target="_blank"><span><span style="font-size: 10px; color:white;">View
+                  this email in your browser</span></span></a></p>
         </td>
       </tr>
-      <tr>
-        <td>
+      <tr class="header" >
+        <td style="padding-bottom:2rem;">
           <a href="https://stlgame.dev" target="_blank"><img src="{{ $stlgdlogo.Permalink }}" width="50%" /></a>
         </td>
       </tr>
       <tr class="content">
         <td>
-          <a style="display:inline-block; text-align: center; padding-top:1rem 0;"
-            href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/"  target="_blank"><img
-              src="{{ $stlgd.Permalink }}" width="20%"></a>
           <h1>St Louis Game Developer RoundUp</h1>
-          <h2><a href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/" target="_blank">Issue № {{ .Params.no }}</a></h2>
+          <a style="display:inline-block; text-align: center; padding-top:1rem 0;"
+            href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/" target="_blank"><img src="{{ $stlru.Permalink }}"></a>
+          <h2><a href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/" target="_blank">Issue № {{ .Params.no }}</a>
+          </h2>
           <h3><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></h3>
           <p style="text-align:justify;">The St Louis Game Developer RoundUp is a monthly news aggregator for the St
             Louis
@@ -202,10 +205,13 @@ ng: 0; background-color: #FAFAFA;width: 100% !important;">
           </div>
         </td>
       </tr>
-      <tr class="footer">
-        <td style="text-align: right;">
-          <a href="https://stlgame.dev" target="_blank"><img src="{{ $stlgdicon.Permalink }}" alt="STLGameDev Icon" width="50" height="50"></a>
+      <tr class="content">
+        <td style="text-align: right; padding: 20px;">
+          <a href="https://stlgame.dev" target="_blank"><img src="{{ $stlgdicon.Permalink }}" alt="STLGameDev Icon"
+              width="50" height="50"></a>
         </td>
+      </tr>
+      <tr class="footer">
         <td>
           <p>Copyright (C) *|CURRENT_YEAR|* *|LIST:COMPANY|*. All rights reserved.</p>
           <p>*|IFNOT:ARCHIVE_PAGE|**|LIST:DESCRIPTION|**|END:IF|*</p>
