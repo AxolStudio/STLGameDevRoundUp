@@ -33,14 +33,13 @@ jobs:
               "use_conversation": false,
               "to_name": "*|FNAME|*",
               "auto_footer": true,
-              "inline_css": true,
+              "inline_css": false,
               "auto_tweet": false,
-              "fb_comments": true,
+              "fb_comments": false,
               "timewarp": false,
-              "template_id": 10138330,
               "drag_and_drop": false
             },
-            "content_type": "template"
+            "content_type": "html"
           }' | jq -r '.id')
           echo "campaign_id=$id" >> $GITHUB_ENV
         env:
