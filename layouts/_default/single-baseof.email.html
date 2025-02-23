@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 
 <head>
@@ -7,7 +8,10 @@
   {{ $dateHuman := .Date |
   time.Format ":date_full"
   -}}
-
+  {{- $stlru := resources.Get "images/stlgdru-logo.png" }}
+  {{ $stlgdlogo := resources.Get "images/stlgd-logo.png" }}
+  {{ $stlgdicon := resources.Get "images/stlgd-icon.png" -}}
+  <title>St Louis Game Developer RoundUp Issue № {{ .Params.no }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -24,7 +28,7 @@
 
       width: 100%;
       padding-right: 2rem;
-      padding-left: 2rem);
+      padding-left: 2rem;
       margin-right: auto;
       margin-left: auto;
     }
@@ -84,31 +88,33 @@
       font-family: "Work Sans", sans-serif, "Noto Color Emoji";
     }
 
-    header {
+    a {
+      color: rgb(228, 135, 35);
+
+    }
+
+    a:hover,
+    a:focus {
+      color: rgb(245, 233, 47);
+    }
+
+    .header {
       background-color: black;
       text-align: center;
       padding: 20px 0;
       color: #ffffff;
     }
 
-    section.content {
+    .content {
       text-align: center;
       background-color: rgb(33, 37, 41);
       color: rgb(222, 226, 230);
       padding: 20px 2rem;
 
-      a {
-        color: rgb(228, 135, 35);
 
-      }
-
-      a:hover,
-      a:focus {
-        color: rgb(245, 233, 47);
-      }
     }
 
-    footer {
+    .footer {
       background-color: black;
       text-align: center;
       padding: 20px 0;
@@ -117,88 +123,101 @@
   </style>
 </head>
 
-<body>
-  <div class="container">
-    <header>
-      <section>
-        <p><a href="*|ARCHIVE|*" tabindex="-1"><span><span style="font-size: 10px; color:white;">View this email in your
-                browser</span></span></a></p>
-      </section>
-      <section>
-        <a href="https://stlgame.dev"><img src="https://stlgame.dev/images/stlgd-logo.svg" width="50%" /></a>
-      </section>
-    </header>
-    <section class="content">
-      <a style="display:inline-block; text-align: center; padding-top:1rem 0;"
-        href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/"><img
-          src="https://roundup.stlgame.dev/images/stlgdru-logo.svg" width="20%"></a>
-      <h1>St Louis Game Developer RoundUp</h1>
-      <h2><a href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/">Issue № {{ .Params.no }}</a></h2>
-      <h3><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></h3>
-      <p style="text-align:justify;">The St Louis Game Developer RoundUp is a monthly news aggregator for the St Louis
-        Game Development community. It is a collection of news, events, and other items of interest to the community
-        brought to you by <a href="https://stlgame.dev">STLGameDev</a></p>
-      <div style="text-align:justify;">
-        {{- $categories := dict }}
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="-webkit-text-size-adjust: none;margin: 0;paddi=
+ng: 0; background-color: #FAFAFA;width: 100% !important;">
+  <center class="container">
+    <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable" style="margin: 0;padding:=
+ 0;background-color: #FAFAFA;height: 100% !important;width: 100% !important;">
+      <tr class="header">
+        <td>
+          <p><a href="*|ARCHIVE|*" tabindex="-1" target="_blank"><span><span style="font-size: 10px; color:white;">View this email in your browser</span></span></a></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="https://stlgame.dev" target="_blank"><img src="{{ $stlgdlogo.Permalink }}" width="50%" /></a>
+        </td>
+      </tr>
+      <tr class="content">
+        <td>
+          <a style="display:inline-block; text-align: center; padding-top:1rem 0;"
+            href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/"  target="_blank"><img
+              src="{{ $stlgd.Permalink }}" width="20%"></a>
+          <h1>St Louis Game Developer RoundUp</h1>
+          <h2><a href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/" target="_blank">Issue № {{ .Params.no }}</a></h2>
+          <h3><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></h3>
+          <p style="text-align:justify;">The St Louis Game Developer RoundUp is a monthly news aggregator for the St
+            Louis
+            Game Development community. It is a collection of news, events, and other items of interest to the community
+            brought to you by <a href="https://stlgame.dev" target="_blank">STLGameDev</a></p>
+          <div style="text-align:justify;">
+            {{- $categories := dict }}
 
-        {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
-        {{ $posts := index .Site.Data $post }}
-        {{ range index $posts.nodes }}
-        {{ $body := .body }}
-        {{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
-        {{ $entry := replaceRE `(?s)^(?:\{.*\})(.*)` "$1" $body }}
+            {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+            {{ $posts := index .Site.Data $post }}
+            {{ range index $posts.nodes }}
+            {{ $body := .body }}
+            {{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
+            {{ $entry := replaceRE `(?s)^(?:\{.*\})(.*)` "$1" $body }}
 
-        {{ $cat := index $categories $category }}
-        {{ if not $cat }}
-        {{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice
-        $entry)))
-        }}
-        {{ else }}
-        {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) | add 1)
-        "entries" (append $entry $cat.entries))) }}
-        {{ end }}
-        {{ end -}}
-        <div id="issue">
-          {{- $header := index $categories "!header" }}
-          {{ if $header }}
-          <section class="issue-header d-block">
-            {{ range $header.entries }}
-            <p class="lead fs-4 ">{{ . | markdownify }}</p>
+            {{ $cat := index $categories $category }}
+            {{ if not $cat }}
+            {{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice
+            $entry)))
+            }}
+            {{ else }}
+            {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) |
+            add
+            1)
+            "entries" (append $entry $cat.entries))) }}
             {{ end }}
-          </section>
-          {{ end -}}
-
-          <section class="row py-4">
-            <div class="col issue-content">
-              {{- range sort $categories "count" "desc" }}
-              {{ if ne .category "!header" }}
-              <section class="issue-section d-block">
-                <h3 class="display-6">{{ .category | title }}</h3>
-                <ul>
-                  {{ range .entries }}
-                  <li>{{ . | markdownify }}</li>
-                  {{ end }}
-                </ul>
+            {{ end -}}
+            <div id="issue">
+              {{- $header := index $categories "!header" }}
+              {{ if $header }}
+              <section class="issue-header d-block">
+                {{ range $header.entries }}
+                <p class="lead fs-4 ">{{ . | markdownify }}</p>
+                {{ end }}
               </section>
-              {{ end }}
               {{ end -}}
+
+              <section class="row py-4">
+                <div class="col issue-content">
+                  {{- range sort $categories "count" "desc" }}
+                  {{ if ne .category "!header" }}
+                  <section class="issue-section d-block">
+                    <h3 class="display-6">{{ .category | title }}</h3>
+                    <ul>
+                      {{ range .entries }}
+                      <li>{{ . | markdownify }}</li>
+                      {{ end }}
+                    </ul>
+                  </section>
+                  {{ end }}
+                  {{ end -}}
+                </div>
+              </section>
             </div>
-          </section>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <section>
-        <p>Copyright (C) *|CURRENT_YEAR|* *|LIST:COMPANY|*. All rights reserved.</p>
-        <p>*|IFNOT:ARCHIVE_PAGE|**|LIST:DESCRIPTION|**|END:IF|*</p>
-        <p></p>
-        <p>Our mailing address is:</p>
-        <p>*|IFNOT:ARCHIVE_PAGE|**|HTML:LIST_ADDRESS|**|END:IF|*</p>
-        <p></p>
-        <p>Want to change how you receive these emails?You can update your preferences or unsubscribe</p>
-      </section>
-    </footer>
-  </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="footer">
+        <td style="text-align: right;">
+          <a href="https://stlgame.dev" target="_blank"><img src="{{ $stlgdicon.Permalink }}" alt="STLGameDev Icon" width="50" height="50"></a>
+        </td>
+        <td>
+          <p>Copyright (C) *|CURRENT_YEAR|* *|LIST:COMPANY|*. All rights reserved.</p>
+          <p>*|IFNOT:ARCHIVE_PAGE|**|LIST:DESCRIPTION|**|END:IF|*</p>
+          <p></p>
+          <p>Our mailing address is:</p>
+          <p>*|IFNOT:ARCHIVE_PAGE|**|HTML:LIST_ADDRESS|**|END:IF|*</p>
+          <p></p>
+          <p>Want to change how you receive these emails?You can update your preferences or unsubscribe</p>
+        </td>
+      </tr>
+    </table>
+  </center>
 </body>
 
 </html>
