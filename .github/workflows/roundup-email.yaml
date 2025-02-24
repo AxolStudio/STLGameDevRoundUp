@@ -47,6 +47,8 @@ jobs:
           echo "campaign_id=$id" >> $GITHUB_ENV
         
 
+        
+
       -   name: get issue content
           id: issue-content
           run: |

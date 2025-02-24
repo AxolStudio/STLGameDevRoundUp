@@ -109,6 +109,8 @@ jobs:
         with:
             issue_no: ${{ needs.generate.outputs.issue_no }}
             base_url: ${{ needs.build.outputs.base_url }}
+        secrets: inherit
+
 
     
     share:
