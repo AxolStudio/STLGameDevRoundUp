@@ -53,7 +53,7 @@ jobs:
 
               ru_content=$(echo $ru_content | jq -sRr @uri)
 
-              echo "issue_content=$ru_content" >> $GITHUB_ENV
+              echo "email_content=$ru_content" >> $GITHUB_ENV
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
