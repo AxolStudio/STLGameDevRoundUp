@@ -8,7 +8,7 @@
 
 # St Louis Game Developer RoundUp
 
-This is the repository for the St Louis Game Developer RoundUp: a semi-regular news aggrigator for the [St Louis Game Development community](http://stlgamedev.com/).
+This is the repository for the St Louis Game Developer RoundUp: a monthly news aggrigator for the [St Louis Game Development community](http://stlgamedev.com/).
 
 ## How to Contribute
 
