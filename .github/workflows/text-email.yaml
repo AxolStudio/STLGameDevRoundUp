@@ -49,31 +49,17 @@ jobs:
           run: |
               url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/email.html"
               
-              escape_json_string() {
-                local input=$1
-                for ((i = 0; i < ${#input}; i++)); do
-                  local char="${input:i:1}"
-                  local escaped="${char}"
-                  case "${char}" in
-                    $'"' ) escaped="\\\"";;
-                    $'\\') escaped="\\\\";;
-                    *)
-                      if [[ "${char}" < $'\x20' ]]; then
-                        case "${char}" in 
-                          $'\b') escaped="\\b";;
-                          $'\f') escaped="\\f";;
-                          $'\n') escaped="\\n";;
-                          $'\r') escaped="\\r";;
-                          $'\t') escaped="\\t";;
-                          *) escaped=$(printf "\u%04X" "'${char}")
-                        esac
-                      fi;;
-                  esac
-                  echo -n "${escaped}"
-                done
-              }
+              ru_content=$(curl -s $url)
 
-              ru_content=$(curl -s $url | escape_json_string )
+              ru_content=$(echo $ru_content | sed 's/"/\\"/g')
+              ru_content=$(echo $ru_content | sed "s/'/\\'/g")
+              ru_content=$(echo $ru_content | sed 's/\n/\\n/g')
+              ru_content=$(echo $ru_content | sed 's/\r/\\r/g')
+              ru_content=$(echo $ru_content | sed 's/\t/\\t/g')
+              ru_content=$(echo $ru_content | sed 's/\f/\\f/g')
+              ru_content=$(echo $ru_content | sed 's/\v/\\v/g')
+              ru_content=$(echo $ru_content | sed 's/\\/\\\\/g')
+
 
               echo "email_content=$ru_content" >> $GITHUB_ENV
           env:
