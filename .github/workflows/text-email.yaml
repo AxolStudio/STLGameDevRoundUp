@@ -51,8 +51,6 @@ jobs:
               
               ru_content=$(curl -s $url)
 
-              ru_content=$(echo "$ru_content" | jq -sRr @json)
-
               echo "email_content=$ru_content" >> $GITHUB_ENV
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
@@ -70,7 +68,7 @@ jobs:
                 --header 'Content-Type: application/json' \
                 --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
                 --data-raw '{
-                  "html" : "${{ env.email_content }}"
+                  "html" : "'"$(json_stringify "${{ env.email_content }}")"'"
                 }'
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
