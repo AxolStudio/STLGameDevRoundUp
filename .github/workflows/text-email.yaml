@@ -49,7 +49,7 @@ jobs:
           run: |
               url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/email.html"
               
-              function escape_json_string() {
+              escape_json_string() {
                 local input=$1
                 for ((i = 0; i < ${#input}; i++)); do
                   local char="${input:i:1}"
