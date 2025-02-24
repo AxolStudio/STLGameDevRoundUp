@@ -28,3 +28,9 @@ date: 2025-02-24T21:12:30Z
 draft: false
 no: 20
 ---
+---
+title: "Issue #20"
+date: 2025-02-24T21:23:10Z
+draft: false
+no: 20
+---
