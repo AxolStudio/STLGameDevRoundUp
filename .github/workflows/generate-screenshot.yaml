@@ -38,12 +38,12 @@ jobs:
                 fetch-depth: 0
         -   name: Screenshot
             id: screenshot
-            uses: karol-brejna-i/webpage-screenshot-action@v1
+            uses: karol-brejna-i/webpage-screenshot-action@v1.1.2
             with:
-              url: "${{ inputs.base_url }}/issue-${{ inputs.issue_no }}/"
+              url: "${{ inputs.base_url }}/issue-${{ inputs.issue_no }}"
               output: "issue-${{ inputs.issue_no }}.png"
               mode: page
-              
+
         -   name: Commit image
             run: |
                 git pull
