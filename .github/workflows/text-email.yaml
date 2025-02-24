@@ -51,7 +51,7 @@ jobs:
               
               ru_content=$(curl -s $url)
 
-              ru_content=$(echo "$ru_content" | jq -sRr @uri)
+              ru_content=$(echo "$ru_content" | jq -sRr @json)
 
               echo "email_content=$ru_content" >> $GITHUB_ENV
           env:
