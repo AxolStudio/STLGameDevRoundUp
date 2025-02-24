@@ -49,8 +49,9 @@ jobs:
           run: |
               url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/email.html"
               
-              ru_content=$(curl -s $url | jq @json '.' )
+              ru_content=$(curl -s $url)
 
+              ru_content=$(echo "$ru_content" | jq -sRr @uri)
 
               echo "email_content=$ru_content" >> $GITHUB_ENV
           env:
