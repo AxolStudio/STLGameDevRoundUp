@@ -56,6 +56,8 @@ jobs:
               ru_content=$(echo "$ru_content" | sed 's~"~\\"~g')
               ru_content=$(echo "$ru_content" | sed "s~'~\\'~g")
 
+              ru_content=$(echo $ru_content)
+
               echo "email_content=$ru_content" >> $GITHUB_ENV
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
