@@ -104,7 +104,7 @@ jobs:
             base_url: ${{ needs.build.outputs.base_url }}
 
     newsletter:
-        needs: [generate, build]
+        needs: [generate, build, screenshot]
         uses: ./.github/workflows/roundup-email.yaml
         with:
             issue_no: ${{ needs.generate.outputs.issue_no }}
