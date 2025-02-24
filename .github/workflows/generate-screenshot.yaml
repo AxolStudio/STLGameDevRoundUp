@@ -38,16 +38,17 @@ jobs:
                 fetch-depth: 0
         -   name: Screenshot
             id: screenshot
-            uses: AxolStudio/screenshot-website@1.1
+            uses: karol-brejna-i/webpage-screenshot-action@v1
             with:
-                source: "${{ inputs.base_url }}/issue-${{ inputs.issue_no }}/"
-                destination: "issue-${{ inputs.issue_no }}.png"
-                makeartifact: false
+              url: "${{ inputs.base_url }}/issue-${{ inputs.issue_no }}/"
+              output: "issue-${{ inputs.issue_no }}.png"
+              mode: page
+              
         -   name: Commit image
             run: |
                 git pull
                 mkdir -p screenshots
-                mv -f ${{ steps.screenshot.outputs.path }} screenshots/issue-${{inputs.issue_no }}.png
+                mv -f ${{ github.workspace }}/issue-${{ inputs.issue_no }}.png screenshots/issue-${{inputs.issue_no }}.png
                 git config --global user.name "GitHub Actions"
                 git config --global user.email "no-reply@github.com"
                 git tag generated-screenshot-${{ inputs.issue_no }}
