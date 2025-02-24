@@ -1,10 +1,21 @@
-name: ▶ EMAIL TEST
-run-name: EMAIL TEST by @${{ github.actor }}
+name: 📧 RoundUp Newsletter Email
+run-name: 📧 RoundUp Newsletter Email by @${{ github.actor }}
 
 on:
-    workflow_dispatch:
+    workflow_call:
+      inputs:
+        issue_no:
+          required: true
+          type: string
+        base_url:
+          required: true
+          type: string
 
 permissions: write-all
+
+concurrency:
+    group: "pages"
+    cancel-in-progress: false
 
 defaults:
     run:
@@ -25,9 +36,9 @@ jobs:
                 "list_id": "c120d5d29b"
             },
             "settings": {
-                "subject_line": "St Louis Game Developer RoundUp Issue № ${{ env.ISSUE_NO }}",
+                "subject_line": "St Louis Game Developer RoundUp Issue № ${{ inputs.issue_no }}",
                 "preview_text": "Monthly Game Development News from STLGameDev!",
-                "title": "RoundUp № ${{ env.ISSUE_NO }}",
+                "title": "RoundUp № ${{ inputs.issue_no }}",
                 "from_name": "STLGameDev",
                 "reply_to": "news@stlgame.dev",
                 "use_conversation": false,
@@ -41,13 +52,11 @@ jobs:
         env:
           MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
           MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
-          BASE_URL: https://roundup.stlgame.dev
-          ISSUE_NO: 19
 
       -   name: get issue content
           id: issue-content
           run: |
-              url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/email.html"
+              url="${{ inputs.base_url }}/issue-${{ inputs.issue_no }}/email.html"
               
               ru_content=$(curl -s $url)
               
@@ -62,13 +71,10 @@ jobs:
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
-            BASE_URL: https://roundup.stlgame.dev
-            ISSUE_NO: 19
 
       -   name: update campaign
           run: |
                 id=${{ env.campaign_id }}
-
 
                 curl --location --request PUT "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
                 --header 'Content-Type: application/json' \
@@ -85,9 +91,8 @@ jobs:
             id=${{ env.campaign_id }}
 
             curl -X POST \
-                "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/actions/test" \
-                --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
-                -d '{"test_emails":["tim@axolstudio.com"], "send_type":"html"}'
+                "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/actions/send" \
+                --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" 
           env:
             MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
             MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
