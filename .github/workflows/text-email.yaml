@@ -49,7 +49,9 @@ jobs:
           run: |
               url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/email.html"
               
-              ru_content=$(curl -s $url | jq -Rs .)
+              ru_content=$(curl -s $url)
+
+              ru_content=$(echo $ru_content)
 
               echo "email_content=$ru_content" >> $GITHUB_ENV
           env:
@@ -62,7 +64,7 @@ jobs:
           run: |
                 id=${{ env.campaign_id }}
 
-                js=$(jq -nRs --arg html '${{ env.email_content }}' '{html: $html}')
+                js=$(jq -nRs --arg html ${{ env.email_content }} '{html: $html}')
 
                 echo $js;
 
