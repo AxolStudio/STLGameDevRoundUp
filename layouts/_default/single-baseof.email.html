@@ -199,7 +199,7 @@ w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       {{- $header := index $categories "!header" }}
       {{ if $header }}
       <tr class="content">
-        <td style="text-align:justify;">
+        <td style="text-align:justify; color:#dee2e6 !important;">
           {{ range $header.entries }}
           <p style="font-size:x-large;">{{ . | markdownify }}</p>
           {{ end }}
@@ -208,7 +208,7 @@ w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       {{ end -}}
 
       <tr class="content">
-        <td style="text-align:justify;">
+        <td style="text-align:justify; color:#dee2e6 !important; ">
           {{- range sort $categories "count" "desc" }}
           {{ if ne .category "!header" }}
 
