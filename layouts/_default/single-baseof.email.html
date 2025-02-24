@@ -101,17 +101,18 @@ w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     .header {
       background-color: black;
       text-align: center;
-      
+
       color: #ffffff;
-      
+
     }
 
     .content {
       text-align: center;
-      background-color: rgb(33, 37, 41);
+      background-color: #212529;
       color: rgb(222, 226, 230);
+
       td {
-        padding: 2rem;
+        padding: .5rem 3rem 0 3rem;
       }
 
     }
@@ -119,8 +120,13 @@ w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     .footer {
       background-color: black;
       text-align: center;
-      padding: 2rem;
+      padding: .5rem 3rem 0 3rem;
       color: #ffffff;
+    }
+
+    h2,
+    h4 {
+      font-size: larger;
     }
   </style>
 </head>
@@ -132,11 +138,11 @@ ng: 0; background-color: #FAFAFA;width: 100% !important;">
  0;background-color: #FAFAFA;height: 100% !important;width: 100% !important;">
       <tr class="header">
         <td>
-          <p><a href="*|ARCHIVE|*" tabindex="-1" target="_blank"><span><span style="font-size: 10px; color:white;">View
-                  this email in your browser</span></span></a></p>
+          <p><a href="*|ARCHIVE|*" tabindex="-1" target="_blank"><span style="font-size: small; ">View
+                this email in your browser</span></a></p>
         </td>
       </tr>
-      <tr class="header" >
+      <tr class="header">
         <td style="padding-bottom:2rem;">
           <a href="https://stlgame.dev" target="_blank"><img src="{{ $stlgdlogo.Permalink }}" width="50%" /></a>
         </td>
@@ -145,64 +151,72 @@ ng: 0; background-color: #FAFAFA;width: 100% !important;">
         <td>
           <h1>St Louis Game Developer RoundUp</h1>
           <a style="display:inline-block; text-align: center; padding-top:1rem 0;"
-            href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/" target="_blank"><img src="{{ $stlru.Permalink }}"></a>
-          <h2><a href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/" target="_blank">Issue № {{ .Params.no }}</a>
+            href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/" target="_blank"><img
+              src="{{ $stlru.Permalink }}"></a>
+          <h2>
+            <a href="https://roundup.stlgame.dev/issue-{{ .Params.no }}/" target="_blank">Issue № {{ .Params.no }}</a>
           </h2>
           <h3><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></h3>
-          <p style="text-align:justify;">The St Louis Game Developer RoundUp is a monthly news aggregator for the St
+        </td>
+      </tr>
+      <tr class="content">
+        
+        <td  style="text-align:justify;">
+          <p style="font-size: medium; color:#999;">The St Louis Game Developer RoundUp is a monthly news aggregator for
+            the St
             Louis
             Game Development community. It is a collection of news, events, and other items of interest to the community
             brought to you by <a href="https://stlgame.dev" target="_blank">STLGameDev</a></p>
-          <div style="text-align:justify;">
-            {{- $categories := dict }}
+      </tr>
 
-            {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
-            {{ $posts := index .Site.Data $post }}
-            {{ range index $posts.nodes }}
-            {{ $body := .body }}
-            {{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
-            {{ $entry := replaceRE `(?s)^(?:\{.*\})(.*)` "$1" $body }}
+      {{- $categories := dict }}
 
-            {{ $cat := index $categories $category }}
-            {{ if not $cat }}
-            {{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice
-            $entry)))
-            }}
-            {{ else }}
-            {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) |
-            add
-            1)
-            "entries" (append $entry $cat.entries))) }}
+      {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+      {{ $posts := index .Site.Data $post }}
+      {{ range index $posts.nodes }}
+      {{ $body := .body }}
+      {{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
+      {{ $entry := replaceRE `(?s)^(?:\{.*\})(.*)` "$1" $body }}
+
+      {{ $cat := index $categories $category }}
+      {{ if not $cat }}
+      {{ $categories = merge $categories (dict $category (dict "category" $category "count" 1 "entries" (slice
+      $entry)))
+      }}
+      {{ else }}
+      {{ $categories = merge $categories (dict $category (dict "category" $category "count" (int ($cat.count) |
+      add
+      1)
+      "entries" (append $entry $cat.entries))) }}
+      {{ end }}
+      {{ end -}}
+
+      {{- $header := index $categories "!header" }}
+      {{ if $header }}
+      <tr class="content">
+        <td style="text-align:justify;">
+          {{ range $header.entries }}
+          <p style="font-size:x-large;">{{ . | markdownify }}</p>
+          {{ end }}
+        </td>
+      </tr>
+      {{ end -}}
+
+      <tr class="content">
+        <td style="text-align:justify;">
+          {{- range sort $categories "count" "desc" }}
+          {{ if ne .category "!header" }}
+
+          <h4>{{ .category | title }}</h4>
+          <ul>
+            {{ range .entries }}
+            <li>{{ . | markdownify }}</li>
             {{ end }}
-            {{ end -}}
-            <div id="issue">
-              {{- $header := index $categories "!header" }}
-              {{ if $header }}
-              <section class="issue-header d-block">
-                {{ range $header.entries }}
-                <p class="lead fs-4 ">{{ . | markdownify }}</p>
-                {{ end }}
-              </section>
-              {{ end -}}
+          </ul>
 
-              <section class="row py-4">
-                <div class="col issue-content">
-                  {{- range sort $categories "count" "desc" }}
-                  {{ if ne .category "!header" }}
-                  <section class="issue-section d-block">
-                    <h3 class="display-6">{{ .category | title }}</h3>
-                    <ul>
-                      {{ range .entries }}
-                      <li>{{ . | markdownify }}</li>
-                      {{ end }}
-                    </ul>
-                  </section>
-                  {{ end }}
-                  {{ end -}}
-                </div>
-              </section>
-            </div>
-          </div>
+          {{ end }}
+          {{ end -}}
+
         </td>
       </tr>
       <tr class="content">
