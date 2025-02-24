@@ -62,8 +62,9 @@ jobs:
           run: |
                 id=${{ env.campaign_id }}
 
-                curl -X PUT \
+                curl --location --request PUT \
                 "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
+                --header 'Content-Type: application/json' \
                 --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
                 --data-raw '{ "html": "${{ env.email_content }}" }'
           env:
