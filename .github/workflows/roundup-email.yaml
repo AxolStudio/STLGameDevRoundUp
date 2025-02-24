@@ -28,8 +28,8 @@ jobs:
       - name: Create Mailchimp Campaign
         run: |
           id=$(curl -X POST \
-          "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns" \
-          --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
+          "https://${{ secrets.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns" \
+          --user "admin@stlgame.dev:${{ secrets.MAILCHIMP_API_KEY }}" \
           --data-raw '{
             "type": "regular",
             "recipients": {
@@ -49,9 +49,7 @@ jobs:
             "content_type": "template"
           }' | jq -r '.id')
           echo "campaign_id=$id" >> $GITHUB_ENV
-        env:
-          MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
-          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+        
 
       -   name: get issue content
           id: issue-content
@@ -68,31 +66,22 @@ jobs:
               ru_content=$(echo $ru_content)
 
               echo "email_content=$ru_content" >> $GITHUB_ENV
-          env:
-            MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
-            MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
 
       -   name: update campaign
           run: |
                 id=${{ env.campaign_id }}
 
-                curl --location --request PUT "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
+                curl --location --request PUT "https://${{ secrets.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
                 --header 'Content-Type: application/json' \
-                --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
+                --user "admin@stlgame.dev:${{ secrets.MAILCHIMP_API_KEY }}" \
                 --data-raw '{
                   "html" : "${{ env.email_content }}"
                 }'
-          env:
-            MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
-            MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
 
       -   name: test email
           run: |
             id=${{ env.campaign_id }}
 
             curl -X POST \
-                "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/actions/send" \
-                --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" 
-          env:
-            MAILCHIMP_DC: ${{ secrets.MAILCHIMP_DC }}
-            MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+                "https://${{ secrets.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/actions/send" \
+                --user "admin@stlgame.dev:${{ secrets.MAILCHIMP_API_KEY }}"
