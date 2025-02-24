@@ -64,6 +64,8 @@ jobs:
 
                 js=$(jq -n --arg html '${{ env.email_content }}' '{html: $html}')
 
+                echo js;
+
                 curl --location --request PUT "https://${{ env.MAILCHIMP_DC }}.api.mailchimp.com/3.0/campaigns/$id/content" \
                 --header 'Content-Type: application/json' \
                 --user "admin@stlgame.dev:${{ env.MAILCHIMP_API_KEY }}" \
