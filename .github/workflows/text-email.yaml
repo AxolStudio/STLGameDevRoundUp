@@ -39,7 +39,7 @@ jobs:
               "timewarp": false,
               "drag_and_drop": false
             },
-            "content_type": "html"
+            "content_type": "template"
           }' | jq -r '.id')
           echo "campaign_id=$id" >> $GITHUB_ENV
         env:
