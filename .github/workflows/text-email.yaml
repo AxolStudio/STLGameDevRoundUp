@@ -52,13 +52,13 @@ jobs:
               ru_content=$(curl -s $url)
 
               
-              ru_content=$(echo $ru_content | sed 's/\\/\\\\/g')
-              ru_content=$(echo $ru_content | sed 's/"/\\"/g')
-              ru_content=$(echo $ru_content | sed "s/'/\\'/g")
-              ru_content=$(echo $ru_content | sed 's/\n/\\n/g')
-              ru_content=$(echo $ru_content | sed 's/\r/\\r/g')
-              ru_content=$(echo $ru_content | sed 's/\t/\\t/g')
-              ru_content=$(echo $ru_content | sed 's/\//\\//g')
+              ru_content=$(echo "$ru_content" | sed 's/\\/\\\\/g')
+              ru_content=$(echo "$ru_content" | sed 's/"/\\"/g')
+              ru_content=$(echo "$ru_content" | sed "s/'/\\'/g")
+              ru_content=$(echo "$ru_content" | sed 's/\n/\\n/g')
+              ru_content=$(echo "$ru_content" | sed 's/\r/\\r/g')
+              ru_content=$(echo "$ru_content" | sed 's/\t/\\t/g')
+              ru_content=$(echo "$ru_content" | sed 's/\//\\//g')
 
 
 
