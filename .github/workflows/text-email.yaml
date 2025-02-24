@@ -62,7 +62,7 @@ jobs:
           run: |
                 id=${{ env.campaign_id }}
 
-                js=$(jq -n --arg html '${{ env.email_content }}' '{html: $html}')
+                js=$(jq -nRs --arg html '${{ env.email_content }}' '{html: $html}')
 
                 echo $js;
 
