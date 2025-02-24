@@ -50,18 +50,11 @@ jobs:
               url="${{ env.BASE_URL }}/issue-${{ env.ISSUE_NO }}/email.html"
               
               ru_content=$(curl -s $url)
-
               
-              ru_content=$(echo "$ru_content" | sed 's/\\/\\\\/g')
-              ru_content=$(echo "$ru_content" | sed 's/"/\\"/g')
-              ru_content=$(echo "$ru_content" | sed "s/'/\\'/g")
-              ru_content=$(echo "$ru_content" | sed 's/\n/\\n/g')
-              ru_content=$(echo "$ru_content" | sed 's/\r/\\r/g')
-              ru_content=$(echo "$ru_content" | sed 's/\t/\\t/g')
-              ru_content=$(echo "$ru_content" | sed 's/\//\\//g')
-
-
-
+              ru_content=$(echo "$ru_content" | sed 's~\\~\\\\"~g')
+              ru_content=$(echo "$ru_content" | sed "s~\\/~\\\\/~g")
+              ru_content=$(echo "$ru_content" | sed 's~"~\\"~g')
+              ru_content=$(echo "$ru_content" | sed "s~'~\\'~g")
 
               echo "email_content=$ru_content" >> $GITHUB_ENV
           env:
