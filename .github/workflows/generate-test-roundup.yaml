@@ -70,7 +70,8 @@ jobs:
                     ---
                     title: "Issue #$ru_no"
                     date: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
-                    draft: true
+                    draft: false
+                    is_test: true
                     no: $ru_no
                     ---
                     EOF
