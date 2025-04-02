@@ -24,10 +24,8 @@
 {{ $post }}
 {{ end }}
 {{ end }}
-{{ .Site.Data }} 
-{{ $posts := index .Site.Data $post }}
 
-{{ $posts }}
+{{ $posts := index .Site.Data $post }}
 
 {{ range index $posts.nodes }}
 {{ $body := .body }}
