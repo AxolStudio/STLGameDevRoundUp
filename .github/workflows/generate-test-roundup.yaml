@@ -40,7 +40,7 @@ jobs:
                                         number
                                         comments(first:100) {
                                             nodes {
-                                                bodyHtml
+                                                body
                                             }
                                         }
                                     }
@@ -58,7 +58,7 @@ jobs:
                     echo '{
                         "nodes": 
                     ' > $save_to
-                    RUIComments=$(echo $RUIssue | jq '[.data.repository.issues.nodes[].comments.nodes[] | select(.bodyHtml | startswith("{"))]')
+                    RUIComments=$(echo $RUIssue | jq '[.data.repository.issues.nodes[].comments.nodes[] | select(.body | startswith("{"))]')
                     RUIComments=$(echo $RUIComments | sed 's/\\r\\n/\\r\\n\\r\\n/g')
                     echo $RUIComments >> $save_to
                     echo '
