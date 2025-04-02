@@ -13,6 +13,8 @@
 </div>
 <hr />
 
+{{ .Site.Data }}
+
 {{- $categories := dict }}
 
 {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
