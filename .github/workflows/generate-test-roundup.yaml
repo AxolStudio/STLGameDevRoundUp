@@ -82,9 +82,9 @@ jobs:
                 run: |
                     git config --global user.name "GitHub Actions"
                     git config --global user.email "no-reply@github.com"
-                    git tag generated-issue-${ISSUE_NO}
-                    git add content/issue-${ISSUE_NO}.md data/issue${ISSUE_NO}.json
-                    git commit -m "Update issue ${ISSUE_NO}"
+                    git tag generated-issue-test
+                    git add content/issue-test.md data/issue-test.json
+                    git commit -m "Testing issue ${ISSUE_NO}"
                     git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
                     git push --follow-tags 
                 env:
