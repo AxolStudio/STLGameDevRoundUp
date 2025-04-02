@@ -66,11 +66,12 @@ jobs:
                     echo 'ISSUE_NO'=$ru_no >> $GITHUB_ENV
                     echo 'issue_no'=$ru_no >> $GITHUB_OUTPUT
                     md_file="content/issue-${ru_no}.md"
-                    cat << EOF >> $md_file
+                    cat << EOF > $md_file
                     ---
                     title: "Issue #$ru_no"
                     date: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
                     draft: false
+                    is_test: false
                     no: $ru_no
                     ---
                     EOF
