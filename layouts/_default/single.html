@@ -19,11 +19,9 @@
 
 {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
 {{ with .Params.is_test }}
-{{ if .Params.is_test }}
 {{ .Site.Data }} 
 {{ $post = printf "%s" "test" | printf "%s%s" "issue" | printf "%s" }}
 {{ $post }}
-{{ end }}
 {{ end }}
 
 {{ $posts := index .Site.Data $post }}
