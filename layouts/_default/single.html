@@ -20,7 +20,7 @@
 {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
 {{ with .Params.is_test }}
 {{ if . }}
-{{ $post = printf "%s" "test" | printf "%s%s" "issue" | printf "%s" }}
+{{ $post = "issue-test" }}
 {{ $post }}
 {{ end }}
 {{ end }}
