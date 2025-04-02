@@ -1,5 +1,5 @@
 {{ define "main" }}
-<ul id="home-list"> {{ range $index, $issue := sort site.RegularPages ".Params.no" "desc" }}{{ if ne $issue.Params.no nil }}{{ if !$issue.Params.is_test }}<li itemType="http://schema.org/Article"
+<ul id="home-list"> {{ range $index, $issue := sort site.RegularPages ".Params.no" "desc" }}{{ if ne $issue.Params.no nil }}{{ if not $issue.Params.is_test }}<li itemType="http://schema.org/Article"
     id="{{ $issue.Params.no }}">
     {{- if eq $index 0 -}}
     <p class="text-secondary">Latest RoundUp</p>
