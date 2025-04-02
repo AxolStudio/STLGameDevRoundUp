@@ -1,6 +1,6 @@
 {
     "nodes": 
 
-[ { "bodyText": "{🧪test} This is a test!" } ]
+[ { "body": "{🧪test} [This](https://google.com/) is a **test**!" } ]
 
 }
