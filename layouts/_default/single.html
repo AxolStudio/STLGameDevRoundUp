@@ -17,11 +17,11 @@
 {{- $categories := dict }}
 
 
-{{ if .Params.is_test }}
-{{ $post := printf "%s" "test" | printf "%s%s" "issue" | printf "%s" }}
-{{ else }}
 {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+{{ with .Params.is_test }}
+{{ $post = printf "%s" "test" | printf "%s%s" "issue" | printf "%s" }}
 {{ end }}
+
 {{ $posts := index .Site.Data $post }}
 
 {{ range index $posts.nodes }}
