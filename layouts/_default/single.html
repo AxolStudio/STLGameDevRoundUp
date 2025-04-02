@@ -13,12 +13,15 @@
 </div>
 <hr />
 
-{{ .Site.Data }}
 
 {{- $categories := dict }}
 
 {{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+{{ if .Params.is_test }}
+{{ $posts := index .Site.Data test }}
+{{ else }}
 {{ $posts := index .Site.Data $post }}
+{{ end }}
 {{ range index $posts.nodes }}
 {{ $body := .body }}
 {{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
