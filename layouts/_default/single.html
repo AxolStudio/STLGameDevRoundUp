@@ -16,12 +16,14 @@
 
 {{- $categories := dict }}
 
-{{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
+
 {{ if .Params.is_test }}
-{{ $posts := index .Site.Data "issue-test" }}
+{{ $post := printf "%s" "test" | printf "%s%s" "issue" | printf "%s" }}
 {{ else }}
-{{ $posts := index .Site.Data $post }}
+{{ $post := printf "%s" (string .Params.no) | printf "%s%s" "issue" | printf "%s" }}
 {{ end }}
+{{ $posts := index .Site.Data $post }}
+
 {{ range index $posts.nodes }}
 {{ $body := .body }}
 {{ $category := replaceRE `(?s)^(?:\{)(.*)(?:\}).*` "$1" $body }}
