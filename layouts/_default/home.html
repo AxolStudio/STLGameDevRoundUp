@@ -1,7 +1,12 @@
 {{ define "main" }}
-<ul id="home-list"> {{ range $index, $issue := sort site.RegularPages ".Params.no" "desc" }}{{ if ne $issue.Params.no nil }}{{ if not $issue.Params.is_test }}<li itemType="http://schema.org/Article"
+{{ $count := 0 }}
+<ul id="home-list"> 
+    {{ range $index, $issue := sort site.RegularPages ".Params.no" "desc" }}
+    {{ if ne $issue.Params.no nil }}
+    {{ if not $issue.Params.is_test }}
+    <li itemType="http://schema.org/Article"
     id="{{ $issue.Params.no }}">
-    {{- if eq $index 0 -}}
+    {{- if eq $count 0 -}}
     <p class="text-secondary">Latest RoundUp</p>
     {{- end -}}
     <a title="St Louis Game Dev RoundUp № {{ $issue.Params.no }}" href="{{ $issue.RelPermalink }}">
@@ -11,6 +16,7 @@
     <time datecreated="{{ $issue.Params.Date.Format " 2006-01-02" }}" itemprop="datePublished" pubdate
       datetime="{{ $issue.Params.Date.Format " 2006-01-02" }}">{{ $issue.Params.Date.Format "January 2, 2006" }}</time>
   </li>
+    {{ add $count 1 }}
     {{ end }}
     {{ end }}
     {{ end }}
